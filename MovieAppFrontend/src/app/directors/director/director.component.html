@@ -12,7 +12,7 @@
 </header>
 <ul>
     <li *ngFor = "let director of directors">
-        <a routerLink = "/director-detail/{{director.directorId}}">
+        <a class = "detail-link" routerLink = "/director-detail/{{director.directorId}}">
             <h3>{{director.name}}</h3>
             <img class = "photo" [src] = "director.photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
         </a>

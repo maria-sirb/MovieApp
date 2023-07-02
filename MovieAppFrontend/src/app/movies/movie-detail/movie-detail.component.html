@@ -26,7 +26,7 @@
         <h3 class = "label">Summary : </h3><p class = "bottom-line">{{movie.summary}}</p>
         <div class = "bottom-line ">
             <h3 class = "label">Director : </h3>
-            <a class = "director" routerLink="/director-detail/{{movie.director.directorId}}">
+            <a class = "detail-link director" routerLink="/director-detail/{{movie.director.directorId}}">
                 <p  style = "font-weight: bold">{{movie.director.name}}</p>
                 <img class = "photo" [src] = "movie.director.photo" (error) = "dp.addDefaultPhotoDirector(movie.director)"/>
             </a>
@@ -34,7 +34,7 @@
         <h3 class = "label">Cast : </h3>
         <ul  class = "bottom-line" class = "cast">
             <li *ngFor = "let actor of movie.movieActors">
-                <a routerLink="/actor-detail/{{actor.actorId}}">
+                <a class = "detail-link" routerLink="/actor-detail/{{actor.actorId}}">
                     <p  style = "font-weight: bold">{{actor.name}}</p>
                     <img class = "photo detail-poster" [src] = " actor.photo" (error) = "dp.addDefaultPhotoActor(actor)" alt = "photo of actor" >
                 </a>
@@ -47,7 +47,7 @@
                 </div>
             </li>
             <li class = "add">
-                <a routerLink="/add-role/{{movie.movieId}}">
+                <a class = "detail-link" routerLink="/add-role/{{movie.movieId}}">
                     <svg class = "add-icon" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M20 14H14V20H10V14H4V10H10V4H14V10H20V14Z" />
                     </svg>

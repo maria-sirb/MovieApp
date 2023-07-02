@@ -12,7 +12,7 @@
 </header>
 <ul>
     <li *ngFor = "let actor of actors">
-      <a routerLink = "/actor-detail/{{actor.actorId}}">
+      <a class = "detail-link" routerLink = "/actor-detail/{{actor.actorId}}">
         <h3>{{actor.name}}</h3>
         <img class = "photo" #actorPhoto [src]= "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "actor photo"/>
       </a>

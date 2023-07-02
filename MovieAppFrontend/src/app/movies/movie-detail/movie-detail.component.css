@@ -13,12 +13,7 @@ li img{
     top: 35px;
     left: 0;
 }
- a:hover img{
-    border: 2px solid var(--accent-color);
-}
-a:hover p{
-    color: var(--accent-color);
-}
+ 
 .director>p,
 .director>img{
     margin-left: 25px;

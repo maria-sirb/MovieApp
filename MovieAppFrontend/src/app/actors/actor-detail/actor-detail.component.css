@@ -13,12 +13,7 @@ li img{
     top: 40px;
     left: 0;
 }
- a:hover img{
-    border: 2px solid var(--accent-color);
-}
-a:hover p{
-    color: var(--accent-color);
-}
+
 .movie-list{
  display: flex;
  flex-direction: row;

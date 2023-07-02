@@ -15,8 +15,7 @@
 </header>
 <ul class = "movie-list">
     <li class = "movie" *ngFor = "let movie of movies" id = {{movie.movieId}}>
-        
-        <a routerLink = "/movie-detail/{{movie.movieId}}">
+        <a class = "detail-link" routerLink = "/movie-detail/{{movie.movieId}}">
             <h3>{{movie.title}}</h3>
             <img class = "poster"  (error) = "dp.addDefaultPhotoMovie(movie)" [src] = "movie.poster" alt = "movie poster"/>
         </a>
