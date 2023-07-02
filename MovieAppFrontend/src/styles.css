@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
 :root{
 
     --light-color: rgb(224, 209, 229);
@@ -12,7 +14,7 @@
 }
 html {
     /*background-color: var(--backgroud-color);*/
-    background-image: linear-gradient(to right, #303030 0%, var(--backgroud-color) 100%);
+    background-image: linear-gradient(to right, #303030 0%, var(--backgroud-color) 100%) !important;
     color: var(--light-color);
     max-width: 100vw;
     padding-bottom: 50px;
@@ -20,6 +22,8 @@ html {
 body{
     overflow-x: hidden;
     margin:0px;
+    background-image: linear-gradient(to right, #303030 0%, var(--backgroud-color) 100%) !important;
+    color: var(--light-color);
 }
 
 .detail-poster{
@@ -33,7 +37,7 @@ li{
     list-style-type: none;
 }
 select{
-    background-color: var(--darkish-color);
+    background-color: var(--darkish-color) !important;
     color: var(--light-color);
     width: 150px;
     height: 30px;
@@ -55,8 +59,7 @@ img, .photo, .poster{
     box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;
 }
 
-
-li .detail-link:hover .photo{
+li .detail-link:hover .poster{
    
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   transform: scale(1.03);
@@ -72,7 +75,8 @@ li .detail-link:hover h3{
   transition:all 0.2s ease-in-out;
 }
 
-.detail-link:hover img{
+.detail-link:hover img,
+.detail-link:hover .photo{
   border: 2px solid var(--accent-color);
   transition:all 0.2s ease-in-out;
 }
