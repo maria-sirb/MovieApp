@@ -25,7 +25,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
-        policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+        policy.WithOrigins("*").AllowAnyHeader())
 );
 
 
