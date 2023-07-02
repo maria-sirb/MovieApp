@@ -1,0 +1,27 @@
+
+<div class = "container" *ngIf = "actor">
+    <div class = "options">
+        <button class = "edit"><a routerLink="/edit-actor/{{actor.actorId}}">Edit</a></button>
+        <button class = "delete" (click) = "deleteActor(actor.actorId)">Delete</button>
+    </div>
+    <div class = "top-details">
+    <div>
+    <h2>{{actor.name}}</h2>
+    <img [src] = "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "photo of actor" />
+    </div>
+    <div  class="right-details">
+        <p><span class = "label">Born : </span>{{actor.born | date}}</p>
+        <p><span class = "label">Oscar Wins : </span>{{actor.oscarWins}}</p>
+        <p><span class = "label">Oscar Nominations : </span>{{actor.oscarNominations}}</p>
+    </div>
+    </div>
+    <h3>Movies: </h3>
+    <ul class = "movie-list">
+        <li *ngFor = "let movie of actor.movieActors">
+            <a routerLink="/movie-detail/{{movie.movieId}}">
+                <p style = "font-weight: bold">{{movie.title}}</p>
+                <img class = "poster" [src] = "movie.poster" (error)= "dp.addDefaultPhotoMovie(movie)"/>
+            </a>
+        </li>
+    </ul>
+</div>

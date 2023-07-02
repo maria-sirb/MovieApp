@@ -1,0 +1,156 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+
+    --light-color: rgb(224, 209, 229);
+    --backgroud-color: rgb(29, 26, 30);
+    --accent-color: rgb(213, 148, 243);
+    --dark-accent-color: rgb(144, 71, 178);
+    --blue: rgb(76, 212, 196);
+    --dark-blue: rgb(6, 177, 157);
+    --dark-color: rgb(19, 18, 19);
+    --darkish-color: rgb(28, 26, 29);
+}
+html {
+    /*background-color: var(--backgroud-color);*/
+    background-image: linear-gradient(to right, #303030 0%, var(--backgroud-color) 100%);
+    color: var(--light-color);
+    max-width: 100vw;
+    padding-bottom: 50px;
+}
+body{
+    overflow-x: hidden;
+    margin:0px;
+}
+
+.detail-poster{
+    width: 400px;
+    height : auto;
+}
+a{
+    text-decoration: none;
+}
+li{
+    list-style-type: none;
+}
+select{
+    background-color: var(--darkish-color);
+    color: var(--light-color);
+    width: 150px;
+    height: 30px;
+    font-size: 15px;
+    border-color: var(--accent-color);
+}
+select:focus{
+    border-color: var(--accent-color);
+}
+.sort-label{
+    color: var(--accent-color);
+    margin: 5px;
+    font-size: 20px;
+}
+img, .photo, .poster{
+    width: 200px;
+    height:auto;
+    box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;
+}
+::-webkit-scrollbar {
+   
+    height: 3px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--dark-color);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+  }
+  .label{
+    font-weight: bold;
+  }
+  .edit, .delete, .submit{
+
+    font-size: 17px;
+    font-weight: bold;
+    width: 80px;
+    height: 40px;
+    color: var(--light-color);
+  }
+  .edit{
+    background-color: var(--dark-accent-color);
+    border: 2px solid var(--dark-accent-color);
+  }
+  .edit:hover{
+    background-color: rgb(176, 95, 214);
+  }
+  .delete, .submit{
+    background-color: var(--dark-blue);
+    border: 2px solid var(--dark-blue);
+    
+  }
+  .delete:hover, .submit:hover{
+    background-color: rgb(70, 194, 179);
+  }
+  p{
+    font-size: 18px;
+    line-height: 30px;
+  }
+  h3{
+    font-size: 22px;
+  }
+
+  .top-details{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 200px;
+    font-size: 17px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--light-color);
+}
+.right-details{
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+}
+.right-details>p{
+    margin: 7px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--light-color);
+}
+.right-details ul{
+    display : flex;
+    gap:30px;
+    padding-left:0; 
+}
+.right-details ul li p{
+    border: 1px solid var(--light-color);
+    padding: 5px;
+    border-radius: 20px;
+}
+.right-details span{
+    padding-right: 20px;
+}
+.options{
+    display : flex;
+    justify-content: space-evenly;
+}
+.container>.options{
+   display: flex;
+   justify-content: flex-start;
+   gap: 50px;
+}
+.form-container{
+    border: 2px solid var(--accent-color);
+    padding: 30px;
+    background-color: var(--darkish-color);
+    width: 300px;
+}
+form .error{
+    background-color: rgba(76, 212, 196, 0.6);
+    border: 2px solid var(--blue);
+    font-size: 17px;
+    padding: 3px;
+    width: 300px;
+}
+

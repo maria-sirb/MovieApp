@@ -1,0 +1,16 @@
+
+<button class = "add-button" (click)="toggleButton(addMovie)">Add new movie</button>
+<button  class = "add-button" (click)="toggleButton(addActor)">Add new actor</button>
+<button  class = "add-button" (click)="toggleButton(addDirector)">Add new director</button>
+<div class = "forms">
+<div *ngIf = "addMovie.value">
+    <app-movie-form (onSubmision)="hasSubmitted($event, addMovie)"></app-movie-form>
+</div>
+<div *ngIf = "addActor.value">
+    <app-actor-form (onSubmision)="hasSubmitted($event, addActor)"></app-actor-form>
+</div>
+<div *ngIf = "addDirector.value">
+    <app-director-form (onSubmision)="hasSubmitted($event, addDirector)"></app-director-form>
+</div>
+</div>
+

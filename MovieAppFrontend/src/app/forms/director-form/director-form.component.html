@@ -1,0 +1,15 @@
+<div class = "big-container">
+    <div class = "form-container">
+        <h1 *ngIf= "id">Edit Director</h1>
+        <h1 *ngIf= "!id">Add Director</h1>
+        <form #directorForm = ngForm (ngSubmit)="addDirectorSubmit(directorForm.value)">
+            <label class = "label">*Name : <input required type = "text" name = "name"  [(ngModel)]= "director.name" ngModel/></label>
+            <label class = "label">Image Address : <input  type = "url" name = "photo"  [(ngModel)]= "director.photo" ngModel/></label>
+            <label class = "label">Born : <input type = "date" name = "born" [ngModel]="director.born | date:'yyyy-MM-dd'" (ngModelChange)="director.born = $event" ngModel></label>
+            <label class = "label">Oscar Wins : <label for=""><input type ="number" name = "oscarWins"  [(ngModel)]= "director.oscarWins" ngModel/></label></label>
+            <label class = "label">Oscar Nominations : <input type ="number" name = "oscarNominations"  [(ngModel)]= "director.oscarNominations" ngModel/></label>
+            <input class = "submit" type = "submit" value = "submit" [disabled]="!directorForm.form.valid"/>
+        </form>
+    </div>
+    
+</div>

@@ -1,0 +1,14 @@
+<div class = "big-container">
+    <div class = "form-container">
+        <h1 *ngIf= "id">Edit Actor</h1>
+        <h1 *ngIf= "!id">Add Actor</h1>
+        <form #actorForm = ngForm (ngSubmit)="addActorSubmit(actorForm.value)">
+            <label class = "label">*Name : <input required type = "text" name = "name" [(ngModel)]= "actor.name" ngModel/></label>
+            <label class = "label">Image Address : <input  type = "url" name = "photo"  [(ngModel)]= "actor.photo" ngModel/></label>
+            <label class = "label">Born : <input type = "date" name = "born"   [ngModel]="actor.born | date:'yyyy-MM-dd'" (ngModelChange)="actor.born = $event" ngModel></label>
+            <label class = "label">Oscar Wins : <input type ="number" name = "oscarWins"  [(ngModel)]= "actor.oscarWins" ngModel/></label>
+            <label class = "label">Oscar Nominations : <input type ="number" name = "oscarNominations"  [(ngModel)]= "actor.oscarNominations" ngModel/></label>
+            <input class = "submit" type = "submit" value = "submit" [disabled]="!actorForm.form.valid"/>
+        </form>
+    </div>
+</div>

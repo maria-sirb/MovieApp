@@ -1,0 +1,25 @@
+
+<app-genre (onGenrePicked)="displayGenreMovies($event)"></app-genre>
+<header>
+<h1>Movies</h1>
+<form #roleForm = ngForm>
+<label class = "sort-label" for = "sortMovies">Sort By : </label>
+<select #sort name = "sortMovies" id = "sortMovies"  (change) = "updateSort(sort.value)" NgModel>
+    <option value = "none" [selected] = "sortMode == 'none'">No Sorting</option>
+    <option value = "releaseYearAsc"  [selected] = "sortMode == 'releaseYearAsc'">Release Year &uarr;</option>
+    <option value = "releaseYearDesc" [selected] = "sortMode == 'releaseYearDesc'">Release Year &darr;</option>
+    <option value ="imdbRating" [selected] = "sortMode == 'imdbRating'">IMDB Rating</option>
+    <option value = "oscarWins" [selected] = "sortMode == 'oscarWins'">Oscar Wins</option>
+</select>
+</form>
+</header>
+<ul class = "movie-list">
+    <li class = "movie" *ngFor = "let movie of movies" id = {{movie.movieId}}>
+        
+        <a routerLink = "/movie-detail/{{movie.movieId}}">
+            <h3>{{movie.title}}</h3>
+            <img class = "poster"  (error) = "dp.addDefaultPhotoMovie(movie)" [src] = "movie.poster" alt = "movie poster"/>
+        </a>
+        <!--<app-movie-detail [movie] = "selectedMovie"></app-movie-detail>-->
+    </li>
+</ul>

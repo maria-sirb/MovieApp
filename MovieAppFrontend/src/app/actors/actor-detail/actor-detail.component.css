@@ -1,0 +1,54 @@
+.container{
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+}
+img {
+    width: 200px;
+    height:auto;
+    box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;  
+}
+li img{
+    position: absolute; 
+    top: 40px;
+    left: 0;
+}
+ a:hover img{
+    border: 2px solid var(--accent-color);
+}
+a:hover p{
+    color: var(--accent-color);
+}
+.movie-list{
+ display: flex;
+ flex-direction: row;
+ overflow-x: scroll;
+ gap: 25px;
+ padding-left: 25px;
+}
+.movie-list p{
+    margin-top:0;
+}
+.movie-list li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 380px;
+    min-width: 200px;
+    margin: 10px 10px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    float: left;
+}
+
+li>a{
+    position: relative;
+    float: left;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+a{
+    color: var(--light-color);
+}

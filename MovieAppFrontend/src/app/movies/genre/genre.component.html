@@ -1,0 +1,14 @@
+
+<ul class = "genre-list">
+    <li>
+        <input type = "radio" id = "all" value = "all" name = "genre" (change)= "pickGenre()" checked />
+        <label for = "all">All Movies</label>
+    </li>
+    <li *ngFor = "let genre of genres">
+       <!-- <a routerLink="/genre/{{genre.genreId}}">
+            <p>{{genre.name}}</p>
+       </a>-->
+       <input type = "radio" [id] = "genre.name" [value] = "genre.name" name = "genre" (change) = "pickGenre(genre)"/>
+       <label [for] = "genre.name">{{genre.name}}</label>
+    </li>
+</ul>

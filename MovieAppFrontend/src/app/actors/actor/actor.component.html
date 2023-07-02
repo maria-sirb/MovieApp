@@ -1,0 +1,20 @@
+<header>
+<h1>Actors</h1>
+<form #roleForm = ngForm>
+  <label class = "sort-label" for = "sortActors">Sort By : </label>
+  <select #sort name = "sortActors" id = "sortActors"  (change) = "updateSort(sort.value)" NgModel>
+      <option value = "none" [selected] = "sortMode == 'none'">No Sorting</option>
+      <option value = "nameAsc" [selected] = "sortMode == 'nameAsc'">Name &uarr;</option>
+      <option value = "nameDesc" [selected] = "sortMode == 'nameDesc'">Name &darr;</option>
+      <option value = "oscarWins" [selected] = "sortMode == 'oscarWins'">Oscar Wins</option>
+  </select>
+  </form>
+</header>
+<ul>
+    <li *ngFor = "let actor of actors">
+      <a routerLink = "/actor-detail/{{actor.actorId}}">
+        <h3>{{actor.name}}</h3>
+        <img class = "photo" #actorPhoto [src]= "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "actor photo"/>
+      </a>
+    </li>
+</ul>

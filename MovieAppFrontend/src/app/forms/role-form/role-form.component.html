@@ -1,0 +1,12 @@
+<div class="big-container">
+<div class = "form-container">
+    <h1 *ngIf= "actorId">Edit Role</h1>
+    <h1 *ngIf= "!actorId">Add Role</h1>
+    <form #roleForm = ngForm (ngSubmit)="addRoleSubmit(roleForm.value)">
+        <label  class = "label">*Actor : <input required type = "text" name = "actor" [readOnly]="actorId" (keyup)="actorError = false" [(ngModel)] = "actor.name" ngModel/></label>
+        <div class = "error" *ngIf = "actorError">The actor was not found. Use an existing actor or add a new actor before using it.</div>
+        <label class = "label">*Role : <input required type = "text" name = "role" [(ngModel)]= "role.role" ngModel/></label>
+        <input class = "submit" type = "submit" value = "submit" [disabled]="!roleForm.form.valid"/>
+    </form>
+</div>
+</div>
