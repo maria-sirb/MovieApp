@@ -12,6 +12,7 @@ import { SearchComponent } from './search/search.component';
 import { AddComponent } from './add/add.component';
 import { FormsModule } from '@angular/forms';
 import { AllFormsModule } from './forms/all-forms.module';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AllFormsModule } from './forms/all-forms.module';
         AppComponent,
         MenuComponent,
         SearchComponent,
-        AddComponent
+        AddComponent,
+        FooterComponent
        
     ],
     providers: [],

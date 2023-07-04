@@ -30,10 +30,24 @@ body{
     overflow-x: hidden;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+app-footer{
+  top: 120px;
+  position: relative;
+  bottom: 0;
+}
+app-root{
+  display: flex;
+  flex-direction: column;
+  min-height: inherit;
+}
+app-movies{
+ min-height: 69vh;
+}
 app-actor, app-director, app-add, app-search, app-actor-detail, app-movie-detail, app-director-detail, 
-app-root>app-actor-form, app-root>app-movie-form, app-root>app-director-form{
+app-root>app-actor-form, app-root>app-movie-form, app-root>app-director-form, app-root>app-role-form{
   position: relative;
   top:100px;
+  min-height: 69vh;
 }
 
 input[type="text"],
