@@ -3,12 +3,31 @@
         <h1 *ngIf= "id">Edit Actor</h1>
         <h1 *ngIf= "!id">Add Actor</h1>
         <form #actorForm = ngForm (ngSubmit)="addActorSubmit(actorForm.value)">
-            <label class = "label">*Name : <input required type = "text" name = "name" [(ngModel)]= "actor.name" ngModel/></label>
-            <label class = "label">Image Address : <input  type = "url" name = "photo"  [(ngModel)]= "actor.photo" ngModel/></label>
-            <label class = "label">Born : <input type = "date" name = "born"   [ngModel]="actor.born | date:'yyyy-MM-dd'" (ngModelChange)="actor.born = $event" ngModel></label>
-            <label class = "label">Oscar Wins : <input type ="number" name = "oscarWins"  [(ngModel)]= "actor.oscarWins" ngModel/></label>
-            <label class = "label">Oscar Nominations : <input type ="number" name = "oscarNominations"  [(ngModel)]= "actor.oscarNominations" ngModel/></label>
-            <input class = "submit" type = "submit" value = "submit" [disabled]="!actorForm.form.valid"/>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="name" class = "label">*Name</label>
+                    <input id="name" required type = "text" name = "name" [(ngModel)]= "actor.name" ngModel/>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="photo" class = "label">Image Address</label>
+                    <input  id="photo" type = "url" name = "photo"  [(ngModel)]= "actor.photo" ngModel/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="born" class = "label">Born</label>
+                    <input id="born" type = "date" name = "born"   [ngModel]="actor.born | date:'yyyy-MM-dd'" (ngModelChange)="actor.born = $event" ngModel>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="oscarWins" class = "label">Oscar Wins</label>
+                    <input id="oscarWins" type ="number" name = "oscarWins"  [(ngModel)]= "actor.oscarWins" ngModel/>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="oscarNominations" class = "label">Oscar Nominations </label>
+                    <input id="oscarNominations" type ="number" name = "oscarNominations"  [(ngModel)]= "actor.oscarNominations" ngModel/>
+                </div>
+            </div>
+            <input class = "submit" type = "submit" value = "Submit" [disabled]="!actorForm.form.valid"/>
         </form>
     </div>
 </div>

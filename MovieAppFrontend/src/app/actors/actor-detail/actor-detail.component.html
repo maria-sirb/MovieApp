@@ -7,7 +7,7 @@
     <div class = "top-details">
     <div>
     <h2>{{actor.name}}</h2>
-    <img [src] = "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "photo of actor" />
+    <img class ="photo" [src] = "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "photo of actor" />
     </div>
     <div  class="right-details">
         <p><span class = "label">Born : </span>{{actor.born | date}}</p>
@@ -15,8 +15,8 @@
         <p><span class = "label">Oscar Nominations : </span>{{actor.oscarNominations}}</p>
     </div>
     </div>
-    <h3>Movies: </h3>
-    <ul class = "movie-list">
+    <h3 class="section-header">Movies: </h3>
+    <ul class = "detail-movie-list">
         <li *ngFor = "let movie of actor.movieActors">
             <a class = "detail-link" routerLink="/movie-detail/{{movie.movieId}}">
                 <p style = "font-weight: bold">{{movie.title}}</p>

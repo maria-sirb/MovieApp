@@ -34,12 +34,13 @@ export class RoleFormComponent implements OnInit {
     };
     movieId = Number(this.route.snapshot.paramMap.get('movieId'));
     actorId = Number(this.route.snapshot.paramMap.get('actorId'));
+
   constructor(private movieService : MovieService, private actorService : ActorsService, private route : ActivatedRoute, private location : Location){
     console.log(this.movie);
   }
+
   ngOnInit(): void {
 
-   
    if(this.actorId)
       {
         
@@ -47,6 +48,11 @@ export class RoleFormComponent implements OnInit {
         this.movieService.getMovieRole(this.movieId, this.actorId).subscribe(role => this.role = role);
       }
   }
+  
+  cancel(){
+    this.location.back();
+  }
+
   addRoleSubmit(data : any)
   {
     console.log(this.movie);

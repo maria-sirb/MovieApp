@@ -26,7 +26,7 @@ export class AddComponent {
   toggleButton(button : TrueFalse)
   {
     button.value = !button.value;
-  }
+  } 
   hasSubmitted(submitted : boolean, button : TrueFalse)
   {
     console.log(submitted);

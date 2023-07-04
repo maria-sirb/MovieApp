@@ -2,21 +2,27 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     padding-inline-start: 0;
     min-height: 100%;
+  }
+  .movie-list-search li{
+    height: 320px;
+  }
+  .actor-list-search li,
+  .director-list-search li{
+    height: 255px;
   }
 li{
    
     list-style-type: none;
     float: left;
     position: relative;
-    height: 350px;
     width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 30px 40px;
+    margin: 20px 40px;
    
 }
 li h3{
@@ -37,16 +43,17 @@ li a {
 
     width: 200px;
     height:auto;
-    box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;
-   
+    box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px; 
 }
-
 .results-container{
     display: flex;
     flex-direction: column; 
+    margin-top: 30px;
+}
+.results-container h1{
+    margin-left: 80px;
 }
 label{
-    margin-left: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,10 +68,7 @@ svg{
 svg path{
     fill : var(--accent-color);
 }
-.results-container{
-    margin-left: 80px;
-    margin-right: 80px;
-}
+
 .search{
     height: 35px;
     width: 400px;

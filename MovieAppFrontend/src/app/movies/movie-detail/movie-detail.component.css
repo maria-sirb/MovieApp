@@ -18,6 +18,9 @@ li img{
 .director>img{
     margin-left: 25px;
 }
+.director>p{
+    margin-bottom: 2px;
+}
 .cast{
  display: flex;
  flex-direction: row;
@@ -28,9 +31,9 @@ li img{
 .cast li{
     padding-top: 10px;
     padding-bottom: 10px;
-    height: 440px;
+    height: 370px;
     min-width: 200px;
-    margin: 10px 10px;
+    margin: 0px 10px 10px 10px;
     width: auto;
     display: flex;
     flex-direction: column;
@@ -59,7 +62,4 @@ a{
     fill: var(--accent-color);
 }
 
-.bottom-line{
-    padding-bottom: 15px; 
-    border-bottom: 1px solid var(--light-color);
-}
+

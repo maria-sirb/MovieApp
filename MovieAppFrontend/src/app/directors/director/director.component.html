@@ -10,7 +10,7 @@
     </select>
 </form>
 </header>
-<ul>
+<ul class="director-list">
     <li *ngFor = "let director of directors">
         <a class = "detail-link" routerLink = "/director-detail/{{director.directorId}}">
             <h3>{{director.name}}</h3>

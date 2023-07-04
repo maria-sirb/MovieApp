@@ -23,15 +23,15 @@
     </div>
     </div>
     <div>
-        <h3 class = "label">Summary : </h3><p class = "bottom-line">{{movie.summary}}</p>
+        <h3 class = "label section-header">Summary : </h3><p class = "bottom-line">{{movie.summary}}</p>
         <div class = "bottom-line ">
-            <h3 class = "label">Director : </h3>
+            <h3 class = "label section-header">Director : </h3>
             <a class = "detail-link director" routerLink="/director-detail/{{movie.director.directorId}}">
                 <p  style = "font-weight: bold">{{movie.director.name}}</p>
                 <img class = "photo" [src] = "movie.director.photo" (error) = "dp.addDefaultPhotoDirector(movie.director)"/>
             </a>
         </div>
-        <h3 class = "label">Cast : </h3>
+        <h3 class = "label section-header">Cast : </h3>
         <ul  class = "bottom-line" class = "cast">
             <li *ngFor = "let actor of movie.movieActors">
                 <a class = "detail-link" routerLink="/actor-detail/{{actor.actorId}}">
@@ -54,5 +54,5 @@
                </a> 
             </li>
         </ul>
-        <h3 class = "label">Storyline : </h3><p>{{movie.storyLine}}</p>
+        <h3 class = "label section-header">Storyline : </h3><p>{{movie.storyLine}}</p>
     </div>

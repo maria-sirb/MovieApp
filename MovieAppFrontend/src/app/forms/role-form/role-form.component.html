@@ -6,7 +6,10 @@
         <label  class = "label">*Actor : <input required type = "text" name = "actor" [readOnly]="actorId" (keyup)="actorError = false" [(ngModel)] = "actor.name" ngModel/></label>
         <div class = "error" *ngIf = "actorError">The actor was not found. Use an existing actor or add a new actor before using it.</div>
         <label class = "label">*Role : <input required type = "text" name = "role" [(ngModel)]= "role.role" ngModel/></label>
-        <input class = "submit" type = "submit" value = "submit" [disabled]="!roleForm.form.valid"/>
+        <div class="buttons-container">
+            <button class = "cancel" type="button" (click)="cancel()">Cancel</button>
+            <input class = "submit" type = "submit" value = "Submit" [disabled]="!roleForm.form.valid"/>
+        </div>
     </form>
 </div>
 </div>

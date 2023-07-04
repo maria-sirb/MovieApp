@@ -5,6 +5,11 @@ nav{
     background-color: var(--dark-color);
     margin:0px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    position:fixed;
+    top:0;
+    width: 100%;
+    z-index: 10;
+    overflow-x: auto;
 }
 a{
     font-size: 25px;

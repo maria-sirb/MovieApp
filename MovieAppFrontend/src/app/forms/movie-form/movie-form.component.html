@@ -4,31 +4,70 @@
     <h1 *ngIf= "id">Edit Movie</h1>
     <h1 *ngIf= "!id">Add Movie</h1>
     <form #movieForm = ngForm (ngSubmit)="addMovieSubmit(movieForm.value)">
-     <div class = "form-half">
-        <label  class = "label">*Title : <input required  type = "text" name = "title" [(ngModel)]= "movie.title" ngModel/></label>
+    <!-- <div class = "form-half">-->
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label  for = "title" class = "label">*Title</label>
+                <input id = "title" required  type = "text" name = "title" [(ngModel)]= "movie.title" ngModel/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for = "director" class = "label">*Director</label>
+                <input id = "director" required type = "text" name = "director" [(ngModel)] = "director.name" (keyup)= "directorError = false" ngModel/>
+            </div>
+        </div>
     
-        <label class = "label no-focus-color">Genres:
-            <div class = genres>
+        <div class = "label no-focus-color">Genres
+            <div class = "genres">
                 <label class = "genre-label" *ngFor = "let genre of genreOptions">
                 <input id = "genre.name" #genreCheckbox type = "checkbox" name = "genre" [value] = "genre.name" [checked] ="isEnabled(genre)" (change)="UpdateCheckedGenres(genre, genreCheckbox.checked)"/>
                 {{genre.name}}
                 </label>
             </div>
-        </label>
-    </div>
-    <div class = "form-half">
-        <label class = "label">*Director : <input required type = "text" name = "director" [(ngModel)] = "director.name" (keyup)= "directorError = false" ngModel/></label>
+        </div>
+    <!--</div>-->
+   <!-- <div class = "form-half">-->
+        
        <div class = "error" *ngIf = "directorError">Director was not found. Use an existing director, or add a new director before using it.</div>
-        <label class = "label">Image Address : <input type = "text" name = "poster"   [(ngModel)] = "movie.poster" ngModel/></label>
-        <label class = "label">Summary : <input type = "text" name = "summary"   [(ngModel)] = "movie.summary" ngModel/></label>
-        <label class = "label">Run Time : <input type ="number" name = "runTime"  [(ngModel)] = "movie.runTime" ngModel/></label>
-        <label class = "label">Release Year : <input type ="number" name = "releaseYear"  [(ngModel)] = "movie.releaseYear" ngModel/></label>
-        <label class = "label">IMDB Rating : <input type ="number" name = "imdbRating" [(ngModel)] = "movie.imdbRating" ngModel/></label>
-        <label class = "label">Oscar Wins : <input type ="number" name = "oscarWins"  [(ngModel)] = "movie.oscarWins" ngModel/></label>
-        <label class = "label">Oscar Nominations : <label for=""><input type ="number" name = "oscarNominations"   [(ngModel)] = "movie.oscarNominations" ngModel/></label></label>
-        <label class = "label">Storyline : <label for=""><input type = "text" name = "storyLine" [(ngModel)] = "movie.storyLine" ngModel/></label></label>
-        <input class = "submit" type = "submit" value = "submit" [disabled]="!movieForm.form.valid"/>
-    </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for = "poster" class = "label">Image Address</label>
+                <input id = "poster" type = "text" name = "poster"   [(ngModel)] = "movie.poster" ngModel/>
+            </div>
+            <div class="form-group col-md-3">
+                <label for = "runTime" class = "label">Run Time</label>
+                <input id="runTime" type ="number" name = "runTime"  [(ngModel)] = "movie.runTime" ngModel/>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="releaseYear" class = "label">Release Year</label>
+                <input id="releaseYear" type ="number" name = "releaseYear"  [(ngModel)] = "movie.releaseYear" ngModel/>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="imdbRating" class = "label">IMDB Rating</label>
+                <input id="imdbRating" type ="number" name = "imdbRating" [(ngModel)] = "movie.imdbRating" ngModel/>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="oscarWins" class = "label">Oscar Wins</label>
+                <input id="oscarWins" type ="number" name = "oscarWins"  [(ngModel)] = "movie.oscarWins" ngModel/>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="oscarNominations" class = "label">Oscar Nominations</label>
+                <input id="oscarNominations" type ="number" name = "oscarNominations"   [(ngModel)] = "movie.oscarNominations" ngModel/>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="summary" class = "label">Summary</label>
+            <input id="summary" type = "text" name = "summary"   [(ngModel)] = "movie.summary" ngModel/>
+        </div>
+        <div class="form-group">
+            <label for="storyLine" class = "label">Storyline</label>
+            <textarea id="storyLine" rows="3" name = "storyLine" [(ngModel)] = "movie.storyLine" ngModel></textarea>
+        </div>
+        <input class = "submit" type = "submit" value = "Submit" [disabled]="!movieForm.form.valid"/>
+    <!--</div>-->
     </form>
     </div>
     

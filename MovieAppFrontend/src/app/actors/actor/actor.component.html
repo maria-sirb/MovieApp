@@ -10,7 +10,7 @@
   </select>
   </form>
 </header>
-<ul>
+<ul class="actor-list">
     <li *ngFor = "let actor of actors">
       <a class = "detail-link" routerLink = "/actor-detail/{{actor.actorId}}">
         <h3>{{actor.name}}</h3>

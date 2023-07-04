@@ -13,29 +13,6 @@ li img{
     top: 40px;
     left: 0;
 }
- 
-.movie-list{
- display: flex;
- flex-direction: row;
- overflow-x: scroll;
- gap: 25px;
- padding-left: 25px;
-}
-.movie-list p{
-    margin-top:0;
-}
-.movie-list li{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    height: 380px;
-    min-width: 200px;
-    margin: 10px 10px;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    float: left;
-}
 
 li>a{
     position: relative;

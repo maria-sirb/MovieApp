@@ -3,12 +3,31 @@
         <h1 *ngIf= "id">Edit Director</h1>
         <h1 *ngIf= "!id">Add Director</h1>
         <form #directorForm = ngForm (ngSubmit)="addDirectorSubmit(directorForm.value)">
-            <label class = "label">*Name : <input required type = "text" name = "name"  [(ngModel)]= "director.name" ngModel/></label>
-            <label class = "label">Image Address : <input  type = "url" name = "photo"  [(ngModel)]= "director.photo" ngModel/></label>
-            <label class = "label">Born : <input type = "date" name = "born" [ngModel]="director.born | date:'yyyy-MM-dd'" (ngModelChange)="director.born = $event" ngModel></label>
-            <label class = "label">Oscar Wins : <label for=""><input type ="number" name = "oscarWins"  [(ngModel)]= "director.oscarWins" ngModel/></label></label>
-            <label class = "label">Oscar Nominations : <input type ="number" name = "oscarNominations"  [(ngModel)]= "director.oscarNominations" ngModel/></label>
-            <input class = "submit" type = "submit" value = "submit" [disabled]="!directorForm.form.valid"/>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="name" class = "label">*Name</label>
+                    <input id="name" required type = "text" name = "name"  [(ngModel)]= "director.name" ngModel/>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="photo" class = "label">Image Address</label>
+                    <input id="photo" type = "url" name = "photo"  [(ngModel)]= "director.photo" ngModel/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="born" class = "label">Born </label>
+                    <input id="born" type = "date" name = "born" [ngModel]="director.born | date:'yyyy-MM-dd'" (ngModelChange)="director.born = $event" ngModel>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="oscarWins" class = "label">Oscar Wins</label>
+                    <input id="oscarWins" type ="number" name = "oscarWins"  [(ngModel)]= "director.oscarWins" ngModel/>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="oscarNominations" class = "label">Oscar Nominations</label>
+                    <input id="oscarNominations" type ="number" name = "oscarNominations"  [(ngModel)]= "director.oscarNominations" ngModel/>
+                </div>
+            </div>
+            <input class = "submit" type = "submit" value = "Submit" [disabled]="!directorForm.form.valid"/>
         </form>
     </div>
     

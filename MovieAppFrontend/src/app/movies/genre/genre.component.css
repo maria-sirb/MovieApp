@@ -2,17 +2,22 @@
     display: flex;
     flex-wrap: no-wrap;
     overflow-x: auto;
+    overflow-y: hidden;
     background-color: var(--darkish-color);
     width: 100vw;
     height: 50px;
     align-items: center;
     margin-top: -10px;
     box-shadow: rgba(37, 37, 64, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 40px -18px inset;
+    position: fixed;
+    top:80px;
+    z-index: 10;
 }
 
 li{
     min-width: 120px;
     margin: 5px;
+    text-align: center;
 }
 input[type = "radio"]{
     opacity: 0;
