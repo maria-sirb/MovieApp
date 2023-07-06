@@ -14,6 +14,7 @@ namespace MovieAppAPI.Data
         public DbSet<Director> Directors { get; set; }
         public DbSet<MovieActor> MovieActors { get; set; }
         public DbSet<MovieGenre> MovieGenres{ get; set; }
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MovieGenre>()
@@ -37,6 +38,10 @@ namespace MovieAppAPI.Data
                .HasOne(m => m.Actor)
                .WithMany(ma => ma.MovieActors)
                .HasForeignKey(a => a.ActorId);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Role)
+                .HasDefaultValue("user");
         }
 
     }

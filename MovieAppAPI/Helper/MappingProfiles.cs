@@ -18,6 +18,8 @@ namespace MovieAppAPI.Helper
             CreateMap<ActorDto, Actor>();
             CreateMap<MovieActor, MovieActorDto>();
             CreateMap<MovieActorDto, MovieActor>();
+            CreateMap<UserDto, User>();
+            CreateMap<User, UserDto>();
 
 
         }
