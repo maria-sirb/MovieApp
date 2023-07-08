@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Dtos;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
@@ -21,6 +22,7 @@ namespace MovieAppAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
+        [ProducesResponseType(400)]
         public IActionResult GetUsers()
         {
             var users = _mapper.Map<List<UserDto>>(_userRepository.GetUsers());
@@ -32,27 +34,37 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpPost("authenticate")]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult AuthenticateUser([FromBody] UserDto userVerify)
         {
             if (userVerify == null)
                 return BadRequest();
 
             var user = _userRepository.GetUsers()
-                        .Where(u => u.Username == userVerify.Username && u.Password == userVerify.Password)
+                        .Where(u => u.Email == userVerify.Email && PasswordHasher.VerifyPassword(userVerify.Password, u.Password))
                         .FirstOrDefault();
             if (user == null)
-                return NotFound();
+                return NotFound("");
 
             return Ok(user);
         }
 
         [HttpPost("register")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         public IActionResult RegisterUser([FromBody] UserDto userCreate)
         {
             if (userCreate == null)
                 return BadRequest();
+
+            if (_userRepository.UserExists(userCreate.Email))
+            {
+                ModelState.AddModelError("", "Email  already exists.");
+                return StatusCode(500, ModelState);
+            }
 
             var user = _userRepository.GetUsers()
                         .Where(u => u.Username == userCreate.Username)
@@ -62,11 +74,19 @@ namespace MovieAppAPI.Controllers
                 ModelState.AddModelError("", "Username already exists.");
                 return StatusCode(500, ModelState);
             }
+
+            string passwordMessages = _userRepository.CheckPasswordStrength(userCreate.Password);
+            if (!string.IsNullOrEmpty(passwordMessages))
+                return BadRequest(passwordMessages);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
             var userMap = _mapper.Map<User>(userCreate);
+            userMap.Password = PasswordHasher.HashPassword(userMap.Password);
+            userMap.Token = "";
+            //userMap.Role = "user";
             if (!_userRepository.CreateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving.");
