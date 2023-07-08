@@ -6,6 +6,8 @@ import { DirectorFormComponent } from './director-form/director-form.component';
 import { RoleFormComponent } from './role-form/role-form.component';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
+import { SignupFormComponent } from './signup-form/signup-form.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { AppRoutingModule } from '../app-routing.module';
     ActorFormComponent,
     MovieFormComponent,
     DirectorFormComponent,
-   RoleFormComponent
+   RoleFormComponent,
+   SignupFormComponent,
+   LoginFormComponent
   ],
   imports: [
     CommonModule,

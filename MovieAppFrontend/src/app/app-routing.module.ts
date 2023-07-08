@@ -12,6 +12,8 @@ import { RoleFormComponent } from './forms/role-form/role-form.component';
 import { MovieFormComponent } from './forms/movie-form/movie-form.component';
 import { ActorFormComponent } from './forms/actor-form/actor-form.component';
 import { DirectorFormComponent } from './forms/director-form/director-form.component';
+import { SignupFormComponent } from './forms/signup-form/signup-form.component';
+import { LoginFormComponent } from './forms/login-form/login-form.component';
 
 
 
@@ -31,7 +33,9 @@ const routes: Routes = [
   {path : 'edit-role/:movieId/:actorId', component : RoleFormComponent},
   {path : 'edit-movie/:movieId', component : MovieFormComponent},
   {path : 'edit-actor/:actorId', component : ActorFormComponent},
-  {path : 'edit-director/:directorId', component : DirectorFormComponent}
+  {path : 'edit-director/:directorId', component : DirectorFormComponent},
+  {path: 'signup', component : SignupFormComponent},
+  {path : 'login', component : LoginFormComponent}
 
 ];
 
