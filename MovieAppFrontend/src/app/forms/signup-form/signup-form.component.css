@@ -30,5 +30,10 @@ input:focus{
  }
  .auth-form-container{
     min-width: 350px;
+    max-width: 350px;
  }
  
+ .errors{
+    word-wrap: break-word;
+    color: rgb(249, 117, 117);
+ }

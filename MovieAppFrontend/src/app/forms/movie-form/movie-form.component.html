@@ -58,13 +58,17 @@
             </div>
         </div>
         
-        <div class="form-group">
-            <label for="summary" class = "label">Summary</label>
-            <input id="summary" type = "text" name = "summary"   [(ngModel)] = "movie.summary" ngModel/>
+        <div class="row">
+            <div class="form-group">
+                <label for="summary" class = "label">Summary</label>
+                <input id="summary" type = "text" name = "summary"   [(ngModel)] = "movie.summary" ngModel/>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="storyLine" class = "label">Storyline</label>
-            <textarea id="storyLine" rows="3" name = "storyLine" [(ngModel)] = "movie.storyLine" ngModel></textarea>
+        <div class = "row">
+            <div class="form-group">
+                <label for="storyLine" class = "label">Storyline</label>
+                <textarea id="storyLine" rows="3" name = "storyLine" [(ngModel)] = "movie.storyLine" ngModel></textarea>
+            </div>
         </div>
         <input class = "submit" type = "submit" value = "Submit" [disabled]="!movieForm.form.valid"/>
     <!--</div>-->

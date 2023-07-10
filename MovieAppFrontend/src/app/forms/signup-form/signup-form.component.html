@@ -1,27 +1,36 @@
 <div class="auth-form-container">
     <h1>Sign Up</h1>
-    <form>
+    <form #signupForm = ngForm (ngSubmit)="signup(signupForm.value)">
         <div class = "row">
             <div class = "form-group col-md-12">
-                <label for = "email" class="label">Email</label>
-                <input type = "email" id="email" name = "email"/>
+                <label for = "email" class="label">*Email</label>
+                <input type = "email" id="email" name = "email" required [(ngModel)]="user.email" ngModel/>
+            </div>
+            <div class="errors" *ngIf = "errors.email">
+                {{errors.email[0]}}
             </div>
         </div>
         <div class = "row">
             <div class = "form-group col-md-12">
-                <label for = "username" class="label">Username</label>
-                <input type = "text" id="username" name = "username"/>
+                <label for = "username" class="label">*Username</label>
+                <input type = "text" id="username" name = "username" [(ngModel)]="user.username" required ngModel/>
+            </div>
+            <div class="errors" *ngIf = "errors.username">
+                {{errors.username[0]}}
             </div>
         </div>
         <div class = "row">
             <div class = "form-group col-md-12">
-                <label for = "password" class="label">Password</label>
-                <input type = "password" id="password" name = "password"/>
+                <label for = "password" class="label">*Password</label>
+                <input type = "password" id="password" name = "password" [(ngModel)]="user.password" required ngModel/>
+            </div>
+            <div class="errors" *ngIf = "errors.password">
+                {{errors.password[0]}}
             </div>
         </div>
         <div class = "buttons">
-            <button class="cancel" type="button">Cancel</button>
-            <input class = "submit" type = "submit" value = "Submit"/>
+            <button class="cancel" type="button" (click)="cancel()">Cancel</button>
+            <input class = "submit" type = "submit" value = "Sign Up" [disabled]="!signupForm.form.valid"/>
         </div>
     </form> 
 </div>

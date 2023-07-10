@@ -70,6 +70,7 @@ textarea{
   color: var(--darkish-color);
   padding-left: 5px;
 }
+
 .detail-poster{
     width: 400px;
     height : auto;
@@ -238,6 +239,10 @@ li .detail-link:hover h3{
     border:2px solid grey !important;
     color: var(--light-color) !important;
  }
+ .submit:focus{
+  box-shadow: none !important;
+ }
+
   p{
     font-size: 18px;
     line-height: 30px;
