@@ -13,6 +13,7 @@ namespace MovieAppAPI.Interfaces
         bool DeleteUser(User user);
         bool Save();
         string CheckPasswordStrength(string password);
+        public string CreateJwt(User user);
 
     }
 }

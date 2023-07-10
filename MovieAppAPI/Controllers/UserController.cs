@@ -48,6 +48,8 @@ namespace MovieAppAPI.Controllers
             if (user == null)
                 return NotFound("");
 
+            user.Token = _userRepository.CreateJwt(user);
+
             return Ok(user);
         }
 

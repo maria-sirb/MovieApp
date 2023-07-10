@@ -1,6 +1,9 @@
-﻿using MovieAppAPI.Data;
+﻿using Microsoft.IdentityModel.Tokens;
+using MovieAppAPI.Data;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -66,6 +69,28 @@ namespace MovieAppAPI.Repositories
                 messages.Append("Password should contain letters and numbers." + Environment.NewLine);
 
             return messages.ToString();
+        }
+        
+        public string CreateJwt(User user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(".the.secret.key.used.for.authentication.");
+            var identity = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(ClaimTypes.Name, user.Username)
+            });
+
+            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+            var tokenDescription = new SecurityTokenDescriptor
+            {
+                Subject = identity,
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = credentials
+            };
+
+            var token = jwtTokenHandler.CreateToken(tokenDescription);
+            return jwtTokenHandler.WriteToken(token);
         }
 
        
