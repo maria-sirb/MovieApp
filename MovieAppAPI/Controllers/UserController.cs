@@ -46,7 +46,7 @@ namespace MovieAppAPI.Controllers
                         .Where(u => u.Email == userVerify.Email && PasswordHasher.VerifyPassword(userVerify.Password, u.Password))
                         .FirstOrDefault();
             if (user == null)
-                return NotFound("");
+                return NotFound("Password or email is incorrect.");
 
             user.Token = _userRepository.CreateJwt(user);
 
@@ -64,8 +64,10 @@ namespace MovieAppAPI.Controllers
 
             if (_userRepository.UserExists(userCreate.Email))
             {
-                ModelState.AddModelError("", "Email  already exists.");
-                return StatusCode(500, ModelState);
+                ModelState.AddModelError("email", "Email  already exists.");
+                // return StatusCode(500, ModelState);
+                // return BadRequest("Email already exists.");
+                return BadRequest(ModelState);
             }
 
             var user = _userRepository.GetUsers()
@@ -73,13 +75,17 @@ namespace MovieAppAPI.Controllers
                         .FirstOrDefault();
             if (user != null)
             {
-                ModelState.AddModelError("", "Username already exists.");
-                return StatusCode(500, ModelState);
+                 ModelState.AddModelError("username", "Username not available.");
+                // return StatusCode(500, ModelState);
+                return BadRequest(ModelState);
             }
 
             string passwordMessages = _userRepository.CheckPasswordStrength(userCreate.Password);
             if (!string.IsNullOrEmpty(passwordMessages))
-                return BadRequest(passwordMessages);
+            {
+                ModelState.AddModelError("password", passwordMessages);
+                return BadRequest(ModelState);
+            }
 
             if (!ModelState.IsValid)
             {
@@ -88,13 +94,13 @@ namespace MovieAppAPI.Controllers
             var userMap = _mapper.Map<User>(userCreate);
             userMap.Password = PasswordHasher.HashPassword(userMap.Password);
             userMap.Token = "";
-            //userMap.Role = "user";
+            userMap.Role = "user";
             if (!_userRepository.CreateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving.");
                 return StatusCode(500, ModelState);
             }
-            return Ok("Successfully registered");
+            return Ok();
         }
 
         [HttpDelete("{userId}")]
