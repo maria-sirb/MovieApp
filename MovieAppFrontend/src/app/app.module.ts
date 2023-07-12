@@ -6,13 +6,14 @@ import { MenuComponent } from './menu/menu.component';
 import { MoviesModule } from "./movies/movies.module";
 import { ActorsModule } from './actors/actors.module';
 import { DirectorsModule } from './directors/directors.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SearchComponent } from './search/search.component';
 import { AddComponent } from './add/add.component';
 import { FormsModule } from '@angular/forms';
 import { AllFormsModule } from './forms/all-forms.module';
 import { FooterComponent } from './footer/footer.component';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 
 @NgModule({
@@ -24,7 +25,11 @@ import { FooterComponent } from './footer/footer.component';
         FooterComponent
        
     ],
-    providers: [],
+    providers: [{
+        provide : HTTP_INTERCEPTORS,
+        useClass : TokenInterceptor,
+        multi : true
+    }],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
