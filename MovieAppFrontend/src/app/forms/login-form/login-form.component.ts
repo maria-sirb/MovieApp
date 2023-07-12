@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Route, Router } from '@angular/router';
@@ -20,15 +20,20 @@ export class LoginFormComponent {
   }
   errors = "";
 
-  constructor(private authenticationService : AuthenticationService, private location : Location, private router : Router)
+  constructor(private authenticationService : AuthenticationService, private router : Router)
   {
 
   }
   login(data : any){
-    this.authenticationService.loginUser(this.user).subscribe(response => this.router.navigate(['']), error => this.errors = error.error)
+    this.authenticationService.loginUser(this.user).subscribe(response => {
+      this.authenticationService.storeToken(response.body.token);
+      this.router.navigate(['']).then(() => {
+        window.location.reload();
+      });
+    }, error => this.errors = error.error)
   }
 
   cancel(){
-    this.location.back();
+    this.router.navigate(['']);
   }
 }

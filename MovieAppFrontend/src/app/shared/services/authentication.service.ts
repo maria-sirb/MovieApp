@@ -18,4 +18,19 @@ export class AuthenticationService {
     return this.client.post<any>(this.baseUrl + '/authenticate', user, {observe : 'response'});
   }
   
+  storeToken(tokenValue : string){
+    localStorage.setItem('token', tokenValue);
+  }
+
+  getToken(){
+    return localStorage.getItem('token');
+  }
+  
+  isLoggedIn() : boolean{
+    return !!this.getToken();
+  }
+
+  logout(){
+    localStorage.removeItem('token');
+  }
 }

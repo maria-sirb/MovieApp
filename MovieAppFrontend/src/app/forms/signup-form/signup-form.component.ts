@@ -20,7 +20,7 @@ export class SignupFormComponent {
   }
   errors : any = {};
 
-  constructor(private authenticationService : AuthenticationService, private location : Location, private router : Router)
+  constructor(private authenticationService : AuthenticationService, private router : Router)
   {
 
   }
@@ -30,6 +30,6 @@ export class SignupFormComponent {
   }
 
   cancel(){
-    this.location.back();
+    this.router.navigate(['']);
   }
 }
