@@ -14,6 +14,7 @@ import { ActorFormComponent } from './forms/actor-form/actor-form.component';
 import { DirectorFormComponent } from './forms/director-form/director-form.component';
 import { SignupFormComponent } from './forms/signup-form/signup-form.component';
 import { LoginFormComponent } from './forms/login-form/login-form.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 
 
@@ -28,7 +29,7 @@ const routes: Routes = [
   {path: 'directors/:sortMode', component: DirectorComponent},
   {path: 'director-detail/:directorId', component : DirectorDetailComponent},
   {path : 'search', component : SearchComponent},
-  {path : 'add', component : AddComponent},
+  {path : 'add', component : AddComponent, canActivate : [AuthGuard]},
   {path : 'add-role/:movieId', component : RoleFormComponent},
   {path : 'edit-role/:movieId/:actorId', component : RoleFormComponent},
   {path : 'edit-movie/:movieId', component : MovieFormComponent},
