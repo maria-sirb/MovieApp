@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Route, Router } from '@angular/router';
+import { UserStoreService } from 'src/app/shared/services/user-store.service';
 
 @Component({
   selector: 'app-login-form',
@@ -20,16 +21,21 @@ export class LoginFormComponent {
   }
   errors = "";
 
-  constructor(private authenticationService : AuthenticationService, private router : Router)
+  constructor(private authenticationService : AuthenticationService, private router : Router, private location : Location, private userStoreService : UserStoreService)
   {
 
   }
   login(data : any){
     this.authenticationService.loginUser(this.user).subscribe(response => {
+    
       this.authenticationService.storeToken(response.body.token);
-      this.router.navigate(['']).then(() => {
-        window.location.reload();
-      });
+
+      const username = this.authenticationService.getUsernameFromToken();
+      const role = this.authenticationService.getRoleFromToken();
+      this.userStoreService.setUsernameForStore(username);
+      this.userStoreService.setRoleForStore(role);
+      
+      this.router.navigate(['']);
     }, error => this.errors = error.error)
   }
 

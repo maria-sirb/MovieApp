@@ -5,17 +5,16 @@
         <a routerLink = "/actors/none">Actors</a>
         <a routerLink = "/directors/none">Directors</a>
         <a routerLink = "/search">Search</a>
-        <a routerLink="/add">Add</a>
+        <a *ngIf = "role=='admin'" routerLink="/add">Add</a>
     </div>
     <div class = "dropdown">
         <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            User
+            {{username||"User"}}
         </a>
         <div  class="dropdown-menu dropdown-menu-dark">
-            <a *ngIf = "!isLoggedIn" class="dropdown-item" routerLink="/signup">Sign Up</a>
-            <a *ngIf = "!isLoggedIn" class="dropdown-item" routerLink="/login">Log in</a>
-            <a *ngIf = "isLoggedIn" class="dropdown-item" role="button" (click)="logout()">Log out</a>
+            <a *ngIf = "!username" class="dropdown-item" routerLink="/signup">Sign Up</a>
+            <a *ngIf = "!username" class="dropdown-item" routerLink="/login">Log in</a>
+            <a *ngIf = "username" class="dropdown-item" role="button" (click)="logout()">Log out</a>
         </div>
     </div>
-    <!--<div *ngIf = "activeUrl == '/movies'"></div>-->
 </nav>

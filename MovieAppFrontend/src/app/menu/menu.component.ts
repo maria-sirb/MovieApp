@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
+import { UserStoreService } from '../shared/services/user-store.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,27 +11,31 @@ import { AuthenticationService } from '../shared/services/authentication.service
 })
 export class MenuComponent {
 
-  activeUrl : string = "";
-  isLoggedIn : boolean = false;
-  constructor(private authenticationService : AuthenticationService, private router : Router, private renderer : Renderer2){
-    
+  username : string= "";
+  role : string = "";
+
+  constructor(private authenticationService : AuthenticationService, private userStoreService : UserStoreService){
+  
   }
 
   ngOnInit() : void {
-    this.isLoggedIn = this.authenticationService.isLoggedIn();
-  }
+    //subscribe to the userStore so when the store username/role values change, the username and role properties will get updated without refreshing the page
+    this.userStoreService.getUsernameFromStore().subscribe(res => {
+      //in case of page refresh, the userStore observable will be empty, so we get the username/role properties values from the token in local storage
+      this.username = res || this.authenticationService.getUsernameFromToken(); 
+      console.log(this.username);
+    })
 
-  onClick(event : Event): void {
-    //this.activeUrl = this.router.url;
-    console.log(event.target);
-    console.log(this.activeUrl);
+    this.userStoreService.getRoleFromStore().subscribe(res => {
+      this.role = res || this.authenticationService.getRoleFromToken();
+      console.log(this.role);
+    })
   }
 
   logout(){
     this.authenticationService.logout();
-    this.router.navigate(['']).then(() => {
-      window.location.reload();
-    })
+    this.userStoreService.setRoleForStore("");
+    this.userStoreService.setUsernameForStore("");
   }
 
 }
