@@ -70,7 +70,6 @@ export class MovieDetailComponent implements OnInit {
 
   hasSubmitted(submitted : any, button : TrueFalse)
   {
-    console.log(submitted);
     if(submitted)
       this.toggleButton(button);
   }

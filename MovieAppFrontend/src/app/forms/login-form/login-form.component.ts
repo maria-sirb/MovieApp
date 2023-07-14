@@ -34,7 +34,7 @@ export class LoginFormComponent {
       const role = this.authenticationService.getRoleFromToken();
       this.userStoreService.setUsernameForStore(username);
       this.userStoreService.setRoleForStore(role);
-      
+
       this.router.navigate(['']);
     }, error => this.errors = error.error)
   }
@@ -42,4 +42,5 @@ export class LoginFormComponent {
   cancel(){
     this.router.navigate(['']);
   }
+
 }

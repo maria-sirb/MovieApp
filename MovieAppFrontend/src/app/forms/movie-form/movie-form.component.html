@@ -8,7 +8,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label  for = "title" class = "label">*Title</label>
-                <input id = "title" required  type = "text" name = "title" [(ngModel)]= "movie.title" ngModel/>
+                <input id = "title" required  type = "text" name = "title" (keyup)= "errors = ''" [(ngModel)]= "movie.title" ngModel/>
             </div>
             <div class="form-group col-md-6">
                 <label for = "director" class = "label">*Director</label>
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="releaseYear" class = "label">Release Year</label>
-                <input id="releaseYear" type ="number" name = "releaseYear"  [(ngModel)] = "movie.releaseYear" ngModel/>
+                <input id="releaseYear" type ="number" name = "releaseYear"  [(ngModel)] = "movie.releaseYear" (keyup)= "errors = ''" ngModel/>
             </div>
             
         </div>
@@ -68,6 +68,11 @@
             <div class="form-group">
                 <label for="storyLine" class = "label">Storyline</label>
                 <textarea id="storyLine" rows="3" name = "storyLine" [(ngModel)] = "movie.storyLine" ngModel></textarea>
+            </div>
+        </div>
+        <div class = "row">
+            <div class="errors" *ngIf = "errors">
+                {{errors}}
             </div>
         </div>
         <input class = "submit" type = "submit" value = "Submit" [disabled]="!movieForm.form.valid"/>

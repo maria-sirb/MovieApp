@@ -3,9 +3,16 @@
     <h1 *ngIf= "actorId">Edit Role</h1>
     <h1 *ngIf= "!actorId">Add Role</h1>
     <form #roleForm = ngForm (ngSubmit)="addRoleSubmit(roleForm.value)">
-        <label  class = "label">*Actor : <input required type = "text" name = "actor" [readOnly]="actorId" (keyup)="actorError = false" [(ngModel)] = "actor.name" ngModel/></label>
+        <label  class = "label">*Actor : 
+            <input required type = "text" name = "actor" [readOnly]="actorId" (keyup)= "actorError = false; errors =''" [(ngModel)] = "actor.name" ngModel/>
+        </label>
         <div class = "error" *ngIf = "actorError">The actor was not found. Use an existing actor or add a new actor before using it.</div>
-        <label class = "label">*Role : <input required type = "text" name = "role" [(ngModel)]= "role.role" ngModel/></label>
+        <label class = "label">*Role : 
+            <input required type = "text" name = "role" [(ngModel)]= "role.role" (keyup)= "errors = ''" ngModel/>
+        </label>
+        <div class="errors" *ngIf = "errors">
+            {{errors}}
+        </div>
         <div class="buttons-container">
             <button class = "cancel" type="button" (click)="cancel()">Cancel</button>
             <input class = "submit" type = "submit" value = "Submit" [disabled]="!roleForm.form.valid"/>

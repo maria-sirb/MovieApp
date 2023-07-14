@@ -20,27 +20,28 @@ export class ActorFormComponent implements OnInit {
     oscarNominations : 0
   }
   id = 0;
+  errors = "";
+
   constructor(private actorService : ActorsService, private route : ActivatedRoute, private location : Location) {
 
   }
   ngOnInit(): void {
+
     this.id = Number(this.route.snapshot.paramMap.get('actorId'));
-    this.actorService.getActor(this.id).subscribe(actor => {
-      this.actor = actor;
-     // this.actorToEdit.born = new Date(new Date(actor.born).toISOString().split('T')[0]);
-    });
+    if(this.id)
+    {
+      this.actorService.getActor(this.id).subscribe(actor => {
+        this.actor = actor;
+      });
+    }
   
   }
+
   addActorSubmit(data : any){
-    console.log(data);
-  
+
     if(this.id == 0)
     {
-      this.actorService.addActor(this.actor).subscribe(response => console.log(response), error => {
-        console.log(error);
-        if(error.status == 200)
-          this.onSubmision.emit(true);
-      })
+      this.actorService.addActor(this.actor).subscribe(response => this.onSubmision.emit(true),  error => this.errors = error.error);
       
     }
     else 
@@ -49,10 +50,9 @@ export class ActorFormComponent implements OnInit {
       this.actorService.uppdateActor(this.id, this.actor).subscribe(response => {
         console.log(response);
         this.location.back();
-        }, error => {
-        console.log(error);
-      })
+        },  error => this.errors = error.error)
     }
 
   }
+
 }

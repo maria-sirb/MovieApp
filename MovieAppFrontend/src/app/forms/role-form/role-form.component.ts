@@ -18,6 +18,7 @@ export class RoleFormComponent implements OnInit {
   @Output() onSubmision = new EventEmitter<any>();
   @Input() movie? : Movie;
   actorError : boolean = false;
+  errors = "";
   role : Role = {
     movieId : 0,
     actorId : 0,
@@ -64,12 +65,7 @@ export class RoleFormComponent implements OnInit {
         {
           this.role.movieId = this.movieId;
           this.role.actorId = inputActor.actorId;
-          this.movieService.addMovieRole(this.role).subscribe(result => console.log(result), error => {
-          console.log(error);
-          if(error.status == 200)
-           // this.onSubmision.emit(true);
-           this.location.back();
-        });
+          this.movieService.addMovieRole(this.role).subscribe((result) => this.location.back(), (error) => this.errors = error.error);
        } 
        else
        {
@@ -78,9 +74,8 @@ export class RoleFormComponent implements OnInit {
             console.log(result);
             this.location.back();
           },
-           error => {
-          console.log(error);
-        });
+          error => this.errors = error.error
+        );
        } 
       
       
@@ -91,4 +86,5 @@ export class RoleFormComponent implements OnInit {
       });
 
   }
+  
 }

@@ -44,6 +44,8 @@ export class MovieFormComponent implements OnInit{
       poster : "",
   };
   id = Number(this.route.snapshot.paramMap.get('movieId'));
+  errors = "";
+
   constructor(private genreService : GenreService, private directorService : DirectorService, private movieService : MovieService, private route : ActivatedRoute, private location : Location){
   }
   ngOnInit(): void {
@@ -101,30 +103,20 @@ export class MovieFormComponent implements OnInit{
          this.movieService.updateMovie(this.id, this.movie, this.checkedGenres, this.director).subscribe(response =>
           {
             console.log(response);
+            this.onSubmision.emit(true);
             this.location.back();
           }, 
-          error => {
-            console.log(error); 
-          if(error.status == 200)
-          this.onSubmision.emit(true);
-          });
+          error => this.errors = error.error);
       }
       else
       {
         this.movieService.addMovie(this.movie, this.checkedGenres, this.director).subscribe(response =>
-          console.log(response), 
-          error => {
-            console.log(error.status); 
-          if(error.status == 200)
-          this.onSubmision.emit(true);
-        });
+          this.onSubmision.emit(true), 
+          error => this.errors = error.error);
       }
       
     },
     error => {this.directorError = true;});
-    
-   // console.log(this.checkedGenres);  
 
   }
-
 }
