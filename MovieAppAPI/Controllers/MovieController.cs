@@ -140,72 +140,8 @@ namespace MovieAppAPI.Controllers
             return Ok(director);
         }
 
-        /* [HttpPost]
-         [ProducesResponseType(204)]
-         [ProducesResponseType(400)]
-         public IActionResult CreateMovie([FromQuery] int directorId,[FromQuery] int actorId,[FromQuery] int genreId,[FromQuery] string role, [FromBody] MovieDto movieCreate)
-         {
-             if (movieCreate == null)
-                 return BadRequest();
-             var movie = _movieRepository.GetMovies()
-                         .Where(g => g.Title.Trim().ToUpper() == movieCreate.Title.TrimEnd().ToUpper() && g.ReleaseYear == movieCreate.ReleaseYear)
-                         .FirstOrDefault();
-             if (movie != null)
-             {
-                 ModelState.AddModelError("", "Movie already exits");
-                 return StatusCode(422, ModelState);
-             }
-             if (!ModelState.IsValid)
-             {
-                 return BadRequest();
-             }
-             var movieMap = _mapper.Map<Movie>(movieCreate);
-             movieMap.Director = _directorRepository.GetDirector(directorId);
-
-             if (!_movieRepository.CreateMovie(actorId, genreId, role, movieMap))
-             {
-                 ModelState.AddModelError("", "Something went wrong while saving");
-                 return StatusCode(500, ModelState);
-             }
-
-             return Ok("Successfully added");
-
-         }*/
-
-        /* 
-         [HttpPost]
-         [ProducesResponseType(204)]
-         [ProducesResponseType(400)]
-         public IActionResult CreateMovie([FromQuery] int directorId, [FromBody] MovieDto movieCreate)
-         {
-             if (movieCreate == null)
-                 return BadRequest();
-             var movie = _movieRepository.GetMovies()
-                         .Where(g => g.Title.Trim().ToUpper() == movieCreate.Title.TrimEnd().ToUpper() && g.ReleaseYear == movieCreate.ReleaseYear)
-                         .FirstOrDefault();
-             if (movie != null)
-             {
-                 ModelState.AddModelError("", "Movie already exits");
-                 return StatusCode(422, ModelState);
-             }
-             if (!ModelState.IsValid)
-             {
-                 return BadRequest();
-             }
-             var movieMap = _mapper.Map<Movie>(movieCreate);
-             movieMap.Director = _directorRepository.GetDirector(directorId);
-
-             if (!_movieRepository.CreateMovie(movieMap))
-             {
-                 ModelState.AddModelError("", "Something went wrong while saving");
-                 return StatusCode(500, ModelState);
-             }
-
-             return Ok("Successfully added");
-
-         }*/
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult CreateMovie([FromQuery] int directorId, [FromQuery]List<int> genreIds, [FromBody] MovieDto movieCreate)
         {
@@ -216,8 +152,7 @@ namespace MovieAppAPI.Controllers
                         .FirstOrDefault();
             if (movie != null)
             {
-                ModelState.AddModelError("", "Movie already exits");
-                return StatusCode(422, ModelState);
+                return BadRequest("Movie already exists.");
             }
             if (!ModelState.IsValid)
             {
@@ -228,45 +163,12 @@ namespace MovieAppAPI.Controllers
 
             if (!_movieRepository.CreateMovie(genreIds, movieMap))
             {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
+                return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok("Successfully added");
+            return Ok();
 
         }
-
-        /*  [HttpPost]
-          [ProducesResponseType(204)]
-          [ProducesResponseType(400)]
-          public IActionResult CreateMovie([FromQuery] int directorId, [FromQuery] List<(int, string)> actorsRoles, [FromQuery] List<int> genreId, [FromBody] MovieDto movieCreate)
-          {
-              if (movieCreate == null)
-                  return BadRequest();
-              var movie = _movieRepository.GetMovies()
-                          .Where(g => g.Title.Trim().ToUpper() == movieCreate.Title.TrimEnd().ToUpper() && g.ReleaseYear == movieCreate.ReleaseYear)
-                          .FirstOrDefault();
-              if (movie != null)
-              {
-                  ModelState.AddModelError("", "Movie already exits");
-                  return StatusCode(422, ModelState);
-              }
-              if (!ModelState.IsValid)
-              {
-                  return BadRequest();
-              }
-              var movieMap = _mapper.Map<Movie>(movieCreate);
-              movieMap.Director = _directorRepository.GetDirector(directorId);
-
-              if (!_movieRepository.CreateMovie(actorsRoles, genreId, movieMap))
-              {
-                  ModelState.AddModelError("", "Something went wrong while saving");
-                  return StatusCode(500, ModelState);
-              }
-
-              return Ok("Successfully added");
-
-          }*/
 
         [HttpPut("{movieId}")]
         [ProducesResponseType(404)]
@@ -287,9 +189,7 @@ namespace MovieAppAPI.Controllers
             movieMap.Director = _directorRepository.GetDirector(directorId);
             if (!_movieRepository.UpdateMovie(genreIds, movieMap))
             {
-                ModelState.AddModelError("", "Something went wrong updating movie");
-                return StatusCode(500, ModelState);
-
+                return BadRequest("Something went wrong while saving.");
             }
             return NoContent();
 
@@ -309,7 +209,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_movieRepository.DeleteMovie(movieToDelete))
             {
-                ModelState.AddModelError("", "Something went wrong deleting genre.");
+                return BadRequest("Something went wrong while deleting movie.");
 
             }
             return NoContent();

@@ -94,8 +94,7 @@ namespace MovieAppAPI.Controllers
                         .FirstOrDefault();
             if (director != null)
             {
-                ModelState.AddModelError("", "Director already exists");
-                return StatusCode(422, ModelState);
+                return BadRequest("Director already exists.");
             }
             if (!ModelState.IsValid)
             {
@@ -104,11 +103,10 @@ namespace MovieAppAPI.Controllers
             var directorMap = _mapper.Map<Director>(directorCreate);
             if (!_directorRepository.CreateDirector(directorMap))
             {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
+                return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok("Successfully added");
+            return Ok();
 
         }
         [HttpPut("{directorId}")]
@@ -129,8 +127,7 @@ namespace MovieAppAPI.Controllers
             var directorMap = _mapper.Map<Director>(updatedDirector);
             if (!_directorRepository.UpdateDirector(directorMap))
             {
-                ModelState.AddModelError("", "Something went wrong updating director");
-                return StatusCode(500, ModelState);
+                return BadRequest("Something went wrong while saving.");
 
             }
             return NoContent();
@@ -153,7 +150,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_directorRepository.DeleteDirector(directorToDelete))
             {
-                ModelState.AddModelError("", "Something went wrong deleting genre.");
+                return BadRequest("Something went wrong while deleting director.");
 
             }
             return NoContent();

@@ -106,7 +106,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult CreateActor([FromBody] ActorDto actorCreate)
         {
@@ -117,8 +117,7 @@ namespace MovieAppAPI.Controllers
                         .FirstOrDefault();
             if (actor != null)
             {
-                ModelState.AddModelError("", "Actor already exits");
-                return StatusCode(422, ModelState);
+                return BadRequest("Actor already exists.");
             }
             if (!ModelState.IsValid)
             {
@@ -127,11 +126,10 @@ namespace MovieAppAPI.Controllers
             var actorMap = _mapper.Map<Actor>(actorCreate);
             if (!_actorRepository.CreateActor(actorMap))
             {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
+                return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok("Successfully added");
+            return Ok();
 
         }
 
@@ -153,9 +151,7 @@ namespace MovieAppAPI.Controllers
             var actorMap = _mapper.Map<Actor>(updatedActor);
             if (!_actorRepository.UpdateActor(actorMap))
             {
-                ModelState.AddModelError("", "Something went wrong updating actor");
-                return StatusCode(500, ModelState);
-
+                return BadRequest("Something went wrong while saving.");
             }
             return NoContent();
 
@@ -174,7 +170,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_actorRepository.DeleteActor(actorToDelete))
             {
-                ModelState.AddModelError("", "Something went wrong deleting genre.");
+                return BadRequest("Something went wrong while deleting actor.");
 
             }
             return NoContent();

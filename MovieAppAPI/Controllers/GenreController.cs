@@ -105,7 +105,7 @@ namespace MovieAppAPI.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return Ok("Successfully added");
+            return Ok();
 
         }
         [HttpPut("{genreId}")]

@@ -61,8 +61,7 @@ namespace MovieAppAPI.Controllers
                         .FirstOrDefault();
             if (role != null)
             {
-                ModelState.AddModelError("", "Genre already exits");
-                return StatusCode(422, ModelState);
+                return BadRequest("Role already exists.");
             }
             if (!ModelState.IsValid)
             {
@@ -71,11 +70,10 @@ namespace MovieAppAPI.Controllers
             var roleMap = _mapper.Map<MovieActor>(roleCreate);
             if (!_movieActorRepository.CreateRole(roleMap))
             {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
+                return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok("Successfully added");
+            return Ok();
 
         }
         [HttpPut("{movieId}/{actorId}")]
@@ -96,8 +94,7 @@ namespace MovieAppAPI.Controllers
             var roleMap = _mapper.Map<MovieActor>(updatedRole);
             if (!_movieActorRepository.UpdateRole(roleMap))
             {
-                ModelState.AddModelError("", "Something went wrong updating genre");
-                return StatusCode(500, ModelState);
+                return BadRequest("Something went wrong while saving.");
 
             }
             return NoContent();
@@ -118,8 +115,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_movieActorRepository.DeleteRole(roleToDelete))
             {
-                ModelState.AddModelError("", "Something went wrong deleting genre.");
-
+                return BadRequest("Something went wrong while deleting role.");
             }
             return NoContent();
         }
