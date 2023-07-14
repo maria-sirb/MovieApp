@@ -4,13 +4,13 @@
 :root{
 
     --light-color: rgb(245, 238, 248);
-    --backgroud-color: rgb(25, 22, 26);
+    --backgroud-color: rgb(31, 31, 31);
     --accent-color: rgb(202, 158, 249);
     --dark-accent-color: rgb(125, 71, 178);
     --blue: rgb(76, 212, 196);
     --dark-blue: rgb(15, 148, 133);
-    --dark-color: rgb(19, 18, 19);
-    --darkish-color: rgb(28, 26, 29);
+    --dark-color: rgb(21, 20, 21);
+    --darkish-color: rgb(28, 27, 27);
 }
 html {
   
@@ -22,7 +22,7 @@ html {
 body{
     margin:0px;
     
-   background-image: radial-gradient(circle at 24.1% 68.8%, rgb(53, 50, 58) 0%, rgb(25, 22, 26) 99.4%) !important;
+   background-image: radial-gradient(circle at 24.1% 68.8%, rgb(57, 55, 59) 0%, rgb(17, 17, 17) 99.4%) !important;
    background-attachment: fixed;
     color: var(--light-color);
     min-height: 100vh !important;
@@ -62,13 +62,30 @@ app-login-form, app-signup-form{
   top: 0;
 }
 
-input[type="text"],
+/*input[type="text"],
 input[type="search"],
 input[type="email"],
-input[type="password"]
-textarea{
-  color: var(--darkish-color);
-  padding-left: 5px;
+input[type="password"],
+input[type="number"],
+input[type="select"],
+input[type="url"],
+input[type="date"],
+input[type="email"],
+textarea*/
+textarea,
+input:not([type='submit']),
+input:focus:not([type='submit'])
+{
+    background-color: var(--backgroud-color) !important;
+    color: var(--light-color) !important;
+    padding-left: 5px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: all 5000s ease-in-out 0s;
 }
 
 .detail-poster{
@@ -241,6 +258,16 @@ li .detail-link:hover h3{
  }
  .submit:focus{
   box-shadow: none !important;
+ }
+
+ .errors{
+  word-wrap: break-word;
+  color: rgb(249, 117, 117);
+  padding-top: 5px;
+ }
+
+ .big-container .error{
+  padding-left: 12px;
  }
 
   p{

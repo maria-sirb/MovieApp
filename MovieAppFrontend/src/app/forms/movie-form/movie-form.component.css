@@ -13,11 +13,12 @@ input[type = "checkbox"]{
 label{
    display: block !important;
 }
-input{
+input, textarea{
     font-size: 17px;
     border: 2px solid var(--accent-color);
     border-radius: 5px;
     width: 100%;
+    outline: none;
 }
 
  .genre-label{
@@ -27,6 +28,7 @@ input{
  .genre-label:has(input[type = "checkbox"]:checked){
     background-color: var(--dark-accent-color);
     color: var(--light-color);
+    border-color: var(--dark-accent-color);
  }
  
  input:focus{
@@ -50,10 +52,6 @@ input{
     color: var(--accent-color);
     margin-top: 0;
     margin-bottom: 35px;
- }
-
- textarea{
-   width: 100%;
  }
  
 

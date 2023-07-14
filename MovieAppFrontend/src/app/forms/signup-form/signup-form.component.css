@@ -33,7 +33,3 @@ input:focus{
     max-width: 350px;
  }
  
- .errors{
-    word-wrap: break-word;
-    color: rgb(249, 117, 117);
- }
