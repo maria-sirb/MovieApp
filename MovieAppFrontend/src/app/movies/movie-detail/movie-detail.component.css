@@ -31,7 +31,8 @@ li img{
 .cast li{
     padding-top: 10px;
     padding-bottom: 10px;
-    height: 370px;
+    min-height: 320px;
+    max-height: 370px;
     min-width: 200px;
     margin: 0px 10px 10px 10px;
     width: auto;
@@ -39,6 +40,9 @@ li img{
     flex-direction: column;
     justify-content: space-between;
     float: left;
+}
+.detail-link{
+    min-height: 240px;
 }
 .cast p{
     margin-top: 0;
@@ -60,6 +64,9 @@ a{
 }
 .add-icon:hover path{
     fill: var(--accent-color);
+}
+.actor-role{
+    color: rgb(207, 206, 206);
 }
 
 

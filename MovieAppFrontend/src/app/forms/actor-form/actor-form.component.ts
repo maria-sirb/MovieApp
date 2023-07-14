@@ -2,6 +2,8 @@ import { Component, Output,EventEmitter, OnInit } from '@angular/core';
 import { ActorsService } from 'src/app/shared/services/actors.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { UserStoreService } from 'src/app/shared/services/user-store.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-actor-form',
@@ -21,6 +23,7 @@ export class ActorFormComponent implements OnInit {
   }
   id = 0;
   errors = "";
+  userRole = "";
 
   constructor(private actorService : ActorsService, private route : ActivatedRoute, private location : Location) {
 

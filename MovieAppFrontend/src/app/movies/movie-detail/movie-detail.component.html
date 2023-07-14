@@ -1,6 +1,6 @@
 
 <div class = "container" *ngIf = "movie">
-    <div class = "options">
+    <div class = "options" *ngIf = "userRole == 'admin'">
         <button class = "edit"><a routerLink="/edit-movie/{{movie.movieId}}">Edit</a></button>
         <button class = "delete" (click)="deleteMovie(movie.movieId)">Delete</button>
     </div>
@@ -39,14 +39,14 @@
                     <img class = "photo detail-poster" [src] = " actor.photo" (error) = "dp.addDefaultPhotoActor(actor)" alt = "photo of actor" >
                 </a>
                 <div>
-                    <p> as {{movie.roles.get(actor.actorId)}}</p>
-                    <div class = "options">
+                    <p class="actor-role"> as {{movie.roles.get(actor.actorId)}}</p>
+                    <div class = "options" *ngIf = "userRole == 'admin'">
                         <button class = "edit"><a routerLink="/edit-role/{{movie.movieId}}/{{actor.actorId}}">Edit</a></button>
                         <button class = "delete" (click)="deleteRole(movie.movieId, actor.actorId)">Delete</button>
                     </div>
                 </div>
             </li>
-            <li class = "add">
+            <li class = "add" *ngIf = "userRole == 'admin'">
                 <a class = "detail-link" routerLink="/add-role/{{movie.movieId}}">
                     <svg class = "add-icon" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M20 14H14V20H10V14H4V10H10V4H14V10H20V14Z" />

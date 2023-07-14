@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MovieAppAPI.Dtos;
 using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
@@ -96,7 +97,8 @@ namespace MovieAppAPI.Controllers
             var userMap = _mapper.Map<User>(userCreate);
             userMap.Password = PasswordHasher.HashPassword(userMap.Password);
             userMap.Token = "";
-            userMap.Role = "user";
+            if(string.IsNullOrEmpty(userCreate.Role))
+                userMap.Role = "user";
             if (!_userRepository.CreateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving.");

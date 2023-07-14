@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     justify-content: center;
     padding-inline-start: 0;
+    padding-bottom: 50px;
 }
 header, .movie-list{
     position: relative;

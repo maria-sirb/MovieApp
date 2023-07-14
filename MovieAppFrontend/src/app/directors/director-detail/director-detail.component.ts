@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Director } from 'src/app/shared/models/director';
 import { DirectorService } from 'src/app/shared/services/director.service';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
+import { UserStoreService } from 'src/app/shared/services/user-store.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-director-detail',
@@ -14,12 +16,20 @@ export class DirectorDetailComponent implements OnInit{
 
   @Input() director? : Director;
   dp = new DefaultPhoto();
-  constructor(private route : ActivatedRoute, private location : Location, private directorService : DirectorService) {
+  userRole = "";
+
+  constructor(private route : ActivatedRoute, private location : Location, private directorService : DirectorService, private userStoreService : UserStoreService, private authenticationService : AuthenticationService) {
 
   }
+
   ngOnInit(): void {
     this.getDirector();
+
+    this.userStoreService.getRoleFromStore().subscribe(res => {
+      this.userRole = res || this.authenticationService.getRoleFromToken();
+    })
   }
+
   getDirector() {
 
     const id = Number(this.route.snapshot.paramMap.get('directorId'));
@@ -28,6 +38,7 @@ export class DirectorDetailComponent implements OnInit{
       this.directorService.getDirectorMovies(id).subscribe(movies => director.movies = movies );
     });
   }
+  
   deleteDirector(directorId : number)
   {
     this.directorService.deleteDirector(directorId).subscribe(response => {console.log(response); this.location.back()}, error => console.log(error));

@@ -9,6 +9,8 @@ import { TrueFalse } from 'src/app/add/add.component';
 import { RoleFormComponent } from 'src/app/forms/role-form/role-form.component';
 import { Router } from '@angular/router';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
+import { UserStoreService } from 'src/app/shared/services/user-store.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -20,13 +22,19 @@ export class MovieDetailComponent implements OnInit {
   @Input() movie?: Movie;
   addRole: TrueFalse = {value : false};
   dp = new DefaultPhoto();
-  constructor (private route : ActivatedRoute, private movieService : MovieService, private location : Location, private router : Router)
+  userRole = "";
+
+  constructor (private route : ActivatedRoute, private movieService : MovieService, private location : Location, private router : Router, private userStoreService : UserStoreService, private authenticationService : AuthenticationService)
   {
     this.addRole.value = false;
    
   }
   ngOnInit(): void {
       this.getMovie();
+
+      this.userStoreService.getRoleFromStore().subscribe(res => {
+        this.userRole = res || this.authenticationService.getRoleFromToken();
+      })
   }
   getMovie()
   {

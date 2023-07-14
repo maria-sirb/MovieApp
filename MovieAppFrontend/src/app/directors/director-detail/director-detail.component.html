@@ -1,6 +1,6 @@
 
 <div class = "container" *ngIf = "director">
-    <div class = "options">
+    <div class = "options" *ngIf = "userRole == 'admin'">
     <button class = "edit"><a routerLink="/edit-director/{{director.directorId}}">Edit</a></button>
     <button class = "delete" (click) = "deleteDirector(director.directorId)">Delete</button>
     </div>
