@@ -1,11 +1,16 @@
 
-<nav>
-    <div class="left-links">
-        <a routerLink="/movies/none">Movies</a>
-        <a routerLink = "/actors/none">Actors</a>
-        <a routerLink = "/directors/none">Directors</a>
-        <a routerLink = "/search">Search</a>
-        <a *ngIf = "role=='admin'" routerLink="/add">Add</a>
+<nav class = "navbar navbar-expand-md navbar-dark">
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarCollapse" class="left-links collapse navbar-collapse">
+        <div class = "navbar-nav">
+            <a routerLink="/movies/none" class="nav-item">Movies</a>
+            <a routerLink = "/actors/none" class="nav-item">Actors</a>
+            <a routerLink = "/directors/none" class="nav-item">Directors</a>
+            <a routerLink = "/search" class="nav-item">Search</a>
+            <a *ngIf = "role=='admin'" routerLink="/add" class="nav-item">Add</a>
+        </div>
     </div>
     <div class = "dropdown">
         <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

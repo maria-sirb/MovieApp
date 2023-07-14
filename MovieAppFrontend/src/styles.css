@@ -17,11 +17,10 @@ html {
     color: var(--light-color);
     max-width: 100vw;
     min-height: 100% !important;
-   
 }
 body{
-    margin:0px;
-    
+   margin:0px;
+   min-width: 100%;
    background-image: radial-gradient(circle at 24.1% 68.8%, rgb(57, 55, 59) 0%, rgb(17, 17, 17) 99.4%) !important;
    background-attachment: fixed;
     color: var(--light-color);
@@ -130,6 +129,7 @@ header{
   align-items: center;
   padding-left: 80px;
   padding-right: 80px;
+  gap: 20px;
 }
 
 .movie-list, .actor-list, .director-list{
@@ -285,9 +285,16 @@ li .detail-link:hover h3{
     border-bottom: 1px solid var(--light-color);
   }
 
+  .container{
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+}
+
   .top-details{
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
     align-items: center;
     gap: 200px;
     font-size: 17px;
@@ -355,8 +362,32 @@ form .error{
 label{
   cursor: pointer;
 }
-/*.submit{
-  margin-top: 30px;
-  width: 200px !important;
-}*/
 
+@media(max-width : 995px){
+
+  .container{
+      padding-left: 15px;
+      padding-right: 15px;    
+  }
+}
+
+
+@media(max-width: 770px){
+ .top-details{
+  gap: 50px;
+ }
+}
+
+@media(max-width: 522px){
+  .top-details,
+  .container>.options{
+    justify-content: center;
+  }
+  .top-details h2{
+    text-align: center;
+  }
+  header{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

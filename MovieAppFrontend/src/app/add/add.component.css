@@ -29,3 +29,13 @@
     justify-content: center;
     min-height: auto;
 }
+@media(max-width: 560px){
+
+  .add-button{
+    font-size: 14px;
+    font-weight: bold;
+    width: 120px;
+    height: 40px;
+    margin: 10px;
+  }
+}

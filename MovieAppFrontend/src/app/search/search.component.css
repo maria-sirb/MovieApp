@@ -57,8 +57,7 @@ label{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
-
+    margin: 20px 20px;
 }
 svg{
     width: 35px;
@@ -81,4 +80,21 @@ svg path{
 }
 .no-results{
     text-align: center;
+}
+
+@media(max-width: 415px){
+
+    .search{
+        width: 200px;
+        font-size: 16px;
+    }
+    li{
+        margin: 20px 0px;
+    }
+    h3{
+        font-size: 20px;
+    }
+    .results-container h1{
+        margin-left: 30px;
+    }
 }

@@ -7,7 +7,7 @@
 </label>
 <div class = "results-container">
 <div *ngIf = "movies?.length   && query.value">
-    <h1>Movies : </h1>
+    <h1 class="section-header">Movies : </h1>
     <ul class = "movie-list-search">
         <li *ngFor = "let movie of movies">
             <a class = "detail-link" routerLink = "/movie-detail/{{movie.movieId}}">
@@ -18,7 +18,7 @@
     </ul>
 </div>
 <div *ngIf = "actors?.length  && query.value">
-    <h1>Actors : </h1>
+    <h1 class="section-header">Actors : </h1>
     <ul class = "actor-list-search">
         <li *ngFor = "let actor of actors">
             <a class = "detail-link" routerLink = "/actor-detail/{{actor.actorId}}">
@@ -30,7 +30,7 @@
     
 </div>
 <div *ngIf = "directors?.length  && query.value">
-    <h1>Directors : </h1>
+    <h1 class="section-header">Directors : </h1>
     <ul class = "director-list-search">
         <li *ngFor = "let director of directors">
             <a class = "detail-link" routerLink = "/director-detail/{{director.directorId}}">

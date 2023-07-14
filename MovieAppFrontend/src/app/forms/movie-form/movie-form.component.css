@@ -53,6 +53,19 @@ input, textarea{
     margin-top: 0;
     margin-bottom: 35px;
  }
+ @media(max-width : 995px){
+
+   .form-container{
+      width: 500px;
+   }
+ }
+ @media(orientation: portrait){
+
+   .form-container{
+      width: 80vw;
+   }
+ }
+ 
  
 
 

@@ -50,3 +50,14 @@ li a {
     box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;
    
 }
+
+@media(max-width: 415px){
+ 
+    li{
+        margin: 20px 0px;
+    }
+    h3{
+        font-size: 20px;
+    }
+}
+

@@ -30,7 +30,14 @@ input:focus{
  }
 
  .auth-form-container{
-    min-width: 350px;
-    max-width: 350px;
+    width: 350px;
  }
+
+ @media(max-width: 4000px){
+
+    .auth-form-container{
+        width: 80vw;
+     }
+  }
+  
  
