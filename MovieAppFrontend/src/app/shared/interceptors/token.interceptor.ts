@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 
@@ -22,15 +22,15 @@ export class TokenInterceptor implements HttpInterceptor {
       setHeaders : {Authorization : `Bearer ${token}`}
     })
     }
-    return next.handle(request).pipe(
-      catchError((err) => {
-        if(err instanceof HttpErrorResponse){
-          if(err.status == 401){
-            this.router.navigate(['login'])
-          }
+  
+    return next.handle(request).pipe(tap(() => {},
+      (err: any) => {
+      if (err instanceof HttpErrorResponse) {
+        if (err.status !== 401) {
+         return;
         }
-        return throwError(() => new Error("Something went wrong."))
-      })
-    );
+        this.router.navigate(['login']);
+      }
+    }));
   }
 }
