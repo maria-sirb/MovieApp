@@ -16,7 +16,6 @@ import { Location } from '@angular/common';
 export class RoleFormComponent implements OnInit {
 
   @Output() onSubmision = new EventEmitter<any>();
-  @Input() movie? : Movie;
   actorError : boolean = false;
   errors = "";
   role : Role = {
@@ -37,7 +36,6 @@ export class RoleFormComponent implements OnInit {
     actorId = Number(this.route.snapshot.paramMap.get('actorId'));
 
   constructor(private movieService : MovieService, private actorService : ActorsService, private route : ActivatedRoute, private location : Location){
-    console.log(this.movie);
   }
 
   ngOnInit(): void {
@@ -56,7 +54,6 @@ export class RoleFormComponent implements OnInit {
 
   addRoleSubmit(data : any)
   {
-    console.log(this.movie);
     let inputActor : Actor;
     this.actorService.getActorByName(this.actor.name).subscribe(actor => {
       inputActor = actor;
@@ -86,5 +83,5 @@ export class RoleFormComponent implements OnInit {
       });
 
   }
-  
+
 }
