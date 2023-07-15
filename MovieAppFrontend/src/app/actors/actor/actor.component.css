@@ -17,7 +17,7 @@ li{
     margin: 30px 40px;
    
 }
-li h3{
+li h5{
    color: var(--light-color);
    white-space: nowrap; 
 }

@@ -27,16 +27,16 @@
         <div class = "bottom-line ">
             <h3 class = "label section-header">Director : </h3>
             <a class = "detail-link director" routerLink="/director-detail/{{movie.director.directorId}}">
-                <p  style = "font-weight: bold">{{movie.director.name}}</p>
                 <img class = "photo" [src] = "movie.director.photo" (error) = "dp.addDefaultPhotoDirector(movie.director)"/>
+                <p  style = "font-weight: bold">{{movie.director.name}}</p>
             </a>
         </div>
         <h3 class = "label section-header">Cast : </h3>
         <ul  class = "bottom-line" class = "cast">
             <li *ngFor = "let actor of movie.movieActors">
                 <a class = "detail-link" routerLink="/actor-detail/{{actor.actorId}}">
-                    <p  style = "font-weight: bold">{{actor.name}}</p>
                     <img class = "photo detail-poster" [src] = " actor.photo" (error) = "dp.addDefaultPhotoActor(actor)" alt = "photo of actor" >
+                    <p  style = "font-weight: bold">{{actor.name}}</p>
                 </a>
                 <div>
                     <p class="actor-role"> as {{movie.roles.get(actor.actorId)}}</p>

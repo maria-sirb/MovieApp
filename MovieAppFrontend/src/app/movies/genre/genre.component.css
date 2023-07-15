@@ -3,7 +3,7 @@
     flex-wrap: no-wrap;
     overflow-x: auto;
     overflow-y: hidden;
-    background-color: var(--darkish-color);
+    background-color: var(--dark-color);
     width: 100vw;
     height: 50px;
     align-items: center;

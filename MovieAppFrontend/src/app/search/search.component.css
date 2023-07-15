@@ -25,9 +25,13 @@ li{
     margin: 20px 40px;
    
 }
-li h3{
+li h5{
    color: var(--light-color);
-   white-space: nowrap; 
+   height: 50px;
+   display: flex;
+   align-items: center;
+   text-align: center;
+   margin-bottom: 3px;
 }
 li a {
     position: absolute;
@@ -91,8 +95,8 @@ svg path{
     li{
         margin: 20px 0px;
     }
-    h3{
-        font-size: 20px;
+    h5{
+        font-size: 18px;
     }
     .results-container h1{
         margin-left: 30px;

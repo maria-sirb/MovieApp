@@ -35,12 +35,14 @@ export class LoginFormComponent {
       this.userStoreService.setUsernameForStore(username);
       this.userStoreService.setRoleForStore(role);
 
-      this.router.navigate(['']);
+      //this.router.navigate(['']);
+      this.location.back();
     }, error => this.errors = error.error)
   }
 
   cancel(){
-    this.router.navigate(['']);
+   // this.router.navigate(['']);
+   this.location.back();
   }
 
 }

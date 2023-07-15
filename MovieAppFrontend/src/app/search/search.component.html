@@ -11,7 +11,7 @@
     <ul class = "movie-list-search">
         <li *ngFor = "let movie of movies">
             <a class = "detail-link" routerLink = "/movie-detail/{{movie.movieId}}">
-                <h3>{{movie.title}}</h3>
+                <h5>{{movie.title}}</h5>
                 <img class = "poster" [src] = "movie.poster"  (error) = "dp.addDefaultPhotoMovie(movie)" alt = "movie poster"/>
             </a>
         </li>
@@ -22,7 +22,7 @@
     <ul class = "actor-list-search">
         <li *ngFor = "let actor of actors">
             <a class = "detail-link" routerLink = "/actor-detail/{{actor.actorId}}">
-                <h3>{{actor.name}}</h3>
+                <h5>{{actor.name}}</h5>
                 <img class = "photo" [src]= "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "actor photo"/>
             </a>
         </li>
@@ -34,7 +34,7 @@
     <ul class = "director-list-search">
         <li *ngFor = "let director of directors">
             <a class = "detail-link" routerLink = "/director-detail/{{director.directorId}}">
-                <h3>{{director.name}}</h3>
+                <h5>{{director.name}}</h5>
                 <img class = "photo" [src] = "director.photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
             </a>
         </li>

@@ -6,7 +6,7 @@ img {
 }
 li img{
     position: absolute; 
-    top: 35px;
+    top: 0px;
     left: 0;
 }
  
@@ -15,7 +15,8 @@ li img{
     margin-left: 25px;
 }
 .director>p{
-    margin-bottom: 2px;
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
 }
 .cast{
  display: flex;
@@ -30,18 +31,19 @@ li img{
     min-height: 320px;
     max-height: 370px;
     min-width: 200px;
-    margin: 0px 10px 10px 10px;
+    margin: 0px 10px 0px 10px;
     width: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     float: left;
 }
 .detail-link{
     min-height: 240px;
 }
 .cast p{
-    margin-top: 0;
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 li>a{
@@ -49,20 +51,30 @@ li>a{
     float: left;
     width: 200px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 a{
     color: var(--light-color);
 }
+.add{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center;
+}
+.add .detail-link{
+    max-height: 200px;
+    min-height: 200px;
+}
 .add-icon{
     width: 200px;
-    padding-top:60px;
 }
 .add-icon:hover path{
     fill: var(--accent-color);
 }
 .actor-role{
-    color: rgb(207, 206, 206);
+    color: rgb(173, 173, 173);
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
 }
 
 

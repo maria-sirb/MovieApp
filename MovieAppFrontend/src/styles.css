@@ -4,13 +4,13 @@
 :root{
 
     --light-color: rgb(245, 238, 248);
-    --backgroud-color: rgb(31, 31, 31);
-    --accent-color: rgb(202, 158, 249);
+    --backgroud-color: rgb(17, 17, 17);
+    --accent-color: rgb(206, 165, 251);
     --dark-accent-color: rgb(125, 71, 178);
     --blue: rgb(76, 212, 196);
     --dark-blue: rgb(15, 148, 133);
-    --dark-color: rgb(21, 20, 21);
-    --darkish-color: rgb(28, 27, 27);
+    --dark-color: rgb(9, 9, 9);
+    --darkish-color: rgb(22, 22, 22);
 }
 html {
   
@@ -21,7 +21,7 @@ html {
 body{
    margin:0px;
    min-width: 100%;
-   background-image: radial-gradient(circle at 24.1% 68.8%, rgb(57, 55, 59) 0%, rgb(17, 17, 17) 99.4%) !important;
+   background-image: radial-gradient(circle at 24.1% 68.8%, rgb(21, 21, 21) 0%, rgb(0, 0, 0) 99.4%) !important;
    background-attachment: fixed;
     color: var(--light-color);
     min-height: 100vh !important;
@@ -55,7 +55,7 @@ app-login-form, app-signup-form{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: radial-gradient(circle at 24.1% 68.8%, rgb(53, 50, 58) 0%, rgb(25, 22, 26) 99.4%) !important;
+  background-image: radial-gradient(circle at 24.1% 68.8%, rgb(21, 21, 21) 0%, rgb(0, 0, 0) 99.4%) !important;
   z-index: 10;
   position: absolute;
   top: 0;
@@ -148,15 +148,15 @@ header{
   padding-left: 25px;
  }
  .detail-movie-list p{
-     margin-top:0;
+     margin-bottom:0;
      white-space: nowrap;
  }
  .detail-movie-list li{
      padding-top: 10px;
      padding-bottom: 10px;
-     height: 380px;
+     height: 340px;
      min-width: 200px;
-     margin: 10px 10px;
+     margin: 0px 10px;
      width: auto;
      display: flex;
      flex-direction: column;
@@ -180,12 +180,13 @@ img, .photo, .poster{
 
 li .detail-link:hover .poster{
    
-  box-shadow: rgba(0, 0, 0, 0.45) 0px 54px 55px, rgba(0, 0, 0, 0.20) 0px -12px 30px, rgba(0, 0, 0, 0.20) 0px 4px 6px, rgba(0, 0, 0, 0.27) 0px 12px 13px, rgba(0, 0, 0, 0.19) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.65) 0px 24px 25px, rgba(0, 0, 0, 0.40) 0px -12px 30px, rgba(0, 0, 0, 0.40) 0px 4px 6px, rgba(0, 0, 0, 0.57) 0px 12px 13px, rgba(0, 0, 0, 0.39) 0px -3px 5px;
   transform: scale(1.03);
   border: 2px solid var(--accent-color);
   transition:all 0.2s ease-in-out;
 }
-li .detail-link:hover h3{
+li .detail-link:hover h3,
+li .detail-link:hover h5{
   color: var(--accent-color) !important;
   transform: scale(1.03);
   text-shadow: 0px 4px 3px rgba(0,0,0,0.56),
@@ -311,6 +312,7 @@ li .detail-link:hover h3{
     margin: 7px;
     padding-bottom: 3px;
     border-bottom: 1px solid var(--light-color);
+    width: 100%;
 }
 .right-details ul{
     display : flex;
@@ -330,7 +332,7 @@ li .detail-link:hover h3{
 }
 .options{
     display : flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 .container>.options{
    display: flex;
@@ -363,7 +365,7 @@ label{
   cursor: pointer;
 }
 
-@media(max-width : 995px){
+@media(max-width : 1200px){
 
   .container{
       padding-left: 15px;
@@ -372,19 +374,25 @@ label{
 }
 
 
-@media(max-width: 770px){
+@media(max-width: 1010px){
  .top-details{
   gap: 50px;
  }
 }
 
-@media(max-width: 522px){
+@media(max-width: 770px){
   .top-details,
   .container>.options{
     justify-content: center;
   }
   .top-details h2{
     text-align: center;
+  }
+  .top-details>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   header{
     padding-left: 20px;

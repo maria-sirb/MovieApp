@@ -2,9 +2,9 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--dark-color);
+    background-color: var(--darkish-color);
     margin:0px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    box-shadow: rgba(8, 8, 8, 0.55) 0px 13px 20px -5px, rgba(0, 0, 0, 0.70) 0px 8px 10px -8px;
     position:fixed;
     top:0;
     width: 100%;

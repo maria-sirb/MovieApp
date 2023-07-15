@@ -30,9 +30,14 @@ li{
     margin: 20px 40px;
    
 }
-li h3{
+li h5{
    color: var(--light-color);
-   white-space: nowrap; 
+  /* white-space: nowrap; */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3px;
 }
 li a {
     position: absolute;
