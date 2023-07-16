@@ -11,5 +11,7 @@ namespace MovieAppAPI.Models
         public string Password { get; set; } 
         public string Role { get; set; }
         public string Token { get; set; }
+        public ICollection<Vote> Votes { get; set; }
+        public ICollection<Review> Reviews { get; set; }
     }
 }

@@ -20,28 +20,40 @@ namespace MovieAppAPI.Data
             modelBuilder.Entity<MovieGenre>()
                 .HasKey(mg => new { mg.MovieId, mg.GenreId });
             modelBuilder.Entity<MovieGenre>()
-                .HasOne(m => m.Movie)
-                .WithMany(mg => mg.MovieGenres)
-                .HasForeignKey(m => m.MovieId);
+                .HasOne(mg => mg.Movie)
+                .WithMany(m => m.MovieGenres)
+                .HasForeignKey(mg => mg.MovieId);
             modelBuilder.Entity<MovieGenre>()
-               .HasOne(m => m.Genre)
-               .WithMany(mg => mg.MovieGenres)
-               .HasForeignKey(g => g.GenreId);
+               .HasOne(mg => mg.Genre)
+               .WithMany(g => g.MovieGenres)
+               .HasForeignKey(mg => mg.GenreId);
 
             modelBuilder.Entity<MovieActor>()
                 .HasKey(ma => new { ma.MovieId, ma.ActorId });
             modelBuilder.Entity<MovieActor>()
-                .HasOne(m => m.Movie)
-                .WithMany(ma => ma.MovieActors)
-                .HasForeignKey(m => m.MovieId);
+                .HasOne(ma => ma.Movie)
+                .WithMany(m => m.MovieActors)
+                .HasForeignKey(ma => ma.MovieId);
             modelBuilder.Entity<MovieActor>()
-               .HasOne(m => m.Actor)
-               .WithMany(ma => ma.MovieActors)
-               .HasForeignKey(a => a.ActorId);
+               .HasOne(ma => ma.Actor)
+               .WithMany(a => a.MovieActors)
+               .HasForeignKey(ma => ma.ActorId);
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Role)
                 .HasDefaultValue("user");
+
+            modelBuilder.Entity<Review>()
+                .ToTable(r => r.HasCheckConstraint("CK_Review_RatingMax", "Rating < 11"));
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reviews)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Vote>()
+                .HasOne(v => v.User)
+                .WithMany(u => u.Votes)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
 
     }
