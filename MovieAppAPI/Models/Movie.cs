@@ -19,5 +19,6 @@ namespace MovieAppAPI.Models
         public Director Director { get; set; }
         public ICollection<MovieGenre> MovieGenres {get; set;}
         public ICollection<MovieActor> MovieActors { get; set; }
+        public ICollection<Review> Reviews { get; set; }
     }
 }

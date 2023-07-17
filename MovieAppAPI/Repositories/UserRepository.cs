@@ -31,6 +31,7 @@ namespace MovieAppAPI.Repositories
             return _context.Users.OrderBy(u => u.UserId).ToList();
         }
 
+
         public bool UserExists(int id) 
         {
             return _context.Users.Any(u => u.UserId == id);

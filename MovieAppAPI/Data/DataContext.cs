@@ -15,6 +15,9 @@ namespace MovieAppAPI.Data
         public DbSet<MovieActor> MovieActors { get; set; }
         public DbSet<MovieGenre> MovieGenres{ get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MovieGenre>()
