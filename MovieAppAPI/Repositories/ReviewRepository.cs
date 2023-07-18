@@ -16,7 +16,11 @@ namespace MovieAppAPI.Repositories
             _context.Add(review);
             return Save();
         }
-
+        public bool UpdateReview(Review review)
+        {
+            _context.Update(review);
+            return Save();
+        }
         public bool DeleteReview(Review review)
         {
             _context.Remove(review);
@@ -42,7 +46,18 @@ namespace MovieAppAPI.Repositories
         {
             return _context.Reviews.Where(r => r.User.UserId == userId).ToList();
         }
-
+        public ICollection<Vote> GetReviewVotes(int reviewId)
+        {
+            return _context.Votes.Where(v => v.Review.ReviewId == reviewId).ToList();
+        }
+        public bool ReviewExists(int reviewId)
+        {
+            return _context.Reviews.Any(r => r.ReviewId == reviewId);
+        }
+        public bool ReviewExists(int userId, int movieId)
+        {
+            return _context.Reviews.Any(r => r.User.UserId == userId && r.Movie.MovieId == movieId);
+        }
         public bool Save()
         {
             var saved = _context.SaveChanges();

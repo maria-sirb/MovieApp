@@ -7,8 +7,12 @@ namespace MovieAppAPI.Interfaces
         ICollection<Review> GetReviews();
         Review GetReview(int id);
         ICollection<Review> GetReviewsFromMovie(int movieId);
-        ICollection<Review> GetReviewsFromUser(int userId);IColle
+        ICollection<Review> GetReviewsFromUser(int userId);
+        ICollection<Vote> GetReviewVotes(int reviewId);
+        bool ReviewExists(int reviewId);
+        bool ReviewExists(int userId, int movieId);
         bool CreateReview(Review review);
+        bool UpdateReview(Review review);
         bool DeleteReview(Review review);
         bool Save();
     }
