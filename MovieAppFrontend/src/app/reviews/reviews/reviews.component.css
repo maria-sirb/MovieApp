@@ -1,0 +1,31 @@
+.star-icon{
+    color: var(--blue);
+    font-size : 30px;
+    margin-right: 5px;
+}
+.review{
+    background-color: var(--darkish-color);
+    padding: 15px;
+}
+.review h5{
+    font-weight: bold !important;
+}
+.reviews-list{
+    gap: 15px;
+    padding: 0;
+}
+.small-text{
+    color: rgb(186, 185, 185);
+    font-weight: 100;
+    font-size: 16px;
+}
+.bigger-text{
+    font-size: 26px;
+}
+.add-review-link{
+    color: var(--blue);
+    font-size : 18px;
+}
+.add-review-link:hover{
+    text-decoration: underline;
+}
