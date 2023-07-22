@@ -23,7 +23,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<UserDto>))]
         [ProducesResponseType(400)]
         [Authorize]
         public IActionResult GetUsers()
@@ -34,6 +34,19 @@ namespace MovieAppAPI.Controllers
                 return BadRequest();
             }
             return Ok(users);
+        }
+
+        [HttpGet("{username}")]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
+        [ProducesResponseType(400)]
+        public IActionResult GetUser(string username)
+        {
+            var user = _mapper.Map<UserDto>(_userRepository.GetUser(username));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            return Ok(user);
         }
 
         [HttpPost("authenticate")]
