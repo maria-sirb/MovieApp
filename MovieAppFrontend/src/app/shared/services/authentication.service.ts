@@ -14,6 +14,10 @@ export class AuthenticationService {
   constructor(private client : HttpClient) { 
     this.userPayload = this.decodeToken();
   }
+  
+  getUser(username : string) : Observable<any>{
+    return this.client.get<any>(this.baseUrl + '/' + username);
+  }
 
   signupUser(user : any) : Observable<any>{
     return this.client.post<any>(this.baseUrl + '/register', user, {observe : 'response'});
