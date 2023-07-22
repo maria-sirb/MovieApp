@@ -48,8 +48,8 @@ export class MovieDetailComponent implements OnInit {
         actors.forEach(actor => {
           this.movieService.getMovieRole(id, actor.actorId).subscribe(role => 
             {
-              console.log(role);
-              console.log(movie.roles);
+             // console.log(role);
+            //  console.log(movie.roles);
               movie.roles.set(actor.actorId, role.role)
              
             }
@@ -66,7 +66,8 @@ export class MovieDetailComponent implements OnInit {
 
     let role : Role | undefined;
     this.movieService.getMovieRole(movieId, actorId).subscribe(r => {role = r;
-    console.log(role);});
+    //console.log(role);
+  });
    // console.log(role);
     return role;
   }
@@ -88,7 +89,7 @@ export class MovieDetailComponent implements OnInit {
   deleteRole(movieId : number, actorId : number)
   {
     this.movieService.deleteMovieRole(movieId, actorId).subscribe(response => {
-      console.log(response);
+     // console.log(response);
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([`/movie-detail/${movieId}`]);
     }); 
