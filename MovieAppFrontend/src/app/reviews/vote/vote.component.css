@@ -1,0 +1,23 @@
+.votes{
+ gap: 25px;
+}
+.like svg,
+.dislike svg{
+    height: 24px;
+    cursor: pointer;
+}
+svg path{
+    fill: var(--light-color);
+    transition: all 0.5s ease-in-out;
+}
+.like, .dislike{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.like p, .dislike p{
+    margin : 0;
+}
+.active path{
+    fill: var(--blue);
+}
