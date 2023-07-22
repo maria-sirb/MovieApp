@@ -15,6 +15,7 @@ import { DirectorFormComponent } from './forms/director-form/director-form.compo
 import { SignupFormComponent } from './forms/signup-form/signup-form.component';
 import { LoginFormComponent } from './forms/login-form/login-form.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { ReviewFormComponent } from './forms/review-form/review-form.component';
 
 
 
@@ -36,8 +37,8 @@ const routes: Routes = [
   {path : 'edit-actor/:actorId', component : ActorFormComponent},
   {path : 'edit-director/:directorId', component : DirectorFormComponent},
   {path: 'signup', component : SignupFormComponent},
-  {path : 'login', component : LoginFormComponent}
-
+  {path : 'login', component : LoginFormComponent},
+  {path : 'add-review/:movieId', component : ReviewFormComponent, canActivate : [AuthGuard]}
 ];
 
 @NgModule({

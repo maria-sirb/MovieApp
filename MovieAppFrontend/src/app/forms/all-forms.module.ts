@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { ReviewFormComponent } from './review-form/review-form.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { LoginFormComponent } from './login-form/login-form.component';
     DirectorFormComponent,
    RoleFormComponent,
    SignupFormComponent,
-   LoginFormComponent
+   LoginFormComponent,
+   ReviewFormComponent
   ],
   imports: [
     CommonModule,
