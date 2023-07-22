@@ -6,6 +6,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { GenreComponent } from './genre/genre.component';
 import { AllFormsModule } from '../forms/all-forms.module';
 import { FormsModule } from '@angular/forms';
+import { AppModule } from '../app.module';
+import { ReviewsModule } from '../reviews/reviews.module';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     AppRoutingModule,
     AllFormsModule,
-    FormsModule
+    FormsModule,
+    ReviewsModule
   ],
 
   exports : [
