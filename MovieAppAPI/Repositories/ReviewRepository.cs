@@ -46,10 +46,12 @@ namespace MovieAppAPI.Repositories
         {
             return _context.Reviews.Where(r => r.User.UserId == userId).ToList();
         }
-        public ICollection<Vote> GetReviewVotes(int reviewId)
+
+        public User GetReviewAuthor(int reviewId)
         {
-            return _context.Votes.Where(v => v.Review.ReviewId == reviewId).ToList();
+            return _context.Reviews.Where(r => r.ReviewId == reviewId).Select(r => r.User).FirstOrDefault();
         }
+
         public bool ReviewExists(int reviewId)
         {
             return _context.Reviews.Any(r => r.ReviewId == reviewId);

@@ -23,7 +23,7 @@ namespace MovieAppAPI.Controllers
             _movieRepository = movieRepository;
             _mapper = mapper;
         }
-        [HttpGet("movie")]
+        [HttpGet("movie/{movieId}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Review>))]
         [ProducesResponseType(400)]
         public IActionResult GetMovieReviews(int movieId)
@@ -36,7 +36,7 @@ namespace MovieAppAPI.Controllers
             return Ok(reviews);
         }
 
-        [HttpGet("user")]
+        [HttpGet("user/{userId}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Review>))]
         [ProducesResponseType(400)]
         public IActionResult GetUserReviews(int userId)
@@ -72,6 +72,17 @@ namespace MovieAppAPI.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet("author/{reviewId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(200)]
+        public IActionResult GetReviewAuthor(int reviewId)
+        {
+            var user = _reviewRepository.GetReviewAuthor(reviewId);
+            if (!ModelState.IsValid)
+                return BadRequest();
+            return Ok(user);
         }
 
         [HttpPut("{reviewId}")]

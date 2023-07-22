@@ -8,7 +8,7 @@ namespace MovieAppAPI.Interfaces
         Review GetReview(int id);
         ICollection<Review> GetReviewsFromMovie(int movieId);
         ICollection<Review> GetReviewsFromUser(int userId);
-        ICollection<Vote> GetReviewVotes(int reviewId);
+        public User GetReviewAuthor(int reviewId);
         bool ReviewExists(int reviewId);
         bool ReviewExists(int userId, int movieId);
         bool CreateReview(Review review);
