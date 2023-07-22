@@ -49,7 +49,7 @@ app-root>app-actor-form, app-root>app-movie-form, app-root>app-director-form, ap
   min-height: 69vh;
 }
 
-app-login-form, app-signup-form{
+app-login-form, app-signup-form, app-review-form{
   min-height: 100vh;
   min-width: 100vw;
   display: flex;
