@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using MovieAppAPI.Dtos;
@@ -49,6 +50,7 @@ namespace MovieAppAPI.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [Authorize]
         public IActionResult CreateVote([FromQuery]int userId, [FromQuery]int reviewId, [FromBody]VoteDto voteCreate)
         {
             if(voteCreate== null)
@@ -71,6 +73,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
+        [Authorize]
         public IActionResult UpdateVote(int voteId, [FromBody]VoteDto voteUpdate)
         {
             if(voteUpdate == null)
