@@ -42,6 +42,11 @@ namespace MovieAppAPI.Repositories
             return _context.Reviews.Where(r => r.Movie.MovieId == movieId).ToList();
         }
 
+        public double GetAverageRatingFromMovie(int movieId)
+        {
+            return _context.Reviews.Where(r => r.Movie.MovieId == movieId).ToList().Average(r => (int?)r.Rating) ?? 0;
+        }
+
         public ICollection<Review> GetReviewsFromUser(int userId)
         {
             return _context.Reviews.Where(r => r.User.UserId == userId).ToList();

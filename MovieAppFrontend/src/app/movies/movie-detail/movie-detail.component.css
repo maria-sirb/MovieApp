@@ -76,6 +76,19 @@ a{
     margin-top: 0 !important;
     margin-bottom: 20px !important;
 }
+.rating{
+    margin-top: 15px;
+    color: rgb(143, 142, 142);
+}
+.bigger-text{
+    font-size: 24px;
+    color: var(--light-color)
+}
+.star-icon{
+    color: var(--blue);
+    font-size : 28px;
+    margin-right: 5px;
+}
 
 
 

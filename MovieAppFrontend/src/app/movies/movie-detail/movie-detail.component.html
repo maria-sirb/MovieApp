@@ -8,6 +8,7 @@
         <div>
         <h2>{{movie.title}}</h2>
         <img class = "poster" [src] = "movie.poster"  (error) = "dp.addDefaultPhotoMovie(movie)" alt = "movie poster"/>
+        <p class="rating"><span class="star-icon">★</span><span class="bigger-text">{{rating}}</span>/10</p>
         </div>
         <div class="right-details">
         <p><span class = "label">IMDB Rating : </span>{{movie.imdbRating}}</p>

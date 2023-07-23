@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { ReviewsService } from 'src/app/shared/services/reviews.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -23,8 +24,9 @@ export class MovieDetailComponent implements OnInit {
   addRole: TrueFalse = {value : false};
   dp = new DefaultPhoto();
   userRole = "";
+  rating = 0;
 
-  constructor (private route : ActivatedRoute, private movieService : MovieService, private location : Location, private router : Router, private userStoreService : UserStoreService, private authenticationService : AuthenticationService)
+  constructor (private route : ActivatedRoute, private movieService : MovieService, private location : Location, private router : Router, private userStoreService : UserStoreService, private authenticationService : AuthenticationService, private reviewService : ReviewsService)
   {
     this.addRole.value = false;
    
@@ -39,6 +41,9 @@ export class MovieDetailComponent implements OnInit {
   getMovie()
   {
     const id = Number(this.route.snapshot.paramMap.get('movieId'));
+
+    this.reviewService.getAverageMovieRating(id).subscribe(rating => this.rating = Math.round(rating * 10) /10, error => console.log(error));
+
     this.movieService.getMovie(id).subscribe(movie => {
       this.movie = movie;
       this.movieService.getMovieDirector(id).subscribe(director => movie.director = director);
@@ -48,10 +53,7 @@ export class MovieDetailComponent implements OnInit {
         actors.forEach(actor => {
           this.movieService.getMovieRole(id, actor.actorId).subscribe(role => 
             {
-             // console.log(role);
-            //  console.log(movie.roles);
               movie.roles.set(actor.actorId, role.role)
-             
             }
           );
         });

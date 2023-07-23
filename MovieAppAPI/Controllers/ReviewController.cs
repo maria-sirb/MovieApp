@@ -36,6 +36,17 @@ namespace MovieAppAPI.Controllers
             return Ok(reviews);
         }
 
+        [HttpGet("average/{movieId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult GetAverageMovieRating(int movieId)
+        {
+            var rating = _reviewRepository.GetAverageRatingFromMovie(movieId);
+            if (!ModelState.IsValid)
+                return BadRequest();
+            return Ok(rating);
+        }
+
         [HttpGet("user/{userId}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Review>))]
         [ProducesResponseType(400)]

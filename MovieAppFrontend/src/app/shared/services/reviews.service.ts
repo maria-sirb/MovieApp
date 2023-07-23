@@ -15,6 +15,9 @@ export class ReviewsService {
   getMovieReviews(movieId : number) : Observable<any[]>{
     return this.client.get<any[]>(this.baseUrl + "/movie/" + movieId);
   }
+  getAverageMovieRating(movieId : number) : Observable<number>{
+    return this.client.get<number>(this.baseUrl + "/average/" + movieId);
+  } 
   getUserReviews(userId : number) : Observable<any[]>{
     return this.client.get<any[]>(this.baseUrl + "/user/" + userId);
   }

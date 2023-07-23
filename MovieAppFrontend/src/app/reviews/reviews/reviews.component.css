@@ -3,6 +3,9 @@
     font-size : 30px;
     margin-right: 5px;
 }
+.rating{
+    color: rgb(143, 142, 142);
+}
 .review{
     background-color: var(--darkish-color);
     padding: 15px;
@@ -15,12 +18,13 @@
     padding: 0;
 }
 .small-text{
-    color: rgb(186, 185, 185);
+    color: rgb(143, 142, 142);
     font-weight: 100;
     font-size: 16px;
 }
 .bigger-text{
     font-size: 26px;
+    color: var(--light-color);
 }
 .add-review-link{
     color: var(--blue);
