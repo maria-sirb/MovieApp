@@ -1,3 +1,4 @@
+import { Movie } from "./movie";
 import { User } from "./user";
 
 export interface Review{
@@ -6,5 +7,6 @@ export interface Review{
     title? : string,
     text? : string,
     date : Date,
-    user? : User
+    user? : User,
+    movie? : Movie
 }

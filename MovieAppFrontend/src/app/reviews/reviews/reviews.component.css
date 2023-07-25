@@ -1,3 +1,9 @@
+ul{
+    gap: 15px;
+}
+a{
+    color: var(--light-color);
+}
 .star-icon{
     color: var(--blue);
     font-size : 30px;
@@ -17,10 +23,23 @@
     gap: 15px;
     padding: 0;
 }
+.reviews-link svg{
+    height: 45px;
+}
+.reviews-link svg path{
+    fill: var(--light-color);
+    transition: all 0.3s ease-in-out;
+}
+.reviews-link:hover svg path{
+    fill: var(--blue);
+}
 .small-text{
     color: rgb(143, 142, 142);
     font-weight: 100;
     font-size: 16px;
+}
+.small-text a:hover{
+    text-decoration: underline;
 }
 .bigger-text{
     font-size: 26px;
@@ -32,4 +51,43 @@
 }
 .add-review-link:hover{
     text-decoration: underline;
+}
+.delete-link{
+    color: rgb(147, 147, 147);
+    cursor: pointer;
+    margin-top: 10px;
+}
+.delete-link:hover{
+    text-decoration: underline;
+}
+.review-container{
+    gap: 10px;
+    padding: 20px;
+}
+.poster{
+    height: 200px !important;
+    width : auto !important;
+}
+.detail-link{
+    min-width: 150px;
+}
+.review-container>div{
+    width : 100%;
+}
+@media(max-width : 550px)
+{
+    .review-container{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .review-container>div>div>div{
+        flex-direction: column-reverse;
+    }
+    .review-container>div>div, .review-container>div, .detail-link{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
 }

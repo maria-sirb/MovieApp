@@ -17,4 +17,5 @@ export interface Movie{
     movieGenres : Genre[];
     movieActors: Actor[];
     roles : Map<number, string>;
+    averageRating? : number;
 }

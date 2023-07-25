@@ -10,7 +10,7 @@ namespace MovieAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewController :Controller
+    public class ReviewController : Controller
     {
         private readonly IReviewRepository _reviewRepository;
         private readonly IUserRepository _userRepository;
@@ -63,11 +63,11 @@ namespace MovieAppAPI.Controllers
         [HttpPost]
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
-        public IActionResult CreateReview([FromQuery]int userId, [FromQuery]int movieId, [FromBody]ReviewDto reviewCreate)
+        public IActionResult CreateReview([FromQuery] int userId, [FromQuery] int movieId, [FromBody] ReviewDto reviewCreate)
         {
             if (reviewCreate == null)
                 return BadRequest();
-            if(_reviewRepository.ReviewExists(userId, movieId))
+            if (_reviewRepository.ReviewExists(userId, movieId))
                 return BadRequest("User already reviewed this movie.");
             if (!ModelState.IsValid)
             {
@@ -96,13 +96,24 @@ namespace MovieAppAPI.Controllers
             return Ok(user);
         }
 
+        [HttpGet("reviewed/{reviewId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(200)]
+        public IActionResult GetReviewedMovie(int reviewId)
+        {
+            var movie = _reviewRepository.GetReviewedMovie(reviewId);
+            if (!ModelState.IsValid)
+                return BadRequest();
+            return Ok(movie);
+        }
+
         [HttpPut("{reviewId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
-        public IActionResult UpdateReview(int reviewId, [FromBody]ReviewDto reviewUpdate)
+        public IActionResult UpdateReview(int reviewId, [FromBody] ReviewDto reviewUpdate)
         {
-            if(reviewUpdate == null)
+            if (reviewUpdate == null)
                 return BadRequest();
             if (reviewUpdate.ReviewId != reviewId)
                 return NotFound();
@@ -111,14 +122,14 @@ namespace MovieAppAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var reviewMap = _mapper.Map<Review>(reviewUpdate);
-            if(!_reviewRepository.UpdateReview(reviewMap))
+            if (!_reviewRepository.UpdateReview(reviewMap))
             {
                 return BadRequest("Something went wrong updating review.");
             }
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{reviewId}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]

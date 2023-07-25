@@ -16,7 +16,11 @@ export class AuthenticationService {
   }
   
   getUser(username : string) : Observable<any>{
-    return this.client.get<any>(this.baseUrl + '/' + username);
+    return this.client.get<any>(this.baseUrl + '/username/' + username);
+  }
+
+  getUserById(userId : number) : Observable<any>{
+    return this.client.get<any>(this.baseUrl + "/id/" + userId);
   }
 
   signupUser(user : any) : Observable<any>{

@@ -10,6 +10,7 @@ namespace MovieAppAPI.Interfaces
         double GetAverageRatingFromMovie(int movieId);
         ICollection<Review> GetReviewsFromUser(int userId);
         User GetReviewAuthor(int reviewId);
+        Movie GetReviewedMovie(int reviewId);
         bool ReviewExists(int reviewId);
         bool ReviewExists(int userId, int movieId);
         bool CreateReview(Review review);

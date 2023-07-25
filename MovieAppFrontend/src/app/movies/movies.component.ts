@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { DefaultPhoto } from '../shared/functions/default-photos';
 
-
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
@@ -29,16 +28,14 @@ export class MoviesComponent implements OnInit{
     
   }
   getAllMovies() {
-    //console.log(this.movies);
     this.movieService.getMovies().subscribe(res => {
       this.movies = res; 
       this.movies.forEach(movie => {
-        this.movieService.getMovieGenres(movie.movieId).subscribe(res => {movie.movieGenres = res;  this.sortMovies();})
+        this.movieService.getMovieGenres(movie.movieId).subscribe(res => movie.movieGenres = res);
+        this.movieService.getMovieActors(movie.movieId).subscribe(res => movie.movieActors = res);
       });
-      this.movies.forEach(movie => {
-        this.movieService.getMovieActors(movie.movieId).subscribe(res => movie.movieActors = res)
-      });
-      console.log(this.movies);
+
+      this.sortMovies();
     });
   }
   displayGenreMovies(genre : Genre) {
@@ -58,12 +55,10 @@ export class MoviesComponent implements OnInit{
   {
     this.sortMode = sortOption;
     this.router.navigate([`../${this.sortMode}`], { relativeTo: this.route });
-    console.log(this.sortMode);
     this.sortMovies();
   }
   sortMovies()
   {
-    console.log(this.sortMode);
     if(this.sortMode == 'none')
     {
       this.movies.sort((movie1, movie2) => movie1.movieId < movie2.movieId? -1 : 1);
@@ -84,10 +79,10 @@ export class MoviesComponent implements OnInit{
     {
       this.movies.sort((movie1, movie2) => {
         if (movie1.oscarWins < movie2.oscarWins) return 1;
-  if (movie1.oscarWins > movie2.oscarWins) return -1;
-  if (movie1.oscarNominations < movie2.oscarNominations) return 1;
-  if (movie1.oscarNominations > movie2.oscarNominations) return -1;
-  return 0;
+        if (movie1.oscarWins > movie2.oscarWins) return -1;
+        if (movie1.oscarNominations < movie2.oscarNominations) return 1;
+        if (movie1.oscarNominations > movie2.oscarNominations) return -1;
+        return 0;
       });
     }
   }

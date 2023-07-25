@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { Movie } from 'src/app/shared/models/movie';
 import { Review } from 'src/app/shared/models/review';
 import { User } from 'src/app/shared/models/user';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { ReviewsService } from 'src/app/shared/services/reviews.service';
+import { UserStoreService } from 'src/app/shared/services/user-store.service';
 
 @Component({
   selector: 'app-reviews',
@@ -15,10 +17,19 @@ export class ReviewsComponent implements OnInit{
   @Input() movie? : Movie;
   @Input() userId? : number;
   reviews : Review[] = [];
-  constructor(private reviewService : ReviewsService){
+  dp = new DefaultPhoto();
+  currentUserId : number = 0;
+
+  constructor(private reviewService : ReviewsService,private authService : AuthenticationService, private userStoreService : UserStoreService){
 
   }
   ngOnInit(): void {
+    this.userStoreService.getUsernameFromStore().subscribe(res => {
+      const currentUsername = res || this.authService.getUsernameFromToken();
+      if(currentUsername)
+        this.authService.getUser(currentUsername).subscribe(user => this.currentUserId = user.userId, error => console.log(error));
+    })
+
     if(this.movie)
     {
        this.reviewService.getMovieReviews(this.movie.movieId).subscribe(reviews => 
@@ -29,8 +40,17 @@ export class ReviewsComponent implements OnInit{
     }
     else if(this.userId)
     {
-      this.reviewService.getUserReviews(this.userId).subscribe(result => this.reviews = result, error => console.log(error));
+      this.reviewService.getUserReviews(this.userId).subscribe(reviews => 
+        {
+          this.reviews = reviews
+          this.reviews.forEach(review => this.reviewService.getReviewedMovie(review.reviewId).subscribe(movie => review.movie = movie, error => console.log(error)));
+        }, error => console.log(error));
     }
+  }
+  deleteReview(reviewId : number)
+  {
+    this.reviewService.deleteReview(reviewId).subscribe(res => console.log(res), err => console.log(err));
+    window.location.reload();
   }
   
 }

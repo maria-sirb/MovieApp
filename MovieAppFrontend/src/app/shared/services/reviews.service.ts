@@ -24,11 +24,18 @@ export class ReviewsService {
   getReviewAuthor(reviewId : number) : Observable<any>{
     return this.client.get<any>(this.baseUrl + "/author/" + reviewId);
   }
+  getReviewedMovie(reviewId : number) : Observable<any>{
+    return this.client.get<any>(this.baseUrl + "/reviewed/" + reviewId);
+  }
   addReview(userId : number, movieId : number, review : object) : Observable<any>{
     let queryParams = new HttpParams();
     queryParams = queryParams.append("userId", userId);
     queryParams = queryParams.append("movieId", movieId);
     return this.client.post<any>(this.baseUrl, review, {params : queryParams, observe : 'response'});
+  }
+  deleteReview(reviewId : number) : Observable<any>
+  {
+    return this.client.delete<any>(this.baseUrl + "/" + reviewId);
   }
 
 }

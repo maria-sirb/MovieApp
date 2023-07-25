@@ -1,0 +1,4 @@
+<div class = "container">
+    <h3>{{user.username}}<span *ngIf ="user.role == 'admin'"> ({{user.role}})</span></h3>
+    <app-reviews [userId] = "userId"></app-reviews>
+</div>

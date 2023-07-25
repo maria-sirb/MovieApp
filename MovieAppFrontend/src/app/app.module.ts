@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { AllFormsModule } from './forms/all-forms.module';
 import { FooterComponent } from './footer/footer.component';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { UserComponent } from './user/user.component';
+import { ReviewsModule } from './reviews/reviews.module';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
         MenuComponent,
         SearchComponent,
         AddComponent,
-        FooterComponent
+        FooterComponent,
+        UserComponent
        
     ],
     providers: [{
@@ -39,7 +42,8 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
         HttpClientModule,
         AppRoutingModule,
         FormsModule,
-        AllFormsModule
+        AllFormsModule,
+        ReviewsModule
 
     ]
 })

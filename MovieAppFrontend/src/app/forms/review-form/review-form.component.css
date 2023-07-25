@@ -1,6 +1,7 @@
 label{
     font-size: 17px;
     display: block;
+    padding-right: 0 !important;
 }
 input, textarea{
    font-size: 17px;
@@ -22,7 +23,6 @@ input:focus, textarea:focus{
  .stars{
    display: inline;
    margin-bottom: 0;
-   padding: 0;
  }
  .star{
     cursor: pointer;

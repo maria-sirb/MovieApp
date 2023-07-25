@@ -13,14 +13,20 @@ nav{
     overflow: visible;
     padding: 0 30px;
 }
-
+.user-link:hover{
+    text-decoration: underline;
+}
 .navbar-nav>a, .dropdown{
     font-size: 22px;
     color: var(--light-color);
     margin: 20px;
     font-weight: bold;
 }
-
+.dropdown button{
+    border : none;
+    background-color : inherit;
+    color: inherit;
+}
 .dropdown-menu{
     position: absolute !important;
 }

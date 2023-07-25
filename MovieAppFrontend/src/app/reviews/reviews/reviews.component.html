@@ -1,18 +1,38 @@
 <div class="d-flex justify-content-between align-items-center">
-    <h3 class = "label section-header">Reviews ({{reviews.length}}): </h3>
+    <h3 class = "label section-header">
+        <a data-bs-toggle="collapse" href="#collapse" role="button" aria-expanded="true" aria-controls="collapse" class="reviews-link">Reviews ({{reviews.length}})
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>expand</title>
+                <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+            </svg>
+        </a>
+    </h3>
     <a *ngIf = "movie" routerLink = "/add-review/{{movie.movieId}}" class = "add-review-link">+ Add Review</a>
 </div>
-<ul class = "d-flex flex-column reviews-list">
-    <li  *ngFor = "let review of reviews" class="review">
-        <div *ngIf = "review.text || review.title">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class = "title">{{review.title}}</h5>
-                <h5 class="rating"><span class="star-icon">★</span><span class ="bigger-text">{{review.rating}}</span>/10</h5>
+<div class="reviews-list collapse" id="collapse">
+    <ul class = "d-flex flex-column">
+        <li  *ngFor = "let review of reviews" class="review">
+            <div class="d-flex review-container">
+                <a *ngIf = "userId && review.movie"  class = "detail-link" routerLink = "/movie-detail/{{review.movie.movieId}}">
+                    <img class = "poster" [src] = "review.movie.poster"  (error) = "dp.addDefaultPhotoMovie(review.movie)" alt = "movie poster"/>
+                </a>
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class = "title"><span>{{review.title || '[No title]'}}</span></h5>
+                            <h5 class="rating"><span class="star-icon">★</span><span class ="bigger-text">{{review.rating}}</span>/10</h5>
+                        </div>
+                        <p class="small-text" *ngIf = "review.user">
+                            <a href="/{{review.user.role}}/{{review.user.userId}}" class="small-text">{{review.user.username}}</a>
+                            on {{review.date | date}}
+                        </p>
+                        <p *ngIf = "review.text">{{review.text}}</p>
+                        <app-vote *ngIf = "review.text || review.title" [reviewId] = "review.reviewId"></app-vote>
+                    </div>
+                    <a *ngIf = "(review.user && review.user.userId == currentUserId) || userId == currentUserId" (click)="deleteReview(review.reviewId)" class ='delete-link'>Delete</a>
+                </div>
             </div>
-            <p class="small-text" *ngIf = "review.user">{{review.user.username}} on {{review.date | date}}</p>
-            <p>{{review.text}}</p>
-            <app-vote [reviewId] = "review.reviewId"></app-vote>
-        </div>
-    </li>
-</ul>
+        </li>
+    </ul>
+</div>
 <p *ngIf ="reviews.length == 0">There are no reviews yet.</p>
