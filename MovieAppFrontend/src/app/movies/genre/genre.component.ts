@@ -24,7 +24,7 @@ export class GenreComponent implements OnInit{
   pickGenre(genre? : Genre) {
    // this.onGenrePicked.emit(genre);
    console.log(genre);
-   this.router.navigateByUrl('/', {skipLocationChange: true})
+   this.router.navigateByUrl('actors', {skipLocationChange: true})
   .then(()=> this.router.navigate([`movies/${genre?.genreId??0}/${this.sortMode}`]));
    
   }
