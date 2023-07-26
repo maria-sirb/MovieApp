@@ -10,7 +10,6 @@ import { UserStoreService } from '../shared/services/user-store.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-
   username : string= "";
   role : string = "";
   userId : number = 0;
@@ -24,6 +23,7 @@ export class MenuComponent {
     this.userStoreService.getUsernameFromStore().subscribe(res => {
       //in case of page refresh, the userStore observable will be empty, so we get the username/role properties values from the token in local storage
       this.username = res || this.authenticationService.getUsernameFromToken();
+      console.log(this.username);
       if(this.username)
         this.authenticationService.getUser(this.username).subscribe(user => {this.userId = user.userId; console.log(user)}, error => console.log(error));
     })
@@ -38,10 +38,10 @@ export class MenuComponent {
     this.authenticationService.logout();
     this.userStoreService.setRoleForStore("");
     this.userStoreService.setUsernameForStore("");
-    /*if(this.router.url.split("/").includes('user') || this.router.url.split("/").includes('admin'))
+    if(this.router.url.split("/").includes('user') || this.router.url.split("/").includes('admin'))
      { 
         this.router.navigate(['/']);
-    }*/
+    }
 
   }
 

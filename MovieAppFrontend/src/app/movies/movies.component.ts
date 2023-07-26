@@ -17,6 +17,7 @@ export class MoviesComponent implements OnInit{
   movies : Movie[] = [];
   selectedMovie? : Movie;
   sortMode = this.route.snapshot.paramMap.get('sortMode');
+  pickedGenreId = Number(this.route.snapshot.paramMap.get('genreId'));
   dp = new DefaultPhoto();
   constructor(private movieService : MovieService, private genreService : GenreService, private route : ActivatedRoute, private router : Router){
      
@@ -24,16 +25,20 @@ export class MoviesComponent implements OnInit{
 
   ngOnInit() : void {
    
-   this.getAllMovies();
+    console.log(this.pickedGenreId);
+    if(this.pickedGenreId)
+      this.genreService.getGenre(this.pickedGenreId).subscribe(genre => this.displayGenreMovies(genre));
+    else
+      this.getAllMovies();
     
   }
   getAllMovies() {
     this.movieService.getMovies().subscribe(res => {
       this.movies = res; 
-      this.movies.forEach(movie => {
+     /* this.movies.forEach(movie => {
         this.movieService.getMovieGenres(movie.movieId).subscribe(res => movie.movieGenres = res);
         this.movieService.getMovieActors(movie.movieId).subscribe(res => movie.movieActors = res);
-      });
+      });*/
 
       this.sortMovies();
     });

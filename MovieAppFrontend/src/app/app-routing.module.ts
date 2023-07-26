@@ -22,8 +22,8 @@ import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
-  {path: 'movies/:sortMode', component: MoviesComponent },
-  {path : '', redirectTo : 'movies/none', pathMatch: 'full'},
+  {path : '', redirectTo : 'movies/0/none', pathMatch: 'full'},
+  {path: 'movies/:genreId/:sortMode', component: MoviesComponent },
   {path: 'movie-detail/:movieId', component : MovieDetailComponent},
   {path : 'actors', redirectTo : '/actors/none', pathMatch: 'full'},
   {path : 'actors/:sortMode', component : ActorComponent},

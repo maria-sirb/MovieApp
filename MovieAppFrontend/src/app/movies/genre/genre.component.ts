@@ -1,7 +1,8 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Genre } from 'src/app/shared/models/genre';
 import { GenreService } from 'src/app/shared/services/genre.service';
 import { EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-genre',
@@ -11,14 +12,20 @@ import { EventEmitter } from '@angular/core';
 export class GenreComponent implements OnInit{
 
   genres :Genre[] = [];
-  @Output() onGenrePicked = new EventEmitter<any>();
-  constructor(private genreService : GenreService) {
+  activeGenreId = Number(this.route.snapshot.paramMap.get('genreId'));
+  @Input() sortMode? : string | null;
+  constructor(private genreService : GenreService, private router : Router, private route : ActivatedRoute) {
 
   }
   ngOnInit(): void {
+    console.log(this.sortMode);
     this.genreService.getGenres().subscribe(genres => this.genres = genres);
   }
   pickGenre(genre? : Genre) {
-    this.onGenrePicked.emit(genre);
+   // this.onGenrePicked.emit(genre);
+   console.log(genre);
+   this.router.navigateByUrl('/', {skipLocationChange: true})
+  .then(()=> this.router.navigate([`movies/${genre?.genreId??0}/${this.sortMode}`]));
+   
   }
 }

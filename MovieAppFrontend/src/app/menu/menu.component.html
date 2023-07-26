@@ -5,7 +5,7 @@
     </button>
     <div id="navbarCollapse" class="left-links collapse navbar-collapse">
         <div class = "navbar-nav">
-            <a routerLink="/movies/none" class="nav-item">Movies</a>
+            <a routerLink="" class="nav-item">Movies</a>
             <a routerLink = "/actors/none" class="nav-item">Actors</a>
             <a routerLink = "/directors/none" class="nav-item">Directors</a>
             <a routerLink = "/search" class="nav-item">Search</a>
@@ -17,7 +17,7 @@
             {{username||"User"}}
         </a>-->
         <button *ngIf = "!username" type="button" disabled>User</button>
-        <button *ngIf = "username" type="button"><a href="/{{role}}/{{userId}}" class="user-link">{{username}}</a></button>
+        <button *ngIf = "username" type="button"><a href="{{role}}/{{userId}}" class="user-link">{{username}}</a></button>
         <button type="button" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only"></span>
         </button>
