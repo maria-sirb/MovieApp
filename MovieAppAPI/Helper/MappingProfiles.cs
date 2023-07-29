@@ -24,6 +24,9 @@ namespace MovieAppAPI.Helper
             CreateMap<Review, ReviewDto>();
             CreateMap<VoteDto, Vote>();
             CreateMap<Vote, VoteDto>();
+            CreateMap<WatchlistDto, Watchlist>();
+            CreateMap<Watchlist, WatchlistDto>();
+        
         }
     }
 }

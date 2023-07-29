@@ -10,12 +10,10 @@ namespace MovieAppAPI.Dtos
         public int RunTime { get; set; }
         public int ReleaseYear { get; set; }
         public string Summary { get; set; }
-
         public double ImdbRating { get; set; }
         public int OscarWins { get; set; }
         public int OscarNominations { get; set; }
-
         public string StoryLine { get; set; }
-      //  public Director Director { get; set; }
+        
     }
 }

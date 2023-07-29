@@ -21,6 +21,7 @@ builder.Services.AddScoped<IMovieActorRepository, MovieActorRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IVoteRepository, VoteRepository>();
+builder.Services.AddScoped<IWatchlistRepository, WatchlistRepository>(); 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -29,10 +30,15 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddCors(policyBuilder =>
+/*builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.WithOrigins("*").AllowAnyHeader())
-);
+);*/
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("https://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+}));
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -52,7 +58,8 @@ builder.Services.AddAuthentication(options =>
 
 
 var app = builder.Build();
-app.UseCors();
+//app.UseCors();
+app.UseCors("corsapp");
 
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
     SeedData(app);

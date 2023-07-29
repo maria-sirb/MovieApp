@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieAppAPI.Models
 {
@@ -20,5 +21,7 @@ namespace MovieAppAPI.Models
         public ICollection<MovieGenre> MovieGenres {get; set;}
         public ICollection<MovieActor> MovieActors { get; set; }
         public ICollection<Review> Reviews { get; set; }
+        public ICollection<Watchlist> Watchlist { get; set; }
+       
     }
 }
