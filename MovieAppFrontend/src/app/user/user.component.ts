@@ -14,12 +14,19 @@ export class UserComponent implements OnInit{
     userId: 0,
     username: ''
   }
-  userId =  Number(this.route.snapshot.paramMap.get('userId'));
+  userId = 0;
   constructor(private authService : AuthenticationService, private route : ActivatedRoute) {}
 
   ngOnInit(): void {
-    console.log(this.userId);
-    this.authService.getUserById(this.userId).subscribe(user => {this.user = user; console.log(user)}, error => console.log(error));
+    
+    //this.userId =  Number(this.route.snapshot.paramMap.get('userId'));
+    this.route.paramMap.subscribe(paramMap => 
+      {
+        this.userId = Number(paramMap.get('userId'));
+        console.log(this.userId);
+        this.authService.getUserById(this.userId).subscribe(user => {this.user = user; console.log(user)}, error => console.log(error));
+    });
+   
   }
 
 
