@@ -36,7 +36,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 );*/
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("https://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+    /*builder.WithOrigins("https://localhost:4200")
+           .AllowAnyMethod()
+           .WithHeaders("authorization", "accept", "content-type", "origin");*/
+    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
 
 builder.Services.AddAuthentication(options =>
