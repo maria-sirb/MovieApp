@@ -19,17 +19,16 @@ export class MenuComponent {
   }
 
   ngOnInit() : void {
-    //subscribe to the userStore so when the store username/role values change, the username and role properties will get updated without refreshing the page
-    this.userStoreService.getUsernameFromStore().subscribe(res => {
-      //in case of page refresh, the userStore observable will be empty, so we get the username/role properties values from the token in local storage
-      this.username = res || this.authenticationService.getUsernameFromToken();
-      console.log(this.username);
-      if(this.username)
-        this.authenticationService.getUser(this.username).subscribe(user => {this.userId = user.userId; console.log(user)}, error => console.log(error));
-    })
 
+    //subscribe to the userStore so when the store username/role values change, the username and role properties will get updated without refreshing the page
     this.userStoreService.getRoleFromStore().subscribe(res => {
-      this.role = res || this.authenticationService.getRoleFromToken();
+      this.role = res || this.authenticationService.getRoleFromToken(); //in case of page refresh, the userStore observable will be empty, so we get the username/role/id properties values from the token in local storage
+    })
+    this.userStoreService.getUsernameFromStore().subscribe(res => {
+      this.username = res || this.authenticationService.getUsernameFromToken();
+    })
+    this.userStoreService.getIdFromStore().subscribe(res => {
+      this.userId = Number(res) || Number(this.authenticationService.getIdFromToken());
     })
 
   }
@@ -38,8 +37,9 @@ export class MenuComponent {
     this.authenticationService.logout();
     this.userStoreService.setRoleForStore("");
     this.userStoreService.setUsernameForStore("");
+    this.userStoreService.setIdForStore("");
     if(this.router.url.split("/").includes('user') || this.router.url.split("/").includes('admin'))
-     { 
+    { 
         this.router.navigate(['/']);
     }
 

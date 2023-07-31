@@ -24,10 +24,8 @@ export class ReviewsComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.userStoreService.getUsernameFromStore().subscribe(res => {
-      const currentUsername = res || this.authService.getUsernameFromToken();
-      if(currentUsername)
-        this.authService.getUser(currentUsername).subscribe(user => this.currentUserId = user.userId, error => console.log(error));
+    this.userStoreService.getIdFromStore().subscribe(res => {
+      this.currentUserId = res || this.authService.getIdFromToken();
     })
 
     if(this.movie)

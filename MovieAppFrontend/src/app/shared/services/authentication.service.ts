@@ -64,4 +64,8 @@ export class AuthenticationService {
     if(this.userPayload)
       return this.userPayload.role;
   }
+  getIdFromToken(){
+    if(this.userPayload)
+      return this.userPayload.nameid;
+  }
 }

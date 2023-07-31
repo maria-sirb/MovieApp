@@ -35,21 +35,19 @@ export class VoteComponent implements OnInit{
             this.dislikesNo++;}
         ), error => console.log(error));
 
-    this.userStoreService.getUsernameFromStore().subscribe(res => {
-      const username = res || this.authenticationService.getUsernameFromToken();
-      this.authenticationService.getUser(username).subscribe(user => {
-        if(user == null)
-        {
-          this.currentVote = {voteId : 0, isLike : false, isDislike : false};
-        }
-        else if(this.reviewId)
-        {
-          this.currentUserId = user.userId;
-          this.voteService.getUserReviewVote(this.reviewId, user.userId).subscribe(vote => {
-            this.currentVote = vote || {voteId : 0, isLike : false, isDislike : false};
-          }, error => console.log(error));
-        }
-      }, error => console.log(error));
+    this.userStoreService.getIdFromStore().subscribe(userId => {
+      this.currentUserId = Number(userId) || Number(this.authenticationService.getIdFromToken()) || 0;
+      if(this.currentUserId == 0)
+      {
+        this.currentVote = {voteId : 0, isLike : false, isDislike : false};
+      }
+      else if(this.reviewId)
+      {
+        this.voteService.getUserReviewVote(this.reviewId, this.currentUserId).subscribe(vote => {
+          this.currentVote = vote || {voteId : 0, isLike : false, isDislike : false};
+        }, error => console.log(error));
+      }
+      
     })  
   }
 

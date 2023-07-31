@@ -28,16 +28,19 @@ export class LoginFormComponent {
   login(data : any){
     this.authenticationService.loginUser(this.user).subscribe(response => {
     
+      console.log(response);
       this.authenticationService.storeToken(response.body.token);
 
       const username = this.authenticationService.getUsernameFromToken();
       const role = this.authenticationService.getRoleFromToken();
+      const id = this.authenticationService.getIdFromToken();
       this.userStoreService.setUsernameForStore(username);
       this.userStoreService.setRoleForStore(role);
+      this.userStoreService.setIdForStore(id);
 
       //this.router.navigate(['']);
       this.location.back();
-    }, error => this.errors = error.error)
+    }, error => {this.errors = error.error; console.log(error)})
   }
 
   cancel(){
