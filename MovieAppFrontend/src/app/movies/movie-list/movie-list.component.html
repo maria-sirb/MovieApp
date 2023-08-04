@@ -1,0 +1,5 @@
+<ul class = "movies-list">
+    <li class = "movie" *ngFor = "let movie of movies" id = {{movie.movieId}}>
+        <app-movie-card [movie] = "movie" [watchlist] = "currentUserWatchlist" *ngIf = "movie && currentUserWatchlist"></app-movie-card>
+    </li>
+</ul>

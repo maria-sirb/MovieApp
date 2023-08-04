@@ -1,0 +1,53 @@
+:host-context(app-movies) .movies-list,
+:host-context(app-search) .movies-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline-start: 0;
+    padding-bottom: 50px;
+}
+:host-context(app-movies) .movies-list{
+    top: 140px;
+    position: relative;
+}
+:host-context(app-actor-detail) .movies-list,
+:host-context(app-director-detail) .movies-list{
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 25px;
+    padding-left: 25px;
+    padding-top: 10px;
+}
+:host-context(app-actor-detail) .movies-list li,
+:host-context(app-director-detail) .movies-list li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 340px;
+    min-width: 200px;
+    margin: 0px 10px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    float: left;
+}
+.movies-list li{
+    position: relative;
+    list-style-type: none;
+    float: left;
+    height: 320px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 40px;   
+}
+
+@media(max-width: 415px){
+ 
+    .movies-list li{
+        margin: 15px 0px !important;
+    }
+}
