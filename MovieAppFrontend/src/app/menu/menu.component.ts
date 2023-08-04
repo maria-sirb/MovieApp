@@ -20,6 +20,8 @@ export class MenuComponent {
 
   ngOnInit() : void {
 
+    if(this.authenticationService.isTokenExpired())
+      this.logout();
     //subscribe to the userStore so when the store username/role values change, the username and role properties will get updated without refreshing the page
     this.userStoreService.getRoleFromStore().subscribe(res => {
       this.role = res || this.authenticationService.getRoleFromToken(); //in case of page refresh, the userStore observable will be empty, so we get the username/role/id properties values from the token in local storage
@@ -43,6 +45,11 @@ export class MenuComponent {
         this.router.navigate(['/']);
     }
 
+  }
+
+  deleteAccount(){
+    this.authenticationService.deleteUser(this.userId).subscribe(res => console.log(res), err => console.log(err));
+    this.logout();
   }
 
 }

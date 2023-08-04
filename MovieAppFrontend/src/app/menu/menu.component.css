@@ -39,3 +39,19 @@ a{
     outline: none;
     box-shadow: none;
 }
+.modal-content, .close{
+    background-color: var(--darkish-color);
+    color: var(--light-color);
+}
+.modal-title svg{
+    height: 30px;
+    margin-right: 10px;
+}
+.modal-title svg path{
+    fill: var(--light-color);
+}
+.close{
+    outline: none;
+    border: none;
+    font-size: 40px;
+}

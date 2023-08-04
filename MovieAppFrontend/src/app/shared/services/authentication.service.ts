@@ -11,7 +11,7 @@ export class AuthenticationService {
   private baseUrl : string =  'https://localhost:7172/api/User';
   private userPayload;
 
-  constructor(private client : HttpClient) { 
+  constructor(private client : HttpClient, private jwtHelper : JwtHelperService) { 
     this.userPayload = this.decodeToken();
   }
   
@@ -29,6 +29,10 @@ export class AuthenticationService {
 
   loginUser(user : any) : Observable<any>{
     return this.client.post<any>(this.baseUrl + '/authenticate', user, {observe : 'response'});
+  }
+
+  deleteUser(userId : number) : Observable<any>{
+    return this.client.delete<any>(this.baseUrl + "/" + userId);
   }
   
   storeToken(tokenValue : string){
@@ -49,10 +53,14 @@ export class AuthenticationService {
     this.userPayload = null;
   }
 
-  decodeToken(){
-    const jwtHelper = new JwtHelperService();
+  isTokenExpired() : boolean{
     const token = this.getToken()??"";  
-    return jwtHelper.decodeToken(token);
+    return this.jwtHelper.isTokenExpired(token);
+  }
+
+  decodeToken(){
+    const token = this.getToken()??"";  
+    return this.jwtHelper.decodeToken(token);
   }
 
   getUsernameFromToken(){

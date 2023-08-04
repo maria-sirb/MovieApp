@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { UserComponent } from './user/user.component';
 import { ReviewsModule } from './reviews/reviews.module';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 
 @NgModule({
@@ -32,7 +33,12 @@ import { ReviewsModule } from './reviews/reviews.module';
         provide : HTTP_INTERCEPTORS,
         useClass : TokenInterceptor,
         multi : true
-    }],
+    },
+    { 
+        provide: JWT_OPTIONS, useValue: JWT_OPTIONS 
+    },
+    JwtHelperService
+    ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
