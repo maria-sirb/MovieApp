@@ -41,6 +41,10 @@ a{
 .small-text a:hover{
     text-decoration: underline;
 }
+h3 span{
+    font-size: 20px;
+    color : rgb(143, 142, 142);
+}
 .bigger-text{
     font-size: 26px;
     color: var(--light-color);

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center">
     <h3 class = "label section-header">
-        <a data-bs-toggle="collapse" href="#collapse" role="button" aria-expanded="true" aria-controls="collapse" class="reviews-link">Reviews ({{reviews.length}})
+        <a data-bs-toggle="collapse" href="#collapse" role="button" aria-expanded="true" aria-controls="collapse" class="reviews-link">Reviews <span>({{reviews.length}})</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <title>expand</title>
                 <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
@@ -26,7 +26,7 @@
                             <a href="/{{review.user.role}}/{{review.user.userId}}" class="small-text">{{review.user.username}}</a>
                             on {{review.date | date}}
                         </p>
-                        <p class = "small-text" *ngIf = "!review.user">
+                        <p class = "small-text" *ngIf = "!review.user && !userId">
                             [deleted] on {{review.date | date}}
                         </p>
                         <p *ngIf = "review.text">{{review.text}}</p>
@@ -36,6 +36,8 @@
                 </div>
             </div>
         </li>
+        <li *ngIf ="reviews.length == 0">
+            <p>There are no reviews yet.</p>
+        </li>
     </ul>
 </div>
-<p *ngIf ="reviews.length == 0">There are no reviews yet.</p>
