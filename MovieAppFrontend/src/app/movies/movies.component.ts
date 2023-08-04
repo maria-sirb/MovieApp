@@ -6,6 +6,9 @@ import { GenreService } from '../shared/services/genre.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { DefaultPhoto } from '../shared/functions/default-photos';
+import { UserStoreService } from '../shared/services/user-store.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { WatchlistService } from '../shared/services/watchlist.service';
 
 @Component({
   selector: 'app-movies',
@@ -19,13 +22,24 @@ export class MoviesComponent implements OnInit{
   sortMode = this.route.snapshot.paramMap.get('sortMode');
   pickedGenreId = Number(this.route.snapshot.paramMap.get('genreId'));
   dp = new DefaultPhoto();
-  constructor(private movieService : MovieService, private genreService : GenreService, private route : ActivatedRoute, private router : Router){
+  currentUserId = 0;
+  currentUserWatchlist : Movie[] | undefined = undefined;
+
+  constructor(private movieService : MovieService, private genreService : GenreService, private userStoreService : UserStoreService, private authService : AuthenticationService, private watchlistService : WatchlistService, private route : ActivatedRoute, private router : Router){
      
   }
 
-  ngOnInit() : void {
-   
-    console.log(this.pickedGenreId);
+  ngOnInit() : void {   
+    this.userStoreService.getIdFromStore().subscribe(id => {
+      this.currentUserId = Number(id) || Number(this.authService.getIdFromToken());  
+      if(this.currentUserId)  
+        this.watchlistService.getUserWatchlist(this.currentUserId).subscribe(watchlist => {
+          this.currentUserWatchlist = watchlist;
+        }, error => console.log(error));  
+      else 
+        this.currentUserWatchlist = [];
+    });
+ 
     if(this.pickedGenreId)
       this.genreService.getGenre(this.pickedGenreId).subscribe(genre => this.displayGenreMovies(genre));
     else
@@ -35,11 +49,6 @@ export class MoviesComponent implements OnInit{
   getAllMovies() {
     this.movieService.getMovies().subscribe(res => {
       this.movies = res; 
-     /* this.movies.forEach(movie => {
-        this.movieService.getMovieGenres(movie.movieId).subscribe(res => movie.movieGenres = res);
-        this.movieService.getMovieActors(movie.movieId).subscribe(res => movie.movieActors = res);
-      });*/
-
       this.sortMovies();
     });
   }
@@ -62,6 +71,7 @@ export class MoviesComponent implements OnInit{
     this.router.navigate([`../${this.sortMode}`], { relativeTo: this.route });
     this.sortMovies();
   }
+  
   sortMovies()
   {
     if(this.sortMode == 'none')

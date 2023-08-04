@@ -1,4 +1,29 @@
 <div class = "container">
-    <h3>{{user.username}}<span *ngIf ="user.role == 'admin'"> ({{user.role}})</span></h3>
-    <app-reviews [userId] = "userId"></app-reviews>
+    <div>
+        <h3>{{user.username}}<span *ngIf ="user.role == 'admin'"> ({{user.role}})</span></h3>
+        <app-reviews [userId] = "userId"></app-reviews>
+    </div>
+    <div>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class = "label section-header">
+                <a data-bs-toggle="collapse" href="#collapse-watchlist" role="button" aria-expanded="true" aria-controls="collapse-watchlist" class="watchlist-link">Watchlist <span>({{watchlist.length}})</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <title>expand</title>
+                        <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+                    </svg>
+                </a>
+            </h3>
+        </div>
+        <div class="collapse" id="collapse-watchlist">
+            <ul class ="watchlist">
+                <li class="watchlist-item" *ngFor = "let movie of watchlist">
+                    <app-movie-card [movie] = "movie" [watchlist] = "currentUserWatchlist" *ngIf = "movie && currentUserWatchlist"></app-movie-card>
+                </li>
+                <li *ngIf ="watchlist.length == 0">
+                    <p>Your watchlist is empty.</p>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
 </div>

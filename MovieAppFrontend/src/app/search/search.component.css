@@ -1,18 +1,15 @@
-.movie-list-search, .actor-list-search, .director-list-search{
+.actor-list-search, .director-list-search{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     padding-inline-start: 0;
     min-height: 100%;
-  }
-  .movie-list-search li{
-    height: 320px;
-  }
-  .actor-list-search li,
-  .director-list-search li{
+}
+.actor-list-search li,
+.director-list-search li{
     height: 255px;
-  }
+}
 li{
    
     list-style-type: none;

@@ -3,21 +3,3 @@ img {
     height:auto;
     box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;  
 }
-li img{
-    position: absolute; 
-    top: 0px;
-    left: 0;
-}
-
-li>a{
-    position: relative;
-    float: left;
-    width: 200px;
-    height: 100%;
-    display: flex;
-    flex-direction: column-reverse;
-    text-align: center;
-}
-a{
-    color: var(--light-color);
-}

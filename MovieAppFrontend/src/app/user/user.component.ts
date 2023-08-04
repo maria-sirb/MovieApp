@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { User } from '../shared/models/user';
+import { Movie } from '../shared/models/movie';
+import { WatchlistService } from '../shared/services/watchlist.service';
+import { UserStoreService } from '../shared/services/user-store.service';
 
 @Component({
   selector: 'app-user',
@@ -15,17 +18,29 @@ export class UserComponent implements OnInit{
     username: ''
   }
   userId = 0;
-  constructor(private authService : AuthenticationService, private route : ActivatedRoute) {}
+  watchlist : Movie[] = [];//the watchlist of the user whose profile is being viewed
+  currentUserWatchlist : Movie[] | undefined = undefined// the watchlist of the currently active user
+
+  constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private watchlistService : WatchlistService, private route : ActivatedRoute) {}
 
   ngOnInit(): void {
     
-    //this.userId =  Number(this.route.snapshot.paramMap.get('userId'));
     this.route.paramMap.subscribe(paramMap => 
       {
         this.userId = Number(paramMap.get('userId'));
-        console.log(this.userId);
         this.authService.getUserById(this.userId).subscribe(user => {this.user = user; console.log(user)}, error => console.log(error));
+        this.watchlistService.getUserWatchlist(this.userId).subscribe(watchlist => this.watchlist = watchlist, error => console.log(error));
     });
+
+    this.userStoreService.getIdFromStore().subscribe(id =>
+      {  
+        var currUserId = Number(id) || Number(this.authService.getIdFromToken());
+        if(currUserId)
+          this.watchlistService.getUserWatchlist(currUserId).subscribe(watchlist => this.currentUserWatchlist = watchlist, error => console.log(error));
+        else
+          this.currentUserWatchlist = [];
+      }
+    )
    
   }
 

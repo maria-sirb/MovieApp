@@ -16,12 +16,5 @@
     </div>
     </div>
     <h3 class="section-header">Movies: </h3>
-    <ul class = "detail-movie-list">
-        <li *ngFor = "let movie of actor.movieActors">
-            <a class = "detail-link" routerLink="/movie-detail/{{movie.movieId}}">
-                <img class = "poster" [src] = "movie.poster" (error)= "dp.addDefaultPhotoMovie(movie)"/>
-                <p style = "font-weight: bold">{{movie.title}}</p>
-            </a>
-        </li>
-    </ul>
+    <app-movie-list [movies] ="actor.movieActors" *ngIf = "actor.movieActors"></app-movie-list>
 </div>

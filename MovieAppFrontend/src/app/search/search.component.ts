@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../shared/services/movie.service';
 import { ActorsService } from '../shared/services/actors.service';
 import { DirectorService } from '../shared/services/director.service';
@@ -6,13 +6,16 @@ import { Movie } from '../shared/models/movie';
 import { Actor } from '../shared/models/actor';
 import { Director } from '../shared/models/director';
 import { DefaultPhoto } from '../shared/functions/default-photos';
+import { UserStoreService } from '../shared/services/user-store.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { WatchlistService } from '../shared/services/watchlist.service';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent {
+export class SearchComponent{
 
   movies? : Movie[];
   actors? : Actor[];

@@ -8,13 +8,17 @@ import { AllFormsModule } from '../forms/all-forms.module';
 import { FormsModule } from '@angular/forms';
 import { AppModule } from '../app.module';
 import { ReviewsModule } from '../reviews/reviews.module';
+import { MovieCardComponent } from './movie-card/movie-card.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
 
 
 @NgModule({
   declarations: [
     MoviesComponent,
     MovieDetailComponent,
-    GenreComponent
+    GenreComponent,
+    MovieCardComponent,
+    MovieListComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,9 @@ import { ReviewsModule } from '../reviews/reviews.module';
 
   exports : [
    MoviesComponent,
-   MovieDetailComponent
+   MovieDetailComponent,
+   MovieCardComponent,
+   MovieListComponent
   ]
   
 })

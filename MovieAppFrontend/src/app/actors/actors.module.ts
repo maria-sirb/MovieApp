@@ -4,6 +4,7 @@ import { ActorComponent } from './actor/actor.component';
 import { ActorDetailComponent } from './actor-detail/actor-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { Form, FormsModule } from '@angular/forms';
+import { MoviesModule } from '../movies/movies.module';
 
 
 
@@ -15,7 +16,8 @@ import { Form, FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    MoviesModule
   ],
   exports : [
     ActorComponent,

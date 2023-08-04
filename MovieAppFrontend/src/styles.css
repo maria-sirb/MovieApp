@@ -139,30 +139,6 @@ header{
   justify-content: center;
   padding-inline-start: 0;
 }
-
-.detail-movie-list{
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  gap: 25px;
-  padding-left: 25px;
- }
- .detail-movie-list p{
-     margin-bottom:0;
-     white-space: nowrap;
- }
- .detail-movie-list li{
-     padding-top: 10px;
-     padding-bottom: 10px;
-     height: 340px;
-     min-width: 200px;
-     margin: 0px 10px;
-     width: auto;
-     display: flex;
-     flex-direction: column;
-     justify-content: flex-start;
-     float: left;
- }
 img, .photo, .poster{
     width: 200px !important;
     height:265px !important;
@@ -184,6 +160,11 @@ li .detail-link:hover .poster{
   transform: scale(1.03);
   border: 2px solid var(--accent-color);
   transition:all 0.2s ease-in-out;
+}
+.detail-link:hover .save-btn-container{
+  transform: scale(1.03);
+  transition:all 0.2s ease-in-out;
+  border: 2px solid var(--accent-color);
 }
 li .detail-link:hover h3,
 li .detail-link:hover h5{

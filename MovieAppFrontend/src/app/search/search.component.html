@@ -8,14 +8,7 @@
 <div class = "results-container">
 <div *ngIf = "movies?.length   && query.value">
     <h1 class="section-header">Movies : </h1>
-    <ul class = "movie-list-search">
-        <li *ngFor = "let movie of movies">
-            <a class = "detail-link" routerLink = "/movie-detail/{{movie.movieId}}">
-                <h5>{{movie.title}}</h5>
-                <img class = "poster" [src] = "movie.poster"  (error) = "dp.addDefaultPhotoMovie(movie)" alt = "movie poster"/>
-            </a>
-        </li>
-    </ul>
+    <app-movie-list [movies] = "movies" *ngIf = "movies"></app-movie-list>
 </div>
 <div *ngIf = "actors?.length  && query.value">
     <h1 class="section-header">Actors : </h1>
