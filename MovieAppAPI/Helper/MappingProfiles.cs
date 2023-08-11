@@ -20,6 +20,8 @@ namespace MovieAppAPI.Helper
             CreateMap<MovieActorDto, MovieActor>();
             CreateMap<UserDto, User>();
             CreateMap<User, UserDto>();
+            CreateMap<UserUpdateDto, User>();
+            CreateMap<User, UserUpdateDto>();
             CreateMap<ReviewDto, Review>();
             CreateMap<Review, ReviewDto>();
             CreateMap<VoteDto, Vote>();

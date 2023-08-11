@@ -16,10 +16,12 @@ namespace MovieAppAPI.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public UserController(IUserRepository userRepository, IMapper mapper, IWebHostEnvironment hostEnvironment)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _hostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -56,6 +58,8 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetUser(int userId)
         {
             var user = _mapper.Map<UserDto>(_userRepository.GetUser(userId));
+            if(!String.IsNullOrEmpty(user.ImageName))
+                user.ImageSource = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/images/{user.ImageName}";
             if (!ModelState.IsValid)
             {
                 return BadRequest();
@@ -95,8 +99,6 @@ namespace MovieAppAPI.Controllers
             if (_userRepository.UserExists(userCreate.Email))
             {
                 ModelState.AddModelError("email", "Email  already exists.");
-                // return StatusCode(500, ModelState);
-                // return BadRequest("Email already exists.");
                 return BadRequest(ModelState);
             }
 
@@ -106,7 +108,6 @@ namespace MovieAppAPI.Controllers
             if (user != null)
             {
                  ModelState.AddModelError("username", "Username not available.");
-                // return StatusCode(500, ModelState);
                 return BadRequest(ModelState);
             }
 
@@ -134,6 +135,45 @@ namespace MovieAppAPI.Controllers
             return Ok();
         }
 
+        [HttpPut("{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public IActionResult UpdateUser(int userId, [FromForm]UserUpdateDto updatedUser)
+        {
+            if (updatedUser == null)
+                return BadRequest();
+            if (userId != updatedUser.UserId)
+                return BadRequest();
+            if (!_userRepository.UserExists(userId))
+                return NotFound();
+            var userMap = _mapper.Map<User>(updatedUser);
+            if(_userRepository.UsernameExistsUpdate(userId, userMap.Username))
+            {
+                ModelState.AddModelError("username", "Username not available.");
+                return BadRequest(ModelState);
+            }
+            if (!ModelState.IsValid)
+                return BadRequest();
+            if (updatedUser.ImageFile != null)
+            {
+                //if the user adds a new image, delete their previous profile image from the system
+                if (!String.IsNullOrEmpty(updatedUser.ImageName))
+                    DeleteImage(updatedUser.ImageName);
+                userMap.ImageName = SaveImage(updatedUser.ImageFile);
+            }
+            //if the user wishes only to delete their current image 
+            else if (updatedUser.ImageFile == null && String.IsNullOrEmpty(updatedUser.ImageSource) && !String.IsNullOrEmpty(updatedUser.ImageName))
+            {
+                DeleteImage(updatedUser.ImageName);
+                userMap.ImageName = "";
+            }
+            if (!_userRepository.UpdateUser(userMap))
+                return BadRequest("Something went wrong while updating the user.");
+            userMap.Token = _userRepository.CreateJwt(userMap);
+            return Ok(userMap);
+        }
+
         [HttpDelete("{userId}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
@@ -153,6 +193,27 @@ namespace MovieAppAPI.Controllers
             return NoContent();
 
         }
+        [NonAction]
+        public string SaveImage(IFormFile imageFile)
+        {
+            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-')
+                                + DateTime.Now.ToString("yymmddssfff") + Path.GetExtension(imageFile.FileName);
+            string imagePath = Path.Combine(_hostEnvironment.ContentRootPath,"Images", imageName);
+            using(FileStream fileStream  = new FileStream(imagePath, FileMode.Create))
+            {
+                imageFile.CopyTo(fileStream);
+            }
+            return imageName;
 
+        }
+
+        [NonAction]
+        public void DeleteImage(string imageName)
+        {
+            string imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
+
+        }
     }
 }

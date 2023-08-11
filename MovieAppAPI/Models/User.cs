@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieAppAPI.Models
 {
@@ -11,8 +12,14 @@ namespace MovieAppAPI.Models
         public string Password { get; set; } 
         public string Role { get; set; }
         public string Token { get; set; }
+        public string ImageName { get; set; }
+        //[NotMapped]
+       // public IFormFile ImageFile { get; set; }
+        [NotMapped]
+        public string ImageSource { get; set; }
         public ICollection<Vote> Votes { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Watchlist> Watchlist { get; set; }
+
     }
 }

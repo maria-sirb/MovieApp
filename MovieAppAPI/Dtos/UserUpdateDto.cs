@@ -1,17 +1,19 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MovieAppAPI.Dtos
 {
-    public class UserDto
+    public class UserUpdateDto
     {
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Token { get; set; }
-        public string ImageName { get; set; }
+        public string? ImageName { get; set; }
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string ImageSource { get; set; }
-        //public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
 }

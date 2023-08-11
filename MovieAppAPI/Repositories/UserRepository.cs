@@ -42,11 +42,22 @@ namespace MovieAppAPI.Repositories
             return _context.Users.Any(u => u.Email == email);
         }
 
+        public bool UsernameExistsUpdate(int updatedUserId, string username)
+        {
+            return _context.Users.Any(u => u.UserId != updatedUserId && u.Username == username);
+        }
+
         public bool CreateUser(User user)
         {
             _context.Add(user);
             return Save();
 
+        }
+
+        public bool UpdateUser(User user)
+        {
+            _context.Update(user);
+            return Save();
         }
 
         public bool DeleteUser(User user)

@@ -91,6 +91,8 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetReviewAuthor(int reviewId)
         {
             var user = _reviewRepository.GetReviewAuthor(reviewId);
+            if (user != null && !String.IsNullOrEmpty(user.ImageName))
+                user.ImageSource = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/images/{user.ImageName}";
             if (!ModelState.IsValid)
                 return BadRequest();
             return Ok(user);
