@@ -16,7 +16,9 @@ export class SignupFormComponent {
     email : "",
     password : "",
     role : "",
-    token : ""
+    token : "",
+    imageName : "",
+    imageSource : ""
   }
   errors : any = {};
 

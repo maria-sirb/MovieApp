@@ -9,6 +9,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ReviewFormComponent } from './review-form/review-form.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ReviewFormComponent } from './review-form/review-form.component';
    RoleFormComponent,
    SignupFormComponent,
    LoginFormComponent,
-   ReviewFormComponent
+   ReviewFormComponent,
+   UserFormComponent
   ],
   imports: [
     CommonModule,

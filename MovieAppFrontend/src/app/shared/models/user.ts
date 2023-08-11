@@ -4,5 +4,8 @@ export interface User{
     email? : string,
     role? : string,
     password? : string,
-    token? : string
+    token? : string,
+    imageName? : string,
+    imageSource? : string,
+    imageFile? : File
 }

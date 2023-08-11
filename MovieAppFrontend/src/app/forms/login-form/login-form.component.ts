@@ -17,7 +17,9 @@ export class LoginFormComponent {
     email : "",
     password : "",
     role : "",
-    token : ""
+    token : "",
+    imageName : "",
+    imageSource : ""
   }
   errors = "";
 

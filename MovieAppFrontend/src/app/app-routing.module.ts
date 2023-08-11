@@ -18,6 +18,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { ReviewFormComponent } from './forms/review-form/review-form.component';
 import { ReviewsComponent } from './reviews/reviews/reviews.component';
 import { UserComponent } from './user/user.component';
+import { UserFormComponent } from './forms/user-form/user-form.component';
 
 
 
@@ -41,7 +42,8 @@ const routes: Routes = [
   {path: 'signup', component : SignupFormComponent},
   {path : 'login', component : LoginFormComponent},
   {path : 'add-review/:movieId', component : ReviewFormComponent, canActivate : [AuthGuard]},
-  {path : ':role/:userId', component : UserComponent}
+  {path : ':role/:userId', component : UserComponent},
+  {path : 'profile/edit/:userId', component : UserFormComponent, canActivate : [AuthGuard]}
 ];
 
 @NgModule({

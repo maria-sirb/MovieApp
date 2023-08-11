@@ -1,0 +1,26 @@
+<div class="user-form-container">
+    <h1>Edit profile</h1>
+    <form #userForm = ngForm (ngSubmit)="updateUser()">
+       <div class="d-flex flex-column align-items-center">   
+           <img [src] = "imageSrc || user.imageSource || '../assets/person.jpg'" class="photo"/>
+           <div class="d-flex align-items-center justify-content-between image-file-container">
+                <label for ="profileImage" class="choose-image">Choose image</label>
+                <a (click)="deleteProfileImage()" class="remove-image">Remove image</a>
+                <input type="file" name ="profileImage" id = "profileImage" placeholder="Upload file" (change) = "readFile($event)" accept="image/*" ngModel/>
+           </div>
+       </div>
+        <div class = "row">
+            <div class = "form-group col-md-12">
+                <label for = "username" class="label">*Username</label>
+                <input type = "text" id="username" name = "username" [(ngModel)]="user.username" (keyup)= "errors = ''" required ngModel/>
+            </div>
+            <div class="errors" *ngIf = "errors.Username">
+                {{errors.Username[0]}}
+            </div>
+        </div>
+        <div class = "buttons">
+            <button class="cancel" type="button" (click)="cancel()">Cancel</button>
+            <input class = "submit" type = "submit" value = "Update" [disabled]="!userForm.form.valid"/>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,10 @@
 <div class = "container">
     <div>
-        <h3>{{user.username}}<span *ngIf ="user.role == 'admin'"> ({{user.role}})</span></h3>
+        <div class="d-flex flex-column align-items-center top-profile-info">
+            <img class = "photo" [src] = "user.imageSource || '../assets/person.jpg'"/>
+            <h3>{{user.username}}<span *ngIf ="user.role == 'admin'"> ({{user.role}})</span></h3>
+            <a class="edit-link" *ngIf = "currentUserId == userId" routerLink="/profile/edit/{{currentUserId}}">Edit profile</a>
+        </div>
         <app-reviews [userId] = "userId"></app-reviews>
     </div>
     <div>

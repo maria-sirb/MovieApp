@@ -20,6 +20,7 @@ export class UserComponent implements OnInit{
   userId = 0;
   watchlist : Movie[] = [];//the watchlist of the user whose profile is being viewed
   currentUserWatchlist : Movie[] | undefined = undefined// the watchlist of the currently active user
+  currentUserId = 0;
 
   constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private watchlistService : WatchlistService, private route : ActivatedRoute) {}
 
@@ -34,9 +35,9 @@ export class UserComponent implements OnInit{
 
     this.userStoreService.getIdFromStore().subscribe(id =>
       {  
-        var currUserId = Number(id) || Number(this.authService.getIdFromToken());
-        if(currUserId)
-          this.watchlistService.getUserWatchlist(currUserId).subscribe(watchlist => this.currentUserWatchlist = watchlist, error => console.log(error));
+        this.currentUserId = Number(id) || Number(this.authService.getIdFromToken());
+        if(this.currentUserId)
+          this.watchlistService.getUserWatchlist(this.currentUserId).subscribe(watchlist => this.currentUserWatchlist = watchlist, error => console.log(error));
         else
           this.currentUserWatchlist = [];
       }

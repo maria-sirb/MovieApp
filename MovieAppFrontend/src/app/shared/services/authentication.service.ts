@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class AuthenticationService {
 
   loginUser(user : any) : Observable<any>{
     return this.client.post<any>(this.baseUrl + '/authenticate', user, {observe : 'response'});
+  }
+
+  editUser(user : User){
+    const formData = new FormData();
+    Object.entries(user).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    return this.client.put<any>(this.baseUrl + "/" + user.userId, formData, {observe : 'response'});
   }
 
   deleteUser(userId : number) : Observable<any>{
