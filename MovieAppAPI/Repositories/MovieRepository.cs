@@ -45,9 +45,7 @@ namespace MovieAppAPI.Repositories
 
         public ICollection<Movie> GetMovies(string? input)
         {
-            //   return _context.Movies.ToList().Where(m => Search(m, input)).OrderBy(m => m.MovieId).ToList();
             return _context.Movies.ToList().Where(m => Search(m, input)).OrderByDescending(m => GetSearchScore(m, input)).ToList();
-          
         }
 
         public ICollection<MovieActor> GetRolesInMovie(int id)
@@ -62,29 +60,6 @@ namespace MovieAppAPI.Repositories
         public bool MovieExists(string title)
         {
             return _context.Movies.Any(m => m.Title.ToLower() == title.ToLower());
-        }
-        public bool CreateMovie(int actorId, int genreId, string role, Movie movie)
-        {
-            var movieActorEntity = _context.Actors.Where(a => a.ActorId == actorId).FirstOrDefault();
-            var movieGenreEntity = _context.Genres.Where(g => g.GenreId == genreId).FirstOrDefault();
-            var movieActor = new MovieActor()
-            {
-                Actor = movieActorEntity,
-                Movie = movie,
-                Role = role
-            };
-            _context.Add(movieActor);
-            var movieGenre = new MovieGenre()
-            {
-                Genre = movieGenreEntity,
-                Movie = movie
-
-            };
-            _context.Add(movieGenre);
-
-            _context.Add(movie);
-            return Save();
-
         }
         public bool CreateMovie(List<int> genreIds, Movie movie)
         {

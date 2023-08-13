@@ -17,11 +17,13 @@ namespace MovieAppAPI.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public UserController(IUserRepository userRepository, IMapper mapper, IWebHostEnvironment hostEnvironment)
+        private readonly IPasswordHasher _passwordHasher;
+        public UserController(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher, IWebHostEnvironment hostEnvironment)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _hostEnvironment = hostEnvironment;
+            _passwordHasher = passwordHasher;
         }
 
         [HttpGet]
@@ -75,16 +77,12 @@ namespace MovieAppAPI.Controllers
         {
             if (userVerify == null)
                 return BadRequest();
-
-            var user = _userRepository.GetUsers()
-                        .Where(u => u.Email == userVerify.Email && PasswordHasher.VerifyPassword(userVerify.Password, u.Password))
-                        .FirstOrDefault();
-            if (user == null)
+            if (!_userRepository.UserExists(userVerify.Email, userVerify.Password))
                 return NotFound("Password or email is incorrect.");
 
-            user.Token = _userRepository.CreateJwt(user);
+            userVerify.Token = _userRepository.CreateJwt(_mapper.Map<User>(userVerify));
 
-            return Ok(user);
+            return Ok(userVerify);
         }
 
         [HttpPost("register")]
@@ -101,11 +99,7 @@ namespace MovieAppAPI.Controllers
                 ModelState.AddModelError("email", "Email  already exists.");
                 return BadRequest(ModelState);
             }
-
-            var user = _userRepository.GetUsers()
-                        .Where(u => u.Username == userCreate.Username)
-                        .FirstOrDefault();
-            if (user != null)
+            if (_userRepository.UsernameExists(userCreate.Username))
             {
                  ModelState.AddModelError("username", "Username not available.");
                 return BadRequest(ModelState);
@@ -123,7 +117,8 @@ namespace MovieAppAPI.Controllers
                 return BadRequest();
             }
             var userMap = _mapper.Map<User>(userCreate);
-            userMap.Password = PasswordHasher.HashPassword(userMap.Password);
+            userMap.Password = _passwordHasher.HashPassword(userMap.Password);
+            //_userRepository.HashUserPassword(userMap);
             userMap.Token = "";
             if(string.IsNullOrEmpty(userCreate.Role))
                 userMap.Role = "user";

@@ -56,10 +56,7 @@ namespace MovieAppAPI.Controllers
         {
             if (roleCreate == null)
                 return BadRequest();
-            var role = _movieActorRepository.GetRoles()
-                        .Where(ma => ma.MovieId == roleCreate.MovieId && ma.ActorId == roleCreate.ActorId)
-                        .FirstOrDefault();
-            if (role != null)
+            if (_movieActorRepository.RoleExists(roleCreate.MovieId, roleCreate.ActorId))
             {
                 return BadRequest("Role already exists.");
             }

@@ -112,10 +112,7 @@ namespace MovieAppAPI.Controllers
         {
             if (actorCreate == null)
                 return BadRequest();
-            var actor = _actorRepository.GetActors()
-                        .Where(g => g.Name.Trim().ToUpper() == actorCreate.Name.TrimEnd().ToUpper())
-                        .FirstOrDefault();
-            if (actor != null)
+            if (_actorRepository.ActorExists(actorCreate.Name))
             {
                 return BadRequest("Actor already exists.");
             }

@@ -14,8 +14,6 @@ namespace MovieAppAPI.Interfaces
         Director GetMovieDirector(int id);
         bool MovieExists(int id);
         bool MovieExists(string title);
-        bool CreateMovie(int actorId, int genreId, string role, Movie movie);
-        // public bool CreateMovie(List<(int actorId, string actorRole)> actorsRoles, List<int> genreIds, Movie movie);
         public bool CreateMovie(List<int> genreIds, Movie movie);
         bool UpdateMovie(List<int> genreIds, Movie movie);
         public bool DeleteMovie(Movie movie);

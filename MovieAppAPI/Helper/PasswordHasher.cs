@@ -1,15 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.Security.Cryptography;
 
 namespace MovieAppAPI.Helper
 {
-    public class PasswordHasher
+    public class PasswordHasher : IPasswordHasher
     {
-       private static readonly int SaltSize = 16;
-       private static readonly int HashSize = 20;
-       private static readonly int Iterations = 10000;
+       private readonly int SaltSize;
+       private readonly int HashSize;
+       private readonly int Iterations;
 
-       public static string HashPassword(string password)
+        public PasswordHasher()
+        {
+            SaltSize = 16;
+            HashSize = 20;
+            Iterations = 10000;
+        }
+
+       public string HashPassword(string password)
        {
             byte[] salt = RandomNumberGenerator.GetBytes(SaltSize);
             var key = new Rfc2898DeriveBytes(password, salt, Iterations);
@@ -23,7 +31,7 @@ namespace MovieAppAPI.Helper
             return base64Hash;
        }
 
-        public static bool VerifyPassword(string password, string base64Hash)
+        public bool VerifyPassword(string password, string base64Hash)
         {
             var hashBytes = Convert.FromBase64String(base64Hash);
             var salt = new byte[SaltSize];

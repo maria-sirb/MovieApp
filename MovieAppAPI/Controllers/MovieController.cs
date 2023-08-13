@@ -43,7 +43,6 @@ namespace MovieAppAPI.Controllers
             }
             var movie = _mapper.Map<MovieDto>(_movieRepository.GetMovie(movieId));
             if(!ModelState.IsValid)
-
             {
                 return BadRequest(ModelState);
             }
@@ -147,10 +146,7 @@ namespace MovieAppAPI.Controllers
         {
             if (movieCreate == null)
                 return BadRequest();
-            var movie = _movieRepository.GetMovies()
-                        .Where(g => g.Title.Trim().ToUpper() == movieCreate.Title.TrimEnd().ToUpper() && g.ReleaseYear == movieCreate.ReleaseYear)
-                        .FirstOrDefault();
-            if (movie != null)
+            if (_movieRepository.MovieExists(movieCreate.Title))
             {
                 return BadRequest("Movie already exists.");
             }

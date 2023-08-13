@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using MovieAppAPI.Data;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -31,7 +32,6 @@ namespace MovieAppAPI.Repositories
             return _context.Users.OrderBy(u => u.UserId).ToList();
         }
 
-
         public bool UserExists(int id) 
         {
             return _context.Users.Any(u => u.UserId == id);
@@ -42,7 +42,17 @@ namespace MovieAppAPI.Repositories
             return _context.Users.Any(u => u.Email == email);
         }
 
-        public bool UsernameExistsUpdate(int updatedUserId, string username)
+        public bool UserExists(string email, string password)
+        {
+            return _context.Users.Any(u => u.Email == email && u.Password == password);
+        }
+
+        public bool UsernameExists(string username)
+        {
+            return _context.Users.Any(u => u.Username == username);
+        }
+
+        public bool UsernameExistsUpdate(int updatedUserId, string username) 
         {
             return _context.Users.Any(u => u.UserId != updatedUserId && u.Username == username);
         }
@@ -51,7 +61,6 @@ namespace MovieAppAPI.Repositories
         {
             _context.Add(user);
             return Save();
-
         }
 
         public bool UpdateUser(User user)

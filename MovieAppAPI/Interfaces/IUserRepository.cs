@@ -9,6 +9,8 @@ namespace MovieAppAPI.Interfaces
         User GetUser(string username);
         bool UserExists(int id);
         bool UserExists(string email);
+        public bool UsernameExists(string username);
+        public bool UserExists(string email, string password);
         bool UsernameExistsUpdate(int updatedUserId, string username);
         bool CreateUser(User user);
         bool UpdateUser(User user);

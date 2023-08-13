@@ -89,10 +89,7 @@ namespace MovieAppAPI.Controllers
         {
             if (directorCreate == null)
                 return BadRequest();
-            var director = _directorRepository.GetDirectors()
-                        .Where(d => d.Name.Trim().ToUpper() == directorCreate.Name.TrimEnd().ToUpper())
-                        .FirstOrDefault();
-            if (director != null)
+            if (_directorRepository.DirectorExists(directorCreate.Name))
             {
                 return BadRequest("Director already exists.");
             }
