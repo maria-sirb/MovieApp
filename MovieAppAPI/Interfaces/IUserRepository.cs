@@ -7,6 +7,7 @@ namespace MovieAppAPI.Interfaces
         ICollection<User> GetUsers();
         User GetUser(int id);
         User GetUser(string username);
+        User GetUserByEmail(string email);
         bool UserExists(int id);
         bool UserExists(string email);
         public bool UsernameExists(string username);

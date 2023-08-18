@@ -5,6 +5,7 @@ using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -25,6 +26,11 @@ namespace MovieAppAPI.Repositories
         public User GetUser(string username)
         {
             return _context.Users.Where(u => u.Username == username).FirstOrDefault();
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.Where(u => u.Email == email).FirstOrDefault();
         }
 
         public ICollection<User> GetUsers()
@@ -114,6 +120,8 @@ namespace MovieAppAPI.Repositories
             var token = jwtTokenHandler.CreateToken(tokenDescription);
             return jwtTokenHandler.WriteToken(token);
         }
+
+
 
        
     }

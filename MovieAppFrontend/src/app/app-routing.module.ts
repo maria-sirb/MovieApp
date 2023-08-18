@@ -19,6 +19,8 @@ import { ReviewFormComponent } from './forms/review-form/review-form.component';
 import { ReviewsComponent } from './reviews/reviews/reviews.component';
 import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './forms/user-form/user-form.component';
+import { ResetPasswordFormComponent } from './forms/reset-password-form/reset-password-form.component';
+import { SendResetEmailFormComponent } from './forms/send-reset-email-form/send-reset-email-form.component';
 
 
 
@@ -43,7 +45,9 @@ const routes: Routes = [
   {path : 'login', component : LoginFormComponent},
   {path : 'add-review/:movieId', component : ReviewFormComponent, canActivate : [AuthGuard]},
   {path : ':role/:userId', component : UserComponent},
-  {path : 'profile/edit/:userId', component : UserFormComponent, canActivate : [AuthGuard]}
+  {path : 'profile/edit/:userId', component : UserFormComponent, canActivate : [AuthGuard]},
+  {path: 'send-reset-email', component : SendResetEmailFormComponent},
+  {path : 'reset/:email/:emailToken', component : ResetPasswordFormComponent}
 ];
 
 @NgModule({

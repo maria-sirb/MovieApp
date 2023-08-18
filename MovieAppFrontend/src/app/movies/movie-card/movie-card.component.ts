@@ -25,15 +25,18 @@ export class MovieCardComponent implements OnInit{
 
   ngOnInit(): void {
     this.userStoreService.getIdFromStore().subscribe(id => {
-      this.currentUserId = Number(id) || Number(this.authService.getIdFromToken()); 
+      this.currentUserId = Number(id) || Number(this.authService.getIdFromToken()) || 0; 
+      if(this.currentUserId == 0)
+        this.isCurrentUserInWatchlist = false;
+      else if(this.watchlist)
+      {
+        this.watchlist.forEach(movie => {
+        if(movie.movieId == this.movie?.movieId)
+          this.isCurrentUserInWatchlist = true;
+        })
+      }
+      
     }); 
-    if(this.watchlist)
-    {
-      this.watchlist.forEach(movie => {
-      if(movie.movieId == this.movie?.movieId)
-        this.isCurrentUserInWatchlist = true;
-      })
-    }
    
   }
 

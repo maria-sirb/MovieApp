@@ -1,0 +1,24 @@
+<div class="send-reset-email-form-container">
+    <h1>Forgot Password</h1>
+    <form #emailForm = ngForm (ngSubmit)="submit(emailForm.value)">
+        <div class = "row">
+            <p>Please enter your email address. You will receive a reset password link.</p>
+            <div class = "form-group col-md-12">
+                <label for = "email" class="label">Email</label>
+                <input type = "email" id="email" name = "email" (keyup)= "errors = ''; emailSent = false;" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email = "ngModel" ngModel/>
+                <div class="errors" *ngIf="email.errors?.['pattern']">Please provide a valid email address.</div>
+            </div>
+        </div>
+        <div class="errors" *ngIf = "errors">
+            {{errors}}
+        </div>
+        <div *ngIf = "emailSent" class="success">
+            Reset password email was successfully sent!
+        </div>
+        <div class = "buttons">
+            <button class="cancel" type="button" (click) = "cancel()">Cancel</button>
+            <input class = "submit" type = "submit" value = "Send" [disabled]="!emailForm.form.valid"/>
+        </div>
+    </form> 
+</div>
+

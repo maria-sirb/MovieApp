@@ -49,7 +49,7 @@ app-root>app-actor-form, app-root>app-movie-form, app-root>app-director-form, ap
   min-height: 69vh;
 }
 
-app-login-form, app-signup-form, app-review-form, app-user-form{
+app-login-form, app-signup-form, app-review-form, app-user-form, app-send-reset-email-form, app-reset-password-form{
   min-height: 100vh;
   min-width: 100vw;
   display: flex;
@@ -326,7 +326,7 @@ li .detail-link:hover h5{
   align-items: center;
   padding: 20px;
 }
-.form-container, .auth-form-container, .user-form-container{
+.form-container, .auth-form-container, .user-form-container, .send-reset-email-form-container, .reset-password-form-container{
     border: 2px solid var(--accent-color);
     padding: 30px;
     background-color: var(--darkish-color);

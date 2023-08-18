@@ -7,6 +7,9 @@ using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
+using MovieAppAPI.UtilityService;
+using System.Security.Cryptography;
+using System.Web;
 
 namespace MovieAppAPI.Controllers
 {
@@ -18,12 +21,14 @@ namespace MovieAppAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IPasswordHasher _passwordHasher;
-        public UserController(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher, IWebHostEnvironment hostEnvironment)
+        private readonly IEmailService _emailService;
+        public UserController(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher, IWebHostEnvironment hostEnvironment, IEmailService emailService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _hostEnvironment = hostEnvironment;
             _passwordHasher = passwordHasher;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -77,12 +82,13 @@ namespace MovieAppAPI.Controllers
         {
             if (userVerify == null)
                 return BadRequest();
-            if (!_userRepository.UserExists(userVerify.Email, userVerify.Password))
+            var user = _userRepository.GetUserByEmail(userVerify.Email);
+            if (user is null || !_passwordHasher.VerifyPassword(userVerify.Password, user.Password))
                 return NotFound("Password or email is incorrect.");
 
-            userVerify.Token = _userRepository.CreateJwt(_mapper.Map<User>(userVerify));
+            user.Token = _userRepository.CreateJwt(user);
 
-            return Ok(userVerify);
+            return Ok(user);
         }
 
         [HttpPost("register")]
@@ -118,7 +124,6 @@ namespace MovieAppAPI.Controllers
             }
             var userMap = _mapper.Map<User>(userCreate);
             userMap.Password = _passwordHasher.HashPassword(userMap.Password);
-            //_userRepository.HashUserPassword(userMap);
             userMap.Token = "";
             if(string.IsNullOrEmpty(userCreate.Role))
                 userMap.Role = "user";
@@ -167,6 +172,74 @@ namespace MovieAppAPI.Controllers
                 return BadRequest("Something went wrong while updating the user.");
             userMap.Token = _userRepository.CreateJwt(userMap);
             return Ok(userMap);
+        }
+
+        [HttpPost("send-reset-email")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult SendResetEmail([FromQuery]string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+            if(user is null)
+            {
+                return NotFound("Email not found");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var tokenBytes = RandomNumberGenerator.GetBytes(64);
+            var emailToken = Convert.ToBase64String(tokenBytes);
+            user.ResetPasswordToken = emailToken;
+            user.ResetPasswordExpiry = DateTime.Now.AddMinutes(15);
+            var emailModel = new Email(email, "Reset Password", EmailBody.EmailStringBody(email, emailToken));
+            if(!_userRepository.UpdateUser(user))
+            {
+                return BadRequest("Something went wrong while sending reset email.");
+            }
+            _emailService.SendEmail(emailModel);
+            return Ok();
+        }
+
+        [HttpPost("reset-password")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            if (resetPasswordDto is null)
+            {
+                return BadRequest();
+            }
+            var user = _userRepository.GetUserByEmail(resetPasswordDto.Email);
+            if (user is null)
+            {
+                return NotFound("Email not found.");
+            }
+            if(user.ResetPasswordToken != resetPasswordDto.EmailToken) 
+            {
+                return BadRequest("Invalid reset password link.");
+            }
+            if (user.ResetPasswordExpiry <= DateTime.Now)
+            {
+                return BadRequest("Reset password link expired.");
+            }
+            string passwordMessages = _userRepository.CheckPasswordStrength(resetPasswordDto.NewPassword);
+            if (!string.IsNullOrEmpty(passwordMessages))
+            {
+                return BadRequest(passwordMessages);
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            user.Password = _passwordHasher.HashPassword(resetPasswordDto.NewPassword);
+            if (!_userRepository.UpdateUser(user))
+            {
+                return BadRequest("Something went wrong while updating password.");
+            }
+            return Ok();
         }
 
         [HttpDelete("{userId}")]

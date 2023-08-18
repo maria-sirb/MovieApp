@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.css']
 })
-export class SignupFormComponent {
+export class SignupFormComponent implements OnInit{
 
   user = {
     userId: 0,
@@ -22,9 +22,11 @@ export class SignupFormComponent {
   }
   errors : any = {};
 
-  constructor(private authenticationService : AuthenticationService, private router : Router, private location : Location)
-  {
+  constructor(private authenticationService : AuthenticationService, private router : Router, private location : Location){ }
 
+  ngOnInit(): void {
+    if(this.authenticationService.getIdFromToken())
+      this.router.navigate(['']);
   }
 
   signup(data : any){

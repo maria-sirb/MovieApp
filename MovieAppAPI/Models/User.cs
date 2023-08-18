@@ -12,9 +12,9 @@ namespace MovieAppAPI.Models
         public string Password { get; set; } 
         public string Role { get; set; }
         public string Token { get; set; }
+        public string? ResetPasswordToken { get; set; }
+        public DateTime? ResetPasswordExpiry { get; set; }
         public string ImageName { get; set; }
-        //[NotMapped]
-       // public IFormFile ImageFile { get; set; }
         [NotMapped]
         public string ImageSource { get; set; }
         public ICollection<Vote> Votes { get; set; }

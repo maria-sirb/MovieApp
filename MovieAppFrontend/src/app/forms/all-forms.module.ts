@@ -10,6 +10,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ReviewFormComponent } from './review-form/review-form.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { SendResetEmailFormComponent } from './send-reset-email-form/send-reset-email-form.component';
+import { ResetPasswordFormComponent } from './reset-password-form/reset-password-form.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { UserFormComponent } from './user-form/user-form.component';
    SignupFormComponent,
    LoginFormComponent,
    ReviewFormComponent,
-   UserFormComponent
+   UserFormComponent,
+   SendResetEmailFormComponent,
+   ResetPasswordFormComponent
   ],
   imports: [
     CommonModule,

@@ -2,7 +2,6 @@ label{
     font-size: 17px;
     display: block;
 }
-
 input{
    font-size: 17px;
    width: 100%;
@@ -18,6 +17,13 @@ input:focus{
    margin-bottom: 15px;
  }
 
+ .row p{
+    font-size: 15px;
+    color: rgb(168, 168, 168);
+    font-weight: 100;
+    margin-bottom: 5px;
+ }
+
  h1{
     color: var(--accent-color);
     align-self: center;
@@ -29,25 +35,11 @@ input:focus{
     justify-content: space-evenly;
     margin-top: 30px;
  }
-
- .auth-form-container{
+ .send-reset-email-form-container{
     width: 350px;
  }
-
- .forgot-password-link{
-   color: rgb(155, 155, 155);
-   margin-top: 5px;
-  }
-
- .forgot-password-link:hover{
-   text-decoration: underline;
- }
-
- @media(max-width: 400px){
-
-    .auth-form-container{
-        width: 80vw;
-     }
-  }
-  
- 
+ .success{
+    word-wrap: break-word;
+    color: var(--accent-color);
+    padding-top: 5px;
+   }
