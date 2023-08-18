@@ -51,6 +51,12 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetUser(string username)
         {
             var user = _mapper.Map<UserDto>(_userRepository.GetUser(username));
+            if (user is null)
+            {
+                return NotFound("User not found.");
+            }
+            if (!String.IsNullOrEmpty(user.ImageName))
+                user.ImageSource = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/images/{user.ImageName}";
             if (!ModelState.IsValid)
             {
                 return BadRequest();
@@ -62,9 +68,14 @@ namespace MovieAppAPI.Controllers
         [HttpGet("id/{userId}")]
         [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetUser(int userId)
         {
             var user = _mapper.Map<UserDto>(_userRepository.GetUser(userId));
+            if(user is null)
+            {
+                return NotFound("User not found.");
+            }
             if(!String.IsNullOrEmpty(user.ImageName))
                 user.ImageSource = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/images/{user.ImageName}";
             if (!ModelState.IsValid)
