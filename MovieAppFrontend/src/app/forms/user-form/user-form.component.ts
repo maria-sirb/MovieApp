@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
@@ -26,12 +26,21 @@ export class UserFormComponent implements OnInit{
     imageFile : undefined
   }
   errors : any = {};
+  currentUserId = 0;
   
-  constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private location : Location, private route : ActivatedRoute) {}
+  constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private location : Location, private route : ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
       var userId = Number(paramMap.get('userId'));
+      //is user logs out redirect to home page + users can't edit other users profiles
+      this.userStoreService.getIdFromStore().subscribe(id => 
+      {
+          this.currentUserId = Number(id) || this.authService.getIdFromToken() || 0;
+          if(this.currentUserId == 0 || this.currentUserId != userId)
+            this.router.navigate(['']);
+      }
+      );
       this.authService.getUserById(userId).subscribe(user => this.user = user, error => console.log(error));
     });
   }

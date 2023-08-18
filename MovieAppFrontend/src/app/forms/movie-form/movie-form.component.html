@@ -1,10 +1,9 @@
 <div class="big-container">
     
     <div class = "form-container">
-    <h1 *ngIf= "id">Edit Movie</h1>
-    <h1 *ngIf= "!id">Add Movie</h1>
+    <h1 *ngIf= "id"  class="form-title">Edit Movie</h1>
+    <h1 *ngIf= "!id"  class="form-title">Add Movie</h1>
     <form #movieForm = ngForm (ngSubmit)="addMovieSubmit(movieForm.value)">
-    <!-- <div class = "form-half">-->
         <div class="row">
             <div class="form-group col-md-6">
                 <label  for = "title" class = "label">*Title</label>
@@ -14,9 +13,10 @@
                 <label for = "director" class = "label">*Director</label>
                 <input id = "director" required type = "text" name = "director" [(ngModel)] = "director.name" (keyup)= "directorError = false" ngModel/>
             </div>
+            <div class = "errors" *ngIf = "directorError">Director was not found. Use an existing director, or add a new director before using it.</div>
         </div>
     
-        <div class = "label no-focus-color">Genres
+        <div class = "label no-focus-color"><label for="">Genres</label>
             <div class = "genres">
                 <label class = "genre-label" *ngFor = "let genre of genreOptions">
                 <input id = "genre.name" #genreCheckbox type = "checkbox" name = "genre" [value] = "genre.name" [checked] ="isEnabled(genre)" (change)="UpdateCheckedGenres(genre, genreCheckbox.checked)"/>
@@ -24,10 +24,6 @@
                 </label>
             </div>
         </div>
-    <!--</div>-->
-   <!-- <div class = "form-half">-->
-        
-       <div class = "error" *ngIf = "directorError">Director was not found. Use an existing director, or add a new director before using it.</div>
         <div class="row">
             <div class="form-group col-md-6">
                 <label for = "poster" class = "label">Image Address</label>
@@ -75,7 +71,9 @@
                 {{errors}}
             </div>
         </div>
-        <input class = "submit" type = "submit" value = "Submit" [disabled]="!movieForm.form.valid"/>
+        <div class="submit-container">
+            <input class = "submit" type = "submit" value = "Submit" [disabled]="!movieForm.form.valid"/>
+        </div>
     <!--</div>-->
     </form>
     </div>

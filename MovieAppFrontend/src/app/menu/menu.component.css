@@ -17,7 +17,7 @@ nav{
     text-decoration: underline;
 }
 .navbar-nav>a, .dropdown{
-    font-size: 22px;
+    font-size: 1.1rem;
     color: var(--light-color);
     margin: 20px;
     font-weight: bold;
@@ -55,3 +55,9 @@ a{
     border: none;
     font-size: 40px;
 }
+/*@media(max-width: 400px)
+{
+    .navbar-nav>a, .dropdown{
+        font-size: 16px;
+    }
+}*/

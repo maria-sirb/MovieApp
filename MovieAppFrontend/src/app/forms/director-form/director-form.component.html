@@ -1,7 +1,7 @@
 <div class = "big-container">
     <div class = "form-container">
-        <h1 *ngIf= "id">Edit Director</h1>
-        <h1 *ngIf= "!id">Add Director</h1>
+        <h1 *ngIf= "id"  class="form-title">Edit Director</h1>
+        <h1 *ngIf= "!id"  class="form-title">Add Director</h1>
         <form #directorForm = ngForm (ngSubmit)="addDirectorSubmit(directorForm.value)">
             <div class="row">
                 <div class="form-group col-md-6">
@@ -32,7 +32,9 @@
                     {{errors}}
                 </div>
             </div>
-            <input class = "submit" type = "submit" value = "Submit" [disabled]="!directorForm.form.valid"/>
+            <div class="submit-container">
+                <input class = "submit" type = "submit" value = "Submit" [disabled]="!directorForm.form.valid"/>
+            </div>
         </form>
     </div>
     

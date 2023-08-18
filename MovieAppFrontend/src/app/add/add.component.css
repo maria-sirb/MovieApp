@@ -4,7 +4,7 @@
   justify-content: center;
 }
 .add-button{
-    font-size: 18px;
+    font-size: 0.9rem;
     font-weight: bold;
     width: 170px;
     height: 50px;
@@ -21,10 +21,11 @@
     background-color: rgb(154, 95, 214);
   }
 .add-button:disabled{
-  background-color: rgb(182, 182, 182);
-    border:2px solid grey;
+  color: rgb(70, 70, 70);
+  background-color: var(--darkish-color);
+  border: 2px solid var(--darkish-color) !important;
 }
-.forms, app-movie-form{
+.forms{
     display: flex;
     justify-content: center;
     min-height: auto;
@@ -32,8 +33,6 @@
 @media(max-width: 560px){
 
   .add-button{
-    font-size: 14px;
-    font-weight: bold;
     width: 120px;
     height: 40px;
     margin: 10px;

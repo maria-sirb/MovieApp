@@ -34,30 +34,26 @@ a{
     fill: var(--blue);
 }
 .small-text{
-    color: rgb(143, 142, 142);
+    color: var(--light-gray);
     font-weight: 100;
-    font-size: 16px;
+    font-size: 0.9rem;
 }
 .small-text a:hover{
     text-decoration: underline;
 }
-h3 span{
-    font-size: 20px;
-    color : rgb(143, 142, 142);
-}
 .bigger-text{
-    font-size: 26px;
+    font-size: 1.4em;
     color: var(--light-color);
 }
 .add-review-link{
     color: var(--blue);
-    font-size : 18px;
+    font-size : 1.1rem;
 }
 .add-review-link:hover{
     text-decoration: underline;
 }
 .delete-link{
-    color: rgb(147, 147, 147);
+    color: var(--light-gray);
     cursor: pointer;
     margin-top: 10px;
 }
@@ -93,11 +89,15 @@ h3 span{
     }
     .review-container>div>div>div{
         flex-direction: column-reverse;
+        border-bottom: 1px solid rgb(69, 69, 69);
+        width: 100%;
     }
     .review-container>div>div, .review-container>div, .detail-link{
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    
+    p{
+        margin-top: 5px;
+    }
 }

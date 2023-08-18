@@ -72,7 +72,7 @@ a{
     fill: var(--accent-color);
 }
 .actor-role{
-    color: rgb(173, 173, 173);
+    color: var(--light-gray);
     margin-top: 0 !important;
     margin-bottom: 20px !important;
 }

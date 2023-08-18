@@ -1,12 +1,14 @@
-<div class="auth-form-container">
-    <h1>Review</h1>
+<div class="form-container small-form-container">
+    <h1 class="form-title">Review</h1>
     <form #reviewForm = ngForm (ngSubmit)="addReview()">
-            <div class = "form-group row">
-                <label for = "rating" class = "col-md-3 col-form-label label">*Rating: </label>
-                <ul class = "stars col-md-9">
-                    <li class = "star" *ngFor = "let star of stars" (click)="countStars(star)" [ngClass] = "{'selected' : (star <= selectedStar)}">★</li>
-                </ul>
-                <input hidden type = "number" id = "rating" name = "rating" required [(ngModel)] = "inputValue" NgModel/>
+            <div class = "row">
+                <div class = "form-group col-md-12">
+                    <label for = "rating" class = "label">*Rating</label>
+                    <ul class = "stars col-md-9">
+                        <li class = "star" *ngFor = "let star of stars" (click)="countStars(star)" [ngClass] = "{'selected' : (star <= selectedStar)}">★</li>
+                    </ul>
+                    <input hidden type = "number" id = "rating" name = "rating" required [(ngModel)] = "inputValue" NgModel/>
+                </div>
             </div>
             <div class = "row">
                 <div class = "form-group col-md-12">

@@ -4,10 +4,11 @@
     overflow-x: auto;
     overflow-y: hidden;
     background-color: var(--dark-color);
+    color: grey;
     width: 100vw;
     height: 50px;
     align-items: center;
-    margin-top: -10px;
+    margin-top: -15px;
     position: fixed;
     top:80px;
     z-index: 10;

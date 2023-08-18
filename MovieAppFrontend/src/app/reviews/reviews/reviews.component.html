@@ -34,7 +34,7 @@
                         <p *ngIf = "review.text">{{review.text}}</p>
                         <app-vote *ngIf = "review.text || review.title" [reviewId] = "review.reviewId"></app-vote>
                     </div>
-                    <a *ngIf = "(review.user && review.user.userId == currentUserId) || userId == currentUserId" (click)="deleteReview(review.reviewId)" class ='delete-link'>Delete</a>
+                    <a *ngIf = "currentUserId != 0 && ((review.user && review.user.userId == currentUserId) || userId == currentUserId)" (click)="deleteReview(review.reviewId)" class ='delete-link'>Delete</a>
                 </div>
             </div>
         </li>
