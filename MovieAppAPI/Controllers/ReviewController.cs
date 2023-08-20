@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MovieAppAPI.Dtos;
@@ -63,6 +64,7 @@ namespace MovieAppAPI.Controllers
         [HttpPost]
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
+        [Authorize]
         public IActionResult CreateReview([FromQuery] int userId, [FromQuery] int movieId, [FromBody] ReviewDto reviewCreate)
         {
             if (reviewCreate == null)
@@ -135,6 +137,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
+        [Authorize]
         public IActionResult DeleteReview(int reviewId)
         {
             if (!_reviewRepository.ReviewExists(reviewId))

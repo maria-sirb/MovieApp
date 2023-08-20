@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using MovieAppAPI.Dtos;
@@ -33,6 +34,7 @@ namespace MovieAppAPI.Controllers
         [HttpPost()]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [Authorize]
         public IActionResult AddWatchlistItem(WatchlistDto itemCreate)
         {
             if (itemCreate == null)
@@ -51,6 +53,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
+        [Authorize]
         public IActionResult DeleteWatchlistItem(int userId, int movieId)
         {
             if (!_watchlistController.WatchlistItemExists(userId, movieId))
