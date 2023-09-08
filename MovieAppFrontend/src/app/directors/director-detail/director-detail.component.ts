@@ -1,6 +1,6 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Director } from 'src/app/shared/models/director';
 import { DirectorService } from 'src/app/shared/services/director.service';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
@@ -18,7 +18,7 @@ export class DirectorDetailComponent implements OnInit{
   dp = new DefaultPhoto();
   userRole = "";
 
-  constructor(private route : ActivatedRoute, private location : Location, private directorService : DirectorService, private userStoreService : UserStoreService, private authenticationService : AuthenticationService) {
+  constructor(private route : ActivatedRoute, private location : Location, private router : Router, private directorService : DirectorService, private userStoreService : UserStoreService, private authenticationService : AuthenticationService) {
 
   }
 
@@ -36,7 +36,7 @@ export class DirectorDetailComponent implements OnInit{
     this.directorService.getDirector(id).subscribe(director => {
       this.director = director;
       this.directorService.getDirectorMovies(id).subscribe(movies => director.movies = movies );
-    });
+    }, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
   }
   
   deleteDirector(directorId : number)

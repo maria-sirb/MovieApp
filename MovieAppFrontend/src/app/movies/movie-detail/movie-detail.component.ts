@@ -59,9 +59,7 @@ export class MovieDetailComponent implements OnInit {
         });
       });
       this.movieService.getMovieGenres(id).subscribe(genres => movie.movieGenres = genres);
-     
-
-    });
+    }, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
   }
 
   Role(movieId : number, actorId : number) {

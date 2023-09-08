@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { User } from '../shared/models/user';
 import { Movie } from '../shared/models/movie';
@@ -22,14 +22,14 @@ export class UserComponent implements OnInit{
   currentUserWatchlist : Movie[] | undefined = undefined// the watchlist of the currently active user
   currentUserId = 0;
 
-  constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private watchlistService : WatchlistService, private route : ActivatedRoute) {}
+  constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private watchlistService : WatchlistService, private route : ActivatedRoute, private router : Router) {}
 
   ngOnInit(): void {
     
     this.route.paramMap.subscribe(paramMap => 
       {
         this.userId = Number(paramMap.get('userId'));
-        this.authService.getUserById(this.userId).subscribe(user => {this.user = user; console.log(user)}, error => console.log(error));
+        this.authService.getUserById(this.userId).subscribe(user => {this.user = user; console.log(user)}, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
         this.watchlistService.getUserWatchlist(this.userId).subscribe(watchlist => this.watchlist = watchlist, error => console.log(error));
     });
 

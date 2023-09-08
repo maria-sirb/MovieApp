@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Actor } from 'src/app/shared/models/actor';
 import { ActorsService } from 'src/app/shared/services/actors.service';
-import { ActivatedRoute, DefaultUrlSerializer } from '@angular/router';
+import { ActivatedRoute, DefaultUrlSerializer, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
@@ -20,7 +20,7 @@ export class ActorDetailComponent {
   dp = new DefaultPhoto();
   userRole = "";
 
-  constructor (private route : ActivatedRoute, private location : Location, private actorService : ActorsService, private userStoreService : UserStoreService, private authenticationService : AuthenticationService) {
+  constructor (private route : ActivatedRoute, private location : Location, private router : Router, private actorService : ActorsService, private userStoreService : UserStoreService, private authenticationService : AuthenticationService) {
 
   }
   
@@ -37,7 +37,7 @@ export class ActorDetailComponent {
     this.actorService.getActor(id).subscribe(actor => {
       this.actor = actor;
       this.actorService.getActorsMovies(id).subscribe(movies => actor.movieActors = movies);
-    });
+    }, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
   }
 
   deleteActor(actorId : number)

@@ -1,0 +1,16 @@
+div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: grey;
+}
+h1{
+    color: var(--blue);
+}
+a{
+    color: var(--light-color);
+}
+a:hover {
+    text-decoration: underline;
+}
