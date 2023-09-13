@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.CacheProfiles.Add("Cache1Min",
+        new CacheProfile()
+        {
+            Duration = 60,
+            Location = ResponseCacheLocation.Any
+        });
+});
+builder.Services.AddResponseCaching();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
@@ -34,17 +44,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProdConnection"));
 });
-/*builder.Services.AddCors(policyBuilder =>
-    policyBuilder.AddDefaultPolicy(policy =>
-        policy.WithOrigins("*").AllowAnyHeader())
-);*/
+
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    /*builder.WithOrigins("https://localhost:4200")
-           .AllowAnyMethod()
-           .WithHeaders("authorization", "accept", "content-type", "origin");*/
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
 
@@ -88,11 +92,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseStaticFiles(new StaticFileOptions
+/*app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, @"Images")),
     RequestPath = "/Images"
-}) ;
+}) ;*/
 
 app.UseHttpsRedirection();
 
@@ -101,5 +105,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseResponseCaching();
 
 app.Run();

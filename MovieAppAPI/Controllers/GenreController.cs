@@ -10,6 +10,7 @@ namespace MovieAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ResponseCache(CacheProfileName = "Cache1Min")]
     public class GenreController : Controller
     {
         private readonly IGenreRepository _genreRepository;
