@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudio,csharp,angular,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,csharp,angular,visualstudiocode
 
+appsettings.json
+appsettings.Production.json
+appsettings.Development.json
 ### Angular ###
 ## Angular ##
 # compiled output
