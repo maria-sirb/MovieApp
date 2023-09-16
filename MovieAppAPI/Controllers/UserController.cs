@@ -22,13 +22,15 @@ namespace MovieAppAPI.Controllers
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IEmailService _emailService;
-        public UserController(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher, IWebHostEnvironment hostEnvironment, IEmailService emailService)
+        private readonly IAzureStorageService _azureStorageService;
+        public UserController(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher, IWebHostEnvironment hostEnvironment, IEmailService emailService, IAzureStorageService azureStorageService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _hostEnvironment = hostEnvironment;
             _passwordHasher = passwordHasher;
             _emailService = emailService;
+            _azureStorageService = azureStorageService;
         }
 
         [HttpGet]
@@ -56,7 +58,7 @@ namespace MovieAppAPI.Controllers
                 return NotFound("User not found.");
             }
             if (!String.IsNullOrEmpty(user.ImageName))
-                user.ImageSource = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/images/{user.ImageName}";
+                user.ImageSource = _azureStorageService.GetFileUrl(user.ImageName);
             if (!ModelState.IsValid)
             {
                 return BadRequest();
@@ -77,7 +79,7 @@ namespace MovieAppAPI.Controllers
                 return NotFound("User not found.");
             }
             if(!String.IsNullOrEmpty(user.ImageName))
-                user.ImageSource = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/images/{user.ImageName}";
+               user.ImageSource = _azureStorageService.GetFileUrl(user.ImageName);
             if (!ModelState.IsValid)
             {
                 return BadRequest();
@@ -171,13 +173,13 @@ namespace MovieAppAPI.Controllers
             {
                 //if the user adds a new image, delete their previous profile image from the system
                 if (!String.IsNullOrEmpty(updatedUser.ImageName))
-                    DeleteImage(updatedUser.ImageName);
-                userMap.ImageName = SaveImage(updatedUser.ImageFile);
+                    _azureStorageService.DeleteImage(updatedUser.ImageName);
+                userMap.ImageName = _azureStorageService.UploadImage(updatedUser.ImageFile);
             }
             //if the user wishes only to delete their current image 
             else if (updatedUser.ImageFile == null && String.IsNullOrEmpty(updatedUser.ImageSource) && !String.IsNullOrEmpty(updatedUser.ImageName))
             {
-                DeleteImage(updatedUser.ImageName);
+                _azureStorageService.DeleteImage(updatedUser.ImageName);
                 userMap.ImageName = "";
             }
             if (!_userRepository.UpdateUser(userMap))
@@ -274,6 +276,8 @@ namespace MovieAppAPI.Controllers
             return NoContent();
 
         }
+
+        //used these to upload user images in the file system before using azure blob storage
         [NonAction]
         public string SaveImage(IFormFile imageFile)
         {

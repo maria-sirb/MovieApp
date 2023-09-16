@@ -6,6 +6,7 @@ using MovieAppAPI.Dtos;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
+using MovieAppAPI.UtilityService;
 
 namespace MovieAppAPI.Controllers
 {
@@ -17,12 +18,14 @@ namespace MovieAppAPI.Controllers
         private readonly IReviewRepository _reviewRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMovieRepository _movieRepository;
+        private readonly IAzureStorageService _azureStorageService;
         private readonly IMapper _mapper;
-        public ReviewController(IReviewRepository reviewRepository, IUserRepository userRepository, IMovieRepository movieRepository, IMapper mapper)
+        public ReviewController(IReviewRepository reviewRepository, IUserRepository userRepository, IMovieRepository movieRepository, IAzureStorageService azureStorageService, IMapper mapper)
         {
             _reviewRepository = reviewRepository;
             _userRepository = userRepository;
             _movieRepository = movieRepository;
+            _azureStorageService = azureStorageService;
             _mapper = mapper;
         }
         [HttpGet("movie/{movieId}")]
@@ -95,7 +98,7 @@ namespace MovieAppAPI.Controllers
         {
             var user = _reviewRepository.GetReviewAuthor(reviewId);
             if (user != null && !String.IsNullOrEmpty(user.ImageName))
-                user.ImageSource = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/images/{user.ImageName}";
+                user.ImageSource = _azureStorageService.GetFileUrl(user.ImageName);
             if (!ModelState.IsValid)
                 return BadRequest();
             return Ok(user);

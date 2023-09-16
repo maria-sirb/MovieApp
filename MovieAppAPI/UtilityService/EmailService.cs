@@ -23,16 +23,16 @@ namespace MovieAppAPI.UtilityService
                 Text = string.Format(email.Content)
             };
 
-            using(var client = new SmtpClient())
+            using (var client = new SmtpClient())
             {
                 try
                 {
-                    client.Connect(_config["EmailSettings:SmtpServer"], Int32.Parse(_config["EmailSettings:Port"]), true);
+                    client.Connect(_config["EmailSettings:SmtpServer"], int.Parse(_config["EmailSettings:Port"]), true);
                     client.Authenticate(_config["EmailSettings:From"], _config["EmailSettings:Password"]);
                     client.Send(emailMessage);
                 }
                 catch (Exception ex)
-                { 
+                {
                     throw;
                 }
             }

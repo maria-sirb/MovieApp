@@ -71,7 +71,7 @@ namespace MovieAppAPI.Controllers
 
         }
 
-        [HttpGet("/movie/{directorId}")]
+        [HttpGet("movie/{directorId}")]
         [ProducesResponseType(200, Type = typeof(Movie))]
         [ProducesResponseType(400)]
         public IActionResult GetDirectorMovie(int directorId)
