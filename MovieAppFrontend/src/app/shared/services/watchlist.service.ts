@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Movie } from '../models/movie';
 import { Watchlist } from '../models/watchlist';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WatchlistService {
 
-  baseUrl = "https://localhost:7172/api/Watchlist";
+  baseUrl = environment.apiUrl + "/Watchlist";
   constructor(private client : HttpClient) { }
 
   getUserWatchlist(userId : number) : Observable<Movie[]>{

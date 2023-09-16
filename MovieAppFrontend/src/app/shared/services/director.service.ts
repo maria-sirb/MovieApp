@@ -3,33 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Director } from '../models/director';
 import { Movie } from '../models/movie';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DirectorService {
 
-  directorsUrl : string = 'https://localhost:7172/api/Director';
-  searchDirectorsUrl : string = 'https://localhost:7172/api/Director?input=';
-  directorMoviesUrl : string =  'https://localhost:7172/movie/';
-  directorNameUrl : string = 'https://localhost:7172/api/Director/director-name/';
+  directorsUrl : string = environment.apiUrl + '/Director';
   constructor(private client : HttpClient) { }
 
   getDirectors() : Observable<Director[]> {
     return this.client.get<Director[]>(this.directorsUrl);
   }
   getDirectorByName(name : string) : Observable<Director> {
-    return this.client.get<Director>(this.directorNameUrl + encodeURIComponent(name.trim()));
+    return this.client.get<Director>(this.directorsUrl + '/director-name/' + encodeURIComponent(name.trim()));
   }
   searchDirectors(input : string) : Observable<Director[]>{
     let query = encodeURIComponent(input.trim())
-    return this.client.get<Director[]>(this.searchDirectorsUrl + query);
+    return this.client.get<Director[]>(this.directorsUrl + '?input=' + query);
   }
   getDirector(directorId : number) : Observable<Director>{
     return this.client.get<Director>(this.directorsUrl + '/' + directorId);
   }
   getDirectorMovies(directorId : number) : Observable<Movie[]> {
-    return this.client.get<Movie[]>(this.directorMoviesUrl + directorId);
+    return this.client.get<Movie[]>(this.directorsUrl + '/movie/' + directorId);
   }
   addDirector(director : object) : Observable<any>{
     return this.client.post<any>(this.directorsUrl, director, {observe : 'response'});

@@ -3,32 +3,30 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { Actor } from '../models/actor';
 import { Movie } from '../models/movie';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActorsService {
 
-  actorsUrl : string =  'https://localhost:7172/api/Actor';
-  searchActorsUrl : string =  'https://localhost:7172/api/Actor?input=';
-  actorMoviesUrl : string = 'https://localhost:7172/api/Actor/movie/';
-  actorNameUrl = 'https://localhost:7172/api/Actor/actor-name/';
+  actorsUrl : string =  environment.apiUrl + '/Actor';
   constructor(private client : HttpClient) { }
   getActors() : Observable<Actor[]>{
       return this.client.get<Actor[]>(this.actorsUrl);
   }
   getActorByName(name : string) : Observable<Actor> {
-    return this.client.get<Actor>(this.actorNameUrl + encodeURIComponent(name.trim()));
+    return this.client.get<Actor>(this.actorsUrl + '/actor-name/' + encodeURIComponent(name.trim()));
   }
   searchActors(input : string) : Observable<Actor[]>{
     let query = encodeURIComponent(input.trim())
-    return this.client.get<Actor[]>(this.searchActorsUrl + query);
+    return this.client.get<Actor[]>(this.actorsUrl + '?input=' + query);
   }
   getActor(actorId : number) : Observable<Actor>{
     return this.client.get<Actor>(this.actorsUrl + '/' + actorId);
   }
   getActorsMovies(actorId : number) : Observable<Movie[]> {
-      return this.client.get<Movie[]>(this.actorMoviesUrl + actorId);
+      return this.client.get<Movie[]>(this.actorsUrl + '/movie/'  + actorId);
   }
   addActor(actor : object) : Observable<any>{
     console.log(actor);

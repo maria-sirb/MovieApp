@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vote } from '../models/vote';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoteService {
 
-  baseUrl = "https://localhost:7172/api/Vote";
+  baseUrl = environment.apiUrl + "/Vote";
   constructor(private client : HttpClient) { }
 
   getReviewVotes(reviewId : number) : Observable<any[]>

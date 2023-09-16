@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Review } from '../models/review';
 import { query } from '@angular/animations';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReviewsService {
 
-  baseUrl = "https://localhost:7172/api/Review";
+  baseUrl = environment.apiUrl + "/Review";
   constructor(private client : HttpClient) { }
 
   getMovieReviews(movieId : number) : Observable<any[]>{

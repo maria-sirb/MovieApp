@@ -4,13 +4,14 @@ import {Observable} from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/user';
 import { ResetPassword } from '../models/resetPassword';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private baseUrl : string =  'https://localhost:7172/api/User';
+  private baseUrl : string =  environment.apiUrl + '/User';
   private userPayload;
 
   constructor(private client : HttpClient, private jwtHelper : JwtHelperService) { 
