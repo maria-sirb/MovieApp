@@ -51,7 +51,6 @@ export class ActorFormComponent implements OnInit {
     {
       this.actor.actorId = this.id;
       this.actorService.uppdateActor(this.id, this.actor).subscribe(response => {
-        console.log(response);
         this.location.back();
         },  error => this.errors = error.error)
     }

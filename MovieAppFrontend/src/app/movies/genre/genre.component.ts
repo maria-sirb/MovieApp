@@ -18,12 +18,9 @@ export class GenreComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    console.log(this.sortMode);
     this.genreService.getGenres().subscribe(genres => this.genres = genres);
   }
   pickGenre(genre? : Genre) {
-   // this.onGenrePicked.emit(genre);
-   console.log(genre);
    this.router.navigateByUrl('actors', {skipLocationChange: true})
   .then(()=> this.router.navigate([`movies/${genre?.genreId??0}/${this.sortMode}`]));
    

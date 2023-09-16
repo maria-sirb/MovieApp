@@ -29,7 +29,6 @@ export class AddComponent {
   } 
   hasSubmitted(submitted : boolean, button : TrueFalse)
   {
-    console.log(submitted);
     if(submitted)
       this.toggleButton(button);
   }

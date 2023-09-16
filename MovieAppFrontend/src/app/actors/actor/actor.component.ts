@@ -25,12 +25,10 @@ export class ActorComponent implements OnInit{
   {
     this.sortMode = sortOption;
     this.router.navigate([`../${this.sortMode}`], { relativeTo: this.route });
-    console.log(this.sortMode);
     this.sortActors();
   }
   sortActors()
   {
-    console.log(this.sortMode);
     if(this.sortMode == 'none')
     {
       this.actors.sort((actor1, actor2) => actor1.actorId < actor2.actorId? -1 : 1);

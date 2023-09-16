@@ -34,7 +34,6 @@ export class SignupFormComponent implements OnInit{
   }
 
   cancel(){
-    //this.router.navigate(['']);
     this.location.back();
   }
 }

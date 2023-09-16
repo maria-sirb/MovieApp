@@ -41,7 +41,7 @@ export class DirectorDetailComponent implements OnInit{
   
   deleteDirector(directorId : number)
   {
-    this.directorService.deleteDirector(directorId).subscribe(response => {console.log(response); this.location.back()}, error => console.log(error));
+    this.directorService.deleteDirector(directorId).subscribe(response => {this.location.back()}, error => console.log(error));
   }
   
 

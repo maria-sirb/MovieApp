@@ -89,10 +89,8 @@ export class MovieFormComponent implements OnInit{
 
   addMovieSubmit(data : any)
   {
-    
-    console.log(data);
+
     this.directorService.getDirectorByName(data.director).subscribe(d => {this.director = d;
-      console.log(this.director);
       if(this.director.directorId == 0)
       this.directorError = true;
       else
@@ -102,7 +100,6 @@ export class MovieFormComponent implements OnInit{
          this.movie.movieId = this.id;
          this.movieService.updateMovie(this.id, this.movie, this.checkedGenres, this.director).subscribe(response =>
           {
-            console.log(response);
             this.onSubmision.emit(true);
             this.location.back();
           }, 

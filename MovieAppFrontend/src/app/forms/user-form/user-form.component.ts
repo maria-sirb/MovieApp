@@ -66,9 +66,7 @@ export class UserFormComponent implements OnInit{
 
   updateUser(){
     this.user.imageFile = this.imageFile;
-    console.log(this.user);
     this.authService.editUser(this.user).subscribe(response => {
-      console.log(response);
       this.authService.storeToken(response.body.token);
 
       const username = this.authService.getUsernameFromToken();
@@ -79,7 +77,6 @@ export class UserFormComponent implements OnInit{
       this.userStoreService.setIdForStore(id);
       this.location.back();
     }, err => {
-      console.log(err);
       this.errors = err.error;
     });
   }

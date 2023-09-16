@@ -91,8 +91,8 @@ export class VoteComponent implements OnInit{
   vote()
   {
     if(this.currentVote.voteId == 0)
-      this.voteService.addVote(this.currentVote, this.currentUserId, this.reviewId || 0).subscribe(res => console.log(res), error => console.log(error));
+      this.voteService.addVote(this.currentVote, this.currentUserId, this.reviewId || 0).subscribe();
     else 
-      this.voteService.editVote(this.currentVote).subscribe(res => console.log(res), error => console.log(error));
+      this.voteService.editVote(this.currentVote).subscribe();
   }
 }

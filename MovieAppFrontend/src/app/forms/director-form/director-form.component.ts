@@ -37,10 +37,8 @@ export class DirectorFormComponent implements OnInit{
   }
 
   addDirectorSubmit(data : any){
-    console.log(data);
     if(data.born == "")
       this.director.born = new Date('01/01/0001');
-    console.log(this.director.born);
     if(this.id == 0)
     {
       this.directorService.addDirector(this.director).subscribe(response => this.onSubmision.emit(true),  error => this.errors = error.error)
@@ -49,7 +47,6 @@ export class DirectorFormComponent implements OnInit{
       this.director.directorId = this.id;
       this.directorService.updateDirector(this.id, this.director).subscribe(response => 
         {
-          console.log(response);
           this.location.back();
         }, 
         error => this.errors = error.error)

@@ -30,7 +30,6 @@ export class LoginFormComponent {
   login(data : any){
     this.authenticationService.loginUser(this.user).subscribe(response => {
     
-      console.log(response);
       this.authenticationService.storeToken(response.body.token);
 
       const username = this.authenticationService.getUsernameFromToken();
@@ -42,7 +41,7 @@ export class LoginFormComponent {
 
       //this.router.navigate(['']);
       this.location.back();
-    }, error => {this.errors = error.error; console.log(error)})
+    }, error => {this.errors = error.error})
   }
 
   cancel(){

@@ -57,7 +57,6 @@ export class RoleFormComponent implements OnInit {
     let inputActor : Actor;
     this.actorService.getActorByName(this.actor.name).subscribe(actor => {
       inputActor = actor;
-        console.log(inputActor);
         if(!this.actorId)
         {
           this.role.movieId = this.movieId;
@@ -68,7 +67,6 @@ export class RoleFormComponent implements OnInit {
        {
         this.movieService.updateMovieRole(this.role).subscribe(result => 
           {
-            console.log(result);
             this.location.back();
           },
           error => this.errors = error.error

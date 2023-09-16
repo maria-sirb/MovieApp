@@ -29,7 +29,7 @@ export class UserComponent implements OnInit{
     this.route.paramMap.subscribe(paramMap => 
       {
         this.userId = Number(paramMap.get('userId'));
-        this.authService.getUserById(this.userId).subscribe(user => {this.user = user; console.log(user)}, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
+        this.authService.getUserById(this.userId).subscribe(user => this.user = user, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
         this.watchlistService.getUserWatchlist(this.userId).subscribe(watchlist => this.watchlist = watchlist, error => console.log(error));
     });
 

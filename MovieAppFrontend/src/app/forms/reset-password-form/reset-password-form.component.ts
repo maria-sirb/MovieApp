@@ -30,7 +30,6 @@ export class ResetPasswordFormComponent implements OnInit{
   }
 
   reset(){
-    console.log(this.resetPassword);
     this.authService.resetPasswrod(this.resetPassword).subscribe(res => this.router.navigate(['login']), err => {this.errors = err.error;})
   }
   

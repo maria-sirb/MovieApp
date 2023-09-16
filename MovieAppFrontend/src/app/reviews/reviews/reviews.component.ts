@@ -26,7 +26,6 @@ export class ReviewsComponent implements OnInit{
   ngOnInit(): void {
     this.userStoreService.getIdFromStore().subscribe(res => {
       this.currentUserId = res || this.authService.getIdFromToken() || 0;
-      console.log(this.currentUserId);
     })
 
     if(this.movie)
@@ -48,7 +47,7 @@ export class ReviewsComponent implements OnInit{
   }
   deleteReview(reviewId : number)
   {
-    this.reviewService.deleteReview(reviewId).subscribe(res => console.log(res), err => console.log(err));
+    this.reviewService.deleteReview(reviewId).subscribe();
     window.location.reload();
   }
   

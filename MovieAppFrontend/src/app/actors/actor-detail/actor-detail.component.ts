@@ -42,7 +42,7 @@ export class ActorDetailComponent {
 
   deleteActor(actorId : number)
   {
-    this.actorService.deleteActor(actorId).subscribe(response => {console.log(response); this.location.back()}, error => console.log(error));
+    this.actorService.deleteActor(actorId).subscribe(response => {this.location.back()}, error => console.log(error));
   }
  
 }

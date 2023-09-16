@@ -48,7 +48,7 @@ export class MenuComponent {
   }
 
   deleteAccount(){
-    this.authenticationService.deleteUser(this.userId).subscribe(res => console.log(res), err => console.log(err));
+    this.authenticationService.deleteUser(this.userId).subscribe();
     this.logout();
   }
 

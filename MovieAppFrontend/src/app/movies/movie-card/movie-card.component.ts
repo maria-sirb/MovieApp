@@ -46,12 +46,12 @@ export class MovieCardComponent implements OnInit{
       this.router.navigate(['/login']);
     else if(this.movie && !this.isCurrentUserInWatchlist)
     { 
-      this.watchlistService.addToWatchlist({userId : this.currentUserId, movieId : this.movie.movieId}).subscribe(res => console.log(res), err => console.log(err));
+      this.watchlistService.addToWatchlist({userId : this.currentUserId, movieId : this.movie.movieId}).subscribe();
       this.isCurrentUserInWatchlist = true;
     }
     else if(this.movie && this.isCurrentUserInWatchlist)
     {
-      this.watchlistService.deleteFromWatchlist(this.currentUserId, this.movie.movieId).subscribe(res => console.log(res), err => console.log(err));
+      this.watchlistService.deleteFromWatchlist(this.currentUserId, this.movie.movieId).subscribe();
       this.isCurrentUserInWatchlist = false;
     }
   }

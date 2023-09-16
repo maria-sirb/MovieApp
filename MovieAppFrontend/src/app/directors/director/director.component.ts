@@ -25,12 +25,10 @@ export class DirectorComponent implements OnInit{
   {
     this.sortMode = sortOption;
     this.router.navigate([`../${this.sortMode}`], { relativeTo: this.route });
-    console.log(this.sortMode);
     this.sortActors();
   }
   sortActors()
   {
-    console.log(this.sortMode);
     if(this.sortMode == 'none')
     {
       this.directors.sort((director1, director2) => director1.directorId < director2.directorId? -1 : 1);
