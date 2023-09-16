@@ -1,6 +1,6 @@
 <header>
 <h1>Actors</h1>
-<form #roleForm = ngForm>
+<form #roleForm = ngForm class="d-flex align-items-center">
   <label class = "sort-label" for = "sortActors">Sort By : </label>
   <select #sort name = "sortActors" id = "sortActors"  (change) = "updateSort(sort.value)" NgModel>
       <option value = "none" [selected] = "sortMode == 'none'">No Sorting</option>

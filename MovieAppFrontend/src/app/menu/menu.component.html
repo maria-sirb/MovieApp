@@ -5,11 +5,11 @@
     </button>
     <div id="navbarCollapse" class="left-links collapse navbar-collapse">
         <div class = "navbar-nav">
-            <a routerLink="" class="nav-item">Movies</a>
-            <a routerLink = "/actors/none" class="nav-item">Actors</a>
-            <a routerLink = "/directors/none" class="nav-item">Directors</a>
-            <a routerLink = "/search" class="nav-item">Search</a>
-            <a *ngIf = "role=='admin'" routerLink="/add" class="nav-item">Add</a>
+            <a routerLink="" class="nav-item"><span data-bs-target="#navbarCollapse" data-bs-toggle="collapse">Movies</span></a>
+            <a routerLink = "/actors/none" class="nav-item"><span data-bs-target="#navbarCollapse" data-bs-toggle="collapse">Actors</span></a>
+            <a routerLink = "/directors/none" class="nav-item"><span data-bs-target="#navbarCollapse" data-bs-toggle="collapse">Directors</span></a>
+            <a routerLink = "/search" class="nav-item"><span data-bs-target="#navbarCollapse" data-bs-toggle="collapse">Search</span></a>
+            <a *ngIf = "role=='admin'" routerLink="/add" class="nav-item"><span data-bs-target="#navbarCollapse" data-bs-toggle="collapse">Add</span></a>
         </div>
     </div>
     <div class = "dropdown">

@@ -47,7 +47,7 @@
 
 @media(max-width: 415px){
  
-    .movies-list li{
+   /* .movies-list li{
         margin: 15px 0px !important;
-    }
+    }*/
 }

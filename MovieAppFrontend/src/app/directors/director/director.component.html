@@ -1,6 +1,6 @@
 <header>
 <h1>Directors</h1>
-<form #roleForm = ngForm>
+<form #roleForm = ngForm  class="d-flex align-items-center">
     <label  class = "sort-label" for = "sortDirectors">Sort By : </label>
     <select #sort name = "sortDirectors" id = "sortDirectors"  (change) = "updateSort(sort.value)" NgModel>
         <option value = "none" [selected] = "sortMode == 'none'">No Sorting</option>
@@ -13,7 +13,7 @@
 <ul class="director-list">
     <li *ngFor = "let director of directors">
         <a class = "detail-link" routerLink = "/director-detail/{{director.directorId}}">
-            <h3>{{director.name}}</h3>
+            <h5>{{director.name}}</h5>
             <img class = "photo" [src] = "director.photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
         </a>
     </li>

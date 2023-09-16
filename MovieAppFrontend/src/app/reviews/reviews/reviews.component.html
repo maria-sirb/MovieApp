@@ -19,7 +19,7 @@
                 <div class="d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class = "title"><span>{{review.title || '[No title]'}}</span></h5>
+                            <h5 class = "title">{{review.title || '[No title]'}}</h5>
                             <h5 class="rating"><span class="star-icon">★</span><span class ="bigger-text">{{review.rating}}</span>/10</h5>
                         </div>
                         <p class="small-text" *ngIf = "review.user">
@@ -31,7 +31,7 @@
                         <p class = "small-text" *ngIf = "!review.user && !userId">
                             [deleted] on {{review.date | date}}
                         </p>
-                        <p *ngIf = "review.text">{{review.text}}</p>
+                        <p *ngIf = "review.text" class="review-text">{{review.text}}</p>
                         <app-vote *ngIf = "review.text || review.title" [reviewId] = "review.reviewId"></app-vote>
                     </div>
                     <a *ngIf = "currentUserId != 0 && ((review.user && review.user.userId == currentUserId) || userId == currentUserId)" (click)="deleteReview(review.reviewId)" class ='delete-link'>Delete</a>

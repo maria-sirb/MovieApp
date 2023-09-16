@@ -24,7 +24,7 @@
     </div>
     </div>
     <div>
-        <h3 class = "label section-header">Summary : </h3><p class = "bottom-line">{{movie.summary}}</p>
+        <h3 class = "label section-header">Summary : </h3><p class = "bottom-line light-gray-text">{{movie.summary}}</p>
         <div class = "bottom-line ">
             <h3 class = "label section-header">Director : </h3>
             <a *ngIf = "movie.director" class = "detail-link director" routerLink="/director-detail/{{movie.director.directorId}}">
@@ -55,6 +55,6 @@
                </a> 
             </li>
         </ul>
-        <h3 class = "label section-header">Storyline : </h3><p class = "bottom-line">{{movie.storyLine}}</p>
+        <h3 class = "label section-header">Storyline : </h3><p class = "bottom-line light-gray-text">{{movie.storyLine}}</p>
         <app-reviews [movie] = "movie"></app-reviews>
     </div>

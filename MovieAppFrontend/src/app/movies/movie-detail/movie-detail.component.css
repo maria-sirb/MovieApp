@@ -56,6 +56,9 @@ li>a{
 a{
     color: var(--light-color);
 }
+.light-gray-text{
+    color: var(--light-gray);
+}
 .add{
     display: flex !important;
     justify-content: flex-start !important;

@@ -39,13 +39,12 @@ li a {
     align-items: center;
     text-decoration: none;
 }
-.poster,
+/*.poster,
 .photo{
-
     width: 200px;
     height:auto;
     box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px; 
-}
+}*/
 .results-container{
     display: flex;
     flex-direction: column; 

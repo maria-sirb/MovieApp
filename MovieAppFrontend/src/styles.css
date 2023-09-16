@@ -431,9 +431,32 @@ li .detail-link:hover h5{
   }
 }
 
+@media(max-width: 450px){
+  app-movies .poster{
+    width: 120px !important;
+    height: 160px !important;
+  }
+  app-actor .photo, app-director .photo{
+    width: 120px !important;
+    height: 120px !important;
+  }
+  app-movies .movies-list .movie{
+    width: 120px !important;
+    height: 220px !important;
+    margin: 10px 20px !important;
+  }
+  app-actor .actor-list li,
+  app-director .director-list li{
+    width: 120px !important;
+    height: 170px !important;
+    margin: 10px 20px !important;
+  }
+}
+
 @media(max-width: 400px){
 
   .small-form-container{
       width: 80vw;
    }
+
 }

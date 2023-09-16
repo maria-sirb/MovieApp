@@ -17,10 +17,16 @@ li{
     margin: 30px 40px;
    
 }
-li h3{
-   color: var(--light-color);
-   white-space: nowrap; 
-}
+
+h5{
+    color: var(--light-color);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 1.1rem;
+ }
 li a {
     position: absolute;
     top: 0;
