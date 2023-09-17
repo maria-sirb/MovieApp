@@ -6,7 +6,7 @@
         <label  class = "label">*Actor
             <input required type = "text" name = "actor" [readOnly]="actorId" (keyup)= "actorError = false; errors =''" [(ngModel)] = "actor.name" ngModel/>
         </label>
-        <div class = "error" *ngIf = "actorError">The actor was not found. Use an existing actor or add a new actor before using it.</div>
+        <div class = "errors" *ngIf = "actorError">The actor was not found. Use an existing actor or add a new actor before using it.</div>
         <label class = "label">*Role
             <input required type = "text" name = "role" [(ngModel)]= "role.role" (keyup)= "errors = ''" ngModel/>
         </label>

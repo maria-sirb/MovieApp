@@ -120,6 +120,7 @@ input:focus, textarea:focus{
   display: flex;
   justify-content: space-evenly;
   margin-top: 30px;
+  gap: 5px;
 }
 .submit-container{
   width: 100%;
@@ -432,21 +433,23 @@ li .detail-link:hover h5{
 }
 
 @media(max-width: 450px){
-  app-movies .poster{
+  app-movies .poster, app-search .poster{
     width: 120px !important;
     height: 160px !important;
   }
-  app-actor .photo, app-director .photo{
+  app-actor .photo, app-director .photo, app-search .photo{
     width: 120px !important;
     height: 120px !important;
   }
-  app-movies .movies-list .movie{
+  app-movies .movies-list .movie, app-search .movies-list .movie{
     width: 120px !important;
     height: 220px !important;
     margin: 10px 20px !important;
   }
   app-actor .actor-list li,
-  app-director .director-list li{
+  app-director .director-list li,
+  app-search .actor-list-search li,
+  app-search .director-list-search li{
     width: 120px !important;
     height: 170px !important;
     margin: 10px 20px !important;
