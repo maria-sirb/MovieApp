@@ -20,14 +20,16 @@ namespace MovieAppAPI.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IConfiguration _configuration;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IEmailService _emailService;
         private readonly IAzureStorageService _azureStorageService;
-        public UserController(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher, IWebHostEnvironment hostEnvironment, IEmailService emailService, IAzureStorageService azureStorageService)
+        public UserController(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher, IWebHostEnvironment hostEnvironment, IConfiguration configuration, IEmailService emailService, IAzureStorageService azureStorageService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _hostEnvironment = hostEnvironment;
+            _configuration = configuration;
             _passwordHasher = passwordHasher;
             _emailService = emailService;
             _azureStorageService = azureStorageService;
@@ -207,7 +209,7 @@ namespace MovieAppAPI.Controllers
             var emailToken = Convert.ToBase64String(tokenBytes);
             user.ResetPasswordToken = emailToken;
             user.ResetPasswordExpiry = DateTime.Now.AddMinutes(15);
-            var emailModel = new Email(email, "Reset Password", EmailBody.EmailStringBody(email, emailToken));
+            var emailModel = new Email(email, "Reset Password", EmailBody.EmailStringBody(email, emailToken, _configuration["EmailSettings:Url"]));
             if(!_userRepository.UpdateUser(user))
             {
                 return BadRequest("Something went wrong while sending reset email.");
