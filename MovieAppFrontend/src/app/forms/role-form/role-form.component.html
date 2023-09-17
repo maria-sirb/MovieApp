@@ -1,5 +1,5 @@
 <div class="big-container">
-<div class = "form-container">
+<div class = "small-form-container form-container">
     <h1 *ngIf= "actorId"  class="form-title">Edit Role</h1>
     <h1 *ngIf= "!actorId" class="form-title">Add Role</h1>
     <form #roleForm = ngForm (ngSubmit)="addRoleSubmit(roleForm.value)">
