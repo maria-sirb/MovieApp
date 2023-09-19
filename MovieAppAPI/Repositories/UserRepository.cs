@@ -14,9 +14,11 @@ namespace MovieAppAPI.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
-        public UserRepository(DataContext context)
+        private readonly IConfiguration _config;
+        public UserRepository(DataContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
         public User GetUser(int id) 
         {
@@ -101,7 +103,7 @@ namespace MovieAppAPI.Repositories
         public string CreateJwt(User user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(".the.secret.key.used.for.authentication.");
+            var key = Encoding.ASCII.GetBytes(_config.GetValue<string>("Jwt:Key"));
             var identity = new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Role, user.Role),
