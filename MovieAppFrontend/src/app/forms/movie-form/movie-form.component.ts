@@ -32,16 +32,16 @@ export class MovieFormComponent implements OnInit{
   movies : []
   };
   directorError? : boolean = false;
-  movie = {
+  movie : Movie = {
       movieId : 0,
       title : "",
-      imdbRating: 0,
-      runTime : 0,
-      releaseYear : 0,
-      summary: "",
-      storyLine: "",
-      oscarWins: 0,
-      oscarNominations: 0,
+      imdbRating : undefined,
+      runTime : undefined,
+      releaseYear : undefined,
+      summary: undefined,
+      storyLine: undefined,
+      oscarWins: undefined,
+      oscarNominations: undefined,
       poster : "",
   };
   id = Number(this.route.snapshot.paramMap.get('movieId'));
@@ -106,9 +106,12 @@ export class MovieFormComponent implements OnInit{
           return this.movieService.addMovie(this.movie, this.checkedGenres, this.director);
         }
       })  
-    ).subscribe(createdId => {
+    ).subscribe(res => {
       this.onSubmision.emit(true);
-      this.router.navigate(['/movie-detail/' + createdId]);
+      if(typeof(res) === 'number')
+        this.router.navigate(['/movie-detail/' + res]);
+      else 
+        this.location.back();
     })
 
   }

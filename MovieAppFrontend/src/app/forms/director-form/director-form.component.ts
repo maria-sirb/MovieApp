@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { DirectorService } from 'src/app/shared/services/director.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Director } from 'src/app/shared/models/director';
 
 @Component({
   selector: 'app-director-form',
@@ -11,13 +12,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DirectorFormComponent implements OnInit{
 
   @Output() onSubmision = new EventEmitter<any>();
-  director = {
+  director : Director = {
     directorId : 0,
-    name : "",
-    photo : "",
-    born : new Date('01/01/0001'),
-    oscarWins : 0,
-    oscarNominations : 0
+    name : " ",
+    photo : undefined,
+    born : undefined,
+    oscarWins : undefined,
+    oscarNominations : undefined
   }
   id = 0;
   errors = "";

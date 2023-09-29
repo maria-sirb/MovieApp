@@ -10,9 +10,9 @@
         <img [src] = "director.photo" class="photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
         </div>
         <div class = "right-details">
-        <p><span class = "label">Born : </span>{{director.born | date}}</p>
-        <p><span class = "label">Oscar Wins : </span>{{director.oscarWins}}</p>
-        <p><span class = "label">Oscar Nominations : </span>{{director.oscarNominations}}</p>
+        <p *ngIf = "director.born"><span class = "label">Born : </span>{{director.born | date}}</p>
+        <p *ngIf = "director.oscarWins"><span class = "label">Oscar Wins : </span>{{director.oscarWins}}</p>
+        <p *ngIf = "director.oscarNominations"><span class = "label">Oscar Nominations : </span>{{director.oscarNominations}}</p>
         </div>
     </div>
     <h3 class="section-header" *ngIf = "directorMovies">Movies : </h3>

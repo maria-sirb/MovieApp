@@ -44,11 +44,11 @@ export class DirectorComponent implements OnInit{
     if(this.sortMode == 'oscarWins')  
     {
       this.directors.sort((director1, director2) => {
-        if (director1.oscarWins < director2.oscarWins) return 1;
-  if (director1.oscarWins > director2.oscarWins) return -1;
-  if (director1.oscarNominations < director2.oscarNominations) return 1;
-  if (director1.oscarNominations > director2.oscarNominations) return -1;
-  return 0;
+        if (director1.oscarWins || 0 < (director2.oscarWins || 0)) return 1;
+        if (director1.oscarWins || 0 > (director2.oscarWins || 0)) return -1;
+        if (director1.oscarNominations || 0 < (director2.oscarNominations || 0)) return 1;
+        if (director1.oscarNominations || 0 > (director2.oscarNominations || 0)) return -1;
+        return 0;
       });
     }
   }

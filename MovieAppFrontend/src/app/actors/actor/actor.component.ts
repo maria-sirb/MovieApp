@@ -44,11 +44,11 @@ export class ActorComponent implements OnInit{
     if(this.sortMode == 'oscarWins')  
     {
       this.actors.sort((actor1, actor2) => {
-        if (actor1.oscarWins < actor2.oscarWins) return 1;
-  if (actor1.oscarWins > actor2.oscarWins) return -1;
-  if (actor1.oscarNominations < actor2.oscarNominations) return 1;
-  if (actor1.oscarNominations > actor2.oscarNominations) return -1;
-  return 0;
+        if (actor1.oscarWins || 0 < (actor2.oscarWins || 0)) return 1;
+        if (actor1.oscarWins || 0 > (actor2.oscarWins || 0)) return -1;
+        if (actor1.oscarNominations || 0 < (actor2.oscarNominations || 0)) return 1;
+        if (actor1.oscarNominations || 0 > (actor2.oscarNominations || 0)) return -1;
+      return 0;
       });
     }
   }

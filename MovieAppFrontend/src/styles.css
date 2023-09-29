@@ -357,7 +357,6 @@ li .detail-link:hover h5{
 .right-details{
     display: flex;
     flex-direction: column;
-    /*padding-top: 40px;*/
 }
 .right-details>p{
     margin: 7px;

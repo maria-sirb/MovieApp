@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { Actor } from 'src/app/shared/models/actor';
 
 @Component({
   selector: 'app-actor-form',
@@ -13,13 +14,13 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 export class ActorFormComponent implements OnInit {
 
   @Output() onSubmision = new EventEmitter<any>();
-  actor = {
+  actor : Actor = {
     actorId : 0,
     name : "",
-    photo : "",
-    born : new Date('01/01/0001'),
-    oscarWins : 0,
-    oscarNominations : 0
+    photo : undefined,
+    born : undefined,
+    oscarWins : undefined,
+    oscarNominations : undefined
   }
   id = 0;
   errors = "";

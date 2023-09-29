@@ -27,15 +27,7 @@ export class MovieDetailComponent implements OnInit {
 
   movie : Movie = {
     movieId: 0,
-    title: '',
-    imdbRating: 0,
-    runTime: 0,
-    releaseYear: 0,
-    summary: '',
-    storyLine: '',
-    oscarWins: 0,
-    oscarNominations: 0,
-    poster: ''
+    title: ''
   };
   director : Director | undefined = undefined;
   genres : Genre[] | undefined = undefined;

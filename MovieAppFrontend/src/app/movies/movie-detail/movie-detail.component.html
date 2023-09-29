@@ -11,11 +11,11 @@
         <p class="rating"><span class="star-icon">★</span><span class="bigger-text">{{rating}}</span>/10</p>
         </div>
         <div class="right-details">
-        <p><span class = "label">IMDB Rating : </span>{{movie.imdbRating}}</p>
-        <p><span class = "label">Release Year : </span>{{movie.releaseYear}}</p>
-        <p><span class = "label">Runtime : </span>{{movie.runTime}} minutes</p>
-        <p><span class = "label">Oscar Wins : </span>{{movie.oscarWins}}</p>
-        <p><span class = "label">Oscar Nominations : </span>{{movie.oscarNominations}}</p>
+        <p *ngIf = "movie.imdbRating"><span class = "label">IMDB Rating : </span>{{movie.imdbRating}}</p>
+        <p *ngIf = "movie.releaseYear"><span class = "label">Release Year : </span>{{movie.releaseYear}}</p>
+        <p *ngIf = "movie.runTime"><span class = "label">Runtime : </span>{{movie.runTime}} minutes</p>
+        <p *ngIf = "movie.oscarWins"><span class = "label">Oscar Wins : </span>{{movie.oscarWins}}</p>
+        <p *ngIf = "movie.oscarNominations"><span class = "label">Oscar Nominations : </span>{{movie.oscarNominations}}</p>
         <ul *ngIf = "genres">
             <li *ngFor = "let genre of genres">
                 <p>{{genre.name}}</p>
@@ -24,7 +24,7 @@
     </div>
     </div>
     <div>
-        <h3 class = "label section-header">Summary : </h3><p class = "bottom-line light-gray-text">{{movie.summary}}</p>
+        <h3 *ngIf = "movie.summary" class = "label section-header">Summary : </h3><p *ngIf = "movie.summary" class = "bottom-line light-gray-text">{{movie.summary}}</p>
         <div *ngIf = "director" class = "bottom-line ">
             <h3 class = "label section-header">Director : </h3>
             <a class = "detail-link director" routerLink="/director-detail/{{director.directorId}}">
@@ -55,6 +55,6 @@
                </a> 
             </li>
         </ul>
-        <h3 class = "label section-header">Storyline : </h3><p class = "bottom-line light-gray-text">{{movie.storyLine}}</p>
+        <h3 *ngIf = "movie.storyLine" class = "label section-header">Storyline : </h3><p class = "bottom-line light-gray-text">{{movie.storyLine}}</p>
         <app-reviews *ngIf = "movie.movieId != 0" [movie] = "movie"></app-reviews>
     </div>

@@ -31,7 +31,7 @@ export class MoviesComponent implements OnInit{
   }
 
   ngOnInit() : void {   
-    
+
     this.userStoreService.getIdFromStore().pipe(
       switchMap((id) => {
         this.currentUserId = Number(id) || Number(this.authService.getIdFromToken());  
@@ -82,23 +82,23 @@ export class MoviesComponent implements OnInit{
     }
     if(this.sortMode == 'releaseYearAsc')  
     {
-      this.movies.sort((movie1, movie2) => movie1.releaseYear < movie2.releaseYear? -1 : 1);
+      this.movies.sort((movie1, movie2) => ((movie1.releaseYear || 0) < (movie2.releaseYear || 0))? -1 : 1);
     }
     if(this.sortMode == 'releaseYearDesc')  
     {
-      this.movies.sort((movie1, movie2) => movie1.releaseYear < movie2.releaseYear? 1 : -1);
+      this.movies.sort((movie1, movie2) => ((movie1.releaseYear || 0) < ( movie2.releaseYear || 0))? 1 : -1);
     }
     if(this.sortMode == 'imdbRating')  
     {
-      this.movies.sort((movie1, movie2) => movie1.imdbRating < movie2.imdbRating? 1 : -1);
+      this.movies.sort((movie1, movie2) => ((movie1.imdbRating || 0) < (movie2.imdbRating || 0)) ? 1 : -1);
     }
     if(this.sortMode == 'oscarWins')  
     {
       this.movies.sort((movie1, movie2) => {
-        if (movie1.oscarWins < movie2.oscarWins) return 1;
-        if (movie1.oscarWins > movie2.oscarWins) return -1;
-        if (movie1.oscarNominations < movie2.oscarNominations) return 1;
-        if (movie1.oscarNominations > movie2.oscarNominations) return -1;
+        if (movie1.oscarWins || 0 < (movie2.oscarWins || 0)) return 1;
+        if (movie1.oscarWins || 0 > (movie2.oscarWins || 0)) return -1;
+        if (movie1.oscarNominations || 0 < (movie2.oscarNominations || 0)) return 1;
+        if (movie1.oscarNominations || 0 > (movie2.oscarNominations || 0)) return -1;
         return 0;
       });
     }
