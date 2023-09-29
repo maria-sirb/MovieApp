@@ -11,6 +11,8 @@ using MovieAppAPI.Interfaces;
 using MovieAppAPI.Repositories;
 using MovieAppAPI.UtilityService;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +26,8 @@ builder.Services.AddControllers(options =>
             Duration = 60,
             Location = ResponseCacheLocation.Any
         });
-});
+}).AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddResponseCaching();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
