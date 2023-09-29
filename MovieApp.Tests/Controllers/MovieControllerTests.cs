@@ -101,7 +101,7 @@ namespace MovieApp.Tests.Controllers
 
             //Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType(typeof(OkResult));
+            result.Should().BeOfType(typeof(OkObjectResult));
         }
 
         [Fact]
