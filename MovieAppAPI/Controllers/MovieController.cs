@@ -81,11 +81,24 @@ namespace MovieAppAPI.Controllers
             }
             var roles = _mapper.Map<List<MovieActorDto>>(_movieRepository.GetRolesInMovie(movieId));
             if (!ModelState.IsValid)
-
             {
                 return BadRequest(ModelState);
             }
             return Ok(roles);
+        }
+
+        [HttpGet("cast/{movieId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<CastMemberDto>))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        public IActionResult GetMovieCast(int movieId)
+        {
+            if (!_movieRepository.MovieExists(movieId))
+                return NotFound();
+            var cast = _mapper.ProjectTo<CastMemberDto>(_movieRepository.GetMovieCast(movieId)).ToList();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(cast);
         }
 
         [HttpGet("actor/{movieId}")]
@@ -163,7 +176,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok();
+            return Ok(movieMap.MovieId);
 
         }
 
@@ -188,7 +201,7 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest("Something went wrong while saving.");
             }
-            return NoContent();
+            return Ok(movieMap.MovieId);
 
         }
         [HttpDelete("{movieId}")]

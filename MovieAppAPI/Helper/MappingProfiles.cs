@@ -28,6 +28,9 @@ namespace MovieAppAPI.Helper
             CreateMap<Vote, VoteDto>();
             CreateMap<WatchlistDto, Watchlist>();
             CreateMap<Watchlist, WatchlistDto>();
+            CreateProjection<MovieActor, CastMemberDto>()
+                .ForMember(dto => dto.Name, conf => conf.MapFrom(ma => ma.Actor.Name))
+                .ForMember(dto => dto.Photo, conf => conf.MapFrom(ma => ma.Actor.Photo));
         
         }
     }

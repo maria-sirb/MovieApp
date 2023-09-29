@@ -1,4 +1,7 @@
-﻿using MovieAppAPI.Data;
+﻿using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using MovieAppAPI.Data;
+using MovieAppAPI.Dtos;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using System.Data;
@@ -28,10 +31,14 @@ namespace MovieAppAPI.Repositories
             return _context.Movies.Where(m => m.MovieId == movieId).Select(m => m.Director).FirstOrDefault();
         }
 
-
         public ICollection<Actor> GetMovieActors(int id)
         {
            return _context.MovieActors.Where(ma => ma.MovieId == id).Select(ma => ma.Actor).ToList();
+        }
+
+        public IQueryable<MovieActor> GetMovieCast(int id)
+        {
+            return _context.MovieActors.Where(ma => ma.MovieId == id);
         }
 
         public ICollection<Genre> GetMovieGenres(int id)
