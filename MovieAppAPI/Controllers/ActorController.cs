@@ -127,7 +127,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok();
+            return Ok(actorMap.ActorId);
 
         }
 

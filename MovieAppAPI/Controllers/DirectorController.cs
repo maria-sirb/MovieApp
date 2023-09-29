@@ -104,7 +104,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok();
+            return Ok(directorMap.DirectorId);
 
         }
         [HttpPut("{directorId}")]
