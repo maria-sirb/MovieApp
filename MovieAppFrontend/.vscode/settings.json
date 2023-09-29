@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/018c7752-57d1-492f-bd4d-33500ae3875d/resourceGroups/rg1/providers/Microsoft.Web/sites/MovieClient",
+    "appService.deploySubpath": "dist\\movie-app-frontend"
+}

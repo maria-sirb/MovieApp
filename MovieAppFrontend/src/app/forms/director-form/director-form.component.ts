@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { DirectorService } from 'src/app/shared/services/director.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-director-form',
@@ -22,7 +22,7 @@ export class DirectorFormComponent implements OnInit{
   id = 0;
   errors = "";
 
-  constructor(private directorService : DirectorService, private route : ActivatedRoute, private location : Location) {
+  constructor(private directorService : DirectorService, private route : ActivatedRoute, private router : Router, private location : Location) {
 
   }
   ngOnInit(): void {
@@ -41,7 +41,11 @@ export class DirectorFormComponent implements OnInit{
       this.director.born = new Date('01/01/0001');
     if(this.id == 0)
     {
-      this.directorService.addDirector(this.director).subscribe(response => this.onSubmision.emit(true),  error => this.errors = error.error)
+      this.directorService.addDirector(this.director).subscribe(createdId => {
+        this.onSubmision.emit(true);
+        this.router.navigate(['/director-detail/' + createdId]);
+
+      },  error => this.errors = error.error)
     }
     else {
       this.director.directorId = this.id;

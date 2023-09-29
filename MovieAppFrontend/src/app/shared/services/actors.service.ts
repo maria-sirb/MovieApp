@@ -28,15 +28,13 @@ export class ActorsService {
   getActorsMovies(actorId : number) : Observable<Movie[]> {
       return this.client.get<Movie[]>(this.actorsUrl + '/movie/'  + actorId);
   }
-  addActor(actor : object) : Observable<any>{
-    console.log(actor);
-    return this.client.post<any>(this.actorsUrl, actor, {observe : 'response'});
+  addActor(actor : object) : Observable<number>{
+    return this.client.post<number>(this.actorsUrl, actor);
   }
   uppdateActor(actorId : number, actor : object) : Observable<any>{
-    console.log(actor);
     return this.client.put<any>(this.actorsUrl + '/' + actorId, actor, {observe : 'response'});
   }
   deleteActor(actorId : number) : Observable<any>{
-    return this.client.delete<Actor>(this.actorsUrl + '/' + actorId);
+    return this.client.delete<any>(this.actorsUrl + '/' + actorId);
   }
 }

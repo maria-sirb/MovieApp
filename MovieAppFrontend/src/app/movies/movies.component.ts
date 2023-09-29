@@ -9,6 +9,7 @@ import { DefaultPhoto } from '../shared/functions/default-photos';
 import { UserStoreService } from '../shared/services/user-store.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { WatchlistService } from '../shared/services/watchlist.service';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -30,15 +31,16 @@ export class MoviesComponent implements OnInit{
   }
 
   ngOnInit() : void {   
-    this.userStoreService.getIdFromStore().subscribe(id => {
-      this.currentUserId = Number(id) || Number(this.authService.getIdFromToken());  
-      if(this.currentUserId)  
-        this.watchlistService.getUserWatchlist(this.currentUserId).subscribe(watchlist => {
-          this.currentUserWatchlist = watchlist;
-        }, error => console.log(error));  
-      else 
+    
+    this.userStoreService.getIdFromStore().pipe(
+      switchMap((id) => {
+        this.currentUserId = Number(id) || Number(this.authService.getIdFromToken());  
+        if(this.currentUserId)
+          return this.watchlistService.getUserWatchlist(this.currentUserId);
         this.currentUserWatchlist = [];
-    });
+        return of(null);
+      })
+    ).subscribe(watchlist => this.currentUserWatchlist = watchlist || undefined);
  
     if(this.pickedGenreId)
       this.genreService.getGenre(this.pickedGenreId).subscribe(genre => this.displayGenreMovies(genre));

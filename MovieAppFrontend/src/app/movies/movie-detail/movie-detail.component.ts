@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import { Movie } from '../../shared/models/movie';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -12,6 +12,11 @@ import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { ReviewsService } from 'src/app/shared/services/reviews.service';
+import { forkJoin, map, mergeMap, subscribeOn, switchMap } from 'rxjs';
+import { Actor } from 'src/app/shared/models/actor';
+import { Director } from 'src/app/shared/models/director';
+import { Genre } from 'src/app/shared/models/genre';
+import { CastMember } from 'src/app/shared/models/castMember';
 
 @Component({
   selector: 'app-movie-detail',
@@ -20,7 +25,21 @@ import { ReviewsService } from 'src/app/shared/services/reviews.service';
 })
 export class MovieDetailComponent implements OnInit {
 
-  @Input() movie?: Movie;
+  movie : Movie = {
+    movieId: 0,
+    title: '',
+    imdbRating: 0,
+    runTime: 0,
+    releaseYear: 0,
+    summary: '',
+    storyLine: '',
+    oscarWins: 0,
+    oscarNominations: 0,
+    poster: ''
+  };
+  director : Director | undefined = undefined;
+  genres : Genre[] | undefined = undefined;
+  cast : CastMember[] | undefined = undefined;
   addRole: TrueFalse = {value : false};
   dp = new DefaultPhoto();
   userRole = "";
@@ -42,27 +61,24 @@ export class MovieDetailComponent implements OnInit {
   {
     const id = Number(this.route.snapshot.paramMap.get('movieId'));
 
+    this.movieService.getMovie(id).subscribe(movie => {this.movie = movie; console.log(movie)}, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
     this.reviewService.getAverageMovieRating(id).subscribe(rating => this.rating = Math.round(rating * 10) /10, error => console.log(error));
+    this.movieService.getMovieDirector(id).subscribe(director => {this.director = director; console.log(director)});
+    this.movieService.getMovieGenres(id).subscribe(genres => {this.genres = genres; console.log(genres)});
+    this.movieService.getMovieCast(id).subscribe(cast => {this.cast = cast; console.log(cast)});
+    /*this.movieService.getMovieActors(id).pipe(
+      mergeMap((actors : Actor[]) => {
+        this.actors = actors;
+        //this.roles = new Map<number, string>();
+        return forkJoin(
+          actors.map(actor => this.movieService.getMovieRole(id, actor.actorId))
+        )
+      })
+     ).subscribe(roles => roles.forEach(role => this.movie.roles?.set(role.actorId, role.role)));*/
 
-    this.movieService.getMovie(id).subscribe(movie => {
-      this.movie = movie;
-      this.movieService.getMovieDirector(id).subscribe(director => movie.director = director);
-      this.movieService.getMovieActors(id).subscribe(actors => {
-        movie.movieActors = actors;
-        movie.roles = new Map<number, string>();
-        actors.forEach(actor => {
-          this.movieService.getMovieRole(id, actor.actorId).subscribe(role => 
-            {
-              movie.roles.set(actor.actorId, role.role)
-            }
-          );
-        });
-      });
-      this.movieService.getMovieGenres(id).subscribe(genres => movie.movieGenres = genres);
-    }, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
   }
 
-  Role(movieId : number, actorId : number) {
+  /*Role(movieId : number, actorId : number) {
 
     let role : Role | undefined;
     this.movieService.getMovieRole(movieId, actorId).subscribe(r => {role = r;
@@ -70,7 +86,7 @@ export class MovieDetailComponent implements OnInit {
   });
    // console.log(role);
     return role;
-  }
+  }*/
   
   toggleButton(button : TrueFalse)
   {

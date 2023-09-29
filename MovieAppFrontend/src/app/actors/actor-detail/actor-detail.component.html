@@ -15,6 +15,6 @@
         <p><span class = "label">Oscar Nominations : </span>{{actor.oscarNominations}}</p>
     </div>
     </div>
-    <h3 class="section-header">Movies: </h3>
-    <app-movie-list [movies] ="actor.movieActors" *ngIf = "actor.movieActors"></app-movie-list>
+    <h3 class="section-header" *ngIf = "actorMovies">Movies: </h3>
+    <app-movie-list [movies] ="actorMovies" *ngIf = "actorMovies"></app-movie-list>
 </div>

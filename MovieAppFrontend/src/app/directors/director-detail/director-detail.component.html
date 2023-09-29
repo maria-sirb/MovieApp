@@ -7,7 +7,7 @@
     <div class = "top-details">
         <div>
         <h2>{{director.name}}</h2>
-        <img [src] = "director.photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
+        <img [src] = "director.photo" class="photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
         </div>
         <div class = "right-details">
         <p><span class = "label">Born : </span>{{director.born | date}}</p>
@@ -15,6 +15,6 @@
         <p><span class = "label">Oscar Nominations : </span>{{director.oscarNominations}}</p>
         </div>
     </div>
-    <h3 class="section-header">Movies : </h3>
-    <app-movie-list [movies] = "director.movies" *ngIf = "director.movies"></app-movie-list>
+    <h3 class="section-header" *ngIf = "directorMovies">Movies : </h3>
+    <app-movie-list [movies] = "directorMovies" *ngIf = "directorMovies"></app-movie-list>
 </div>

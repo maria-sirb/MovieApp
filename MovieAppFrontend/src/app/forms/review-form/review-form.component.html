@@ -22,6 +22,9 @@
                     <textarea name = "review" class = "review"  [(ngModel)] = "review.text" ngModel></textarea>
                 </div>
             </div>
+            <div class="errors" *ngIf = "errors">
+                {{errors}}
+            </div>
         <div class = "buttons">
             <button class="cancel" type="button" (click)="cancel()">Cancel</button>
             <input class = "submit" type = "submit" value = "Submit" [disabled]="!reviewForm.form.valid"/>

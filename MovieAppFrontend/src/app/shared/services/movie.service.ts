@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import { Role } from '../models/role';
 import { Director } from '../models/director';
 import { environment } from 'src/environments/environment';
+import { CastMember } from '../models/castMember';
 
 @Injectable({
   providedIn: 'root'
@@ -42,10 +43,13 @@ export class MovieService {
   getMovieRole(movieId : number, actorId : number) : Observable<Role>{
     return this.client.get<Role>(this.movieRoleUrl + movieId + '/' + actorId);
   }
+  getMovieCast(movieId : number) : Observable<CastMember[]>{
+    return this.client.get<CastMember[]>(this.moviesUrl + '/cast/' + movieId);
+  }
   getMovieDirector(movieId :number) : Observable<Director>{
     return this.client.get<Director>(this.moviesUrl + "/director/" + movieId);
   }
-  addMovie(movie : object, genres :Genre[], director : Director) : Observable<any>{
+  addMovie(movie : object, genres :Genre[], director : Director) : Observable<number>{
 
     let genreParams : string = "";
     let queryParams = new HttpParams();
@@ -56,10 +60,10 @@ export class MovieService {
     });
     
    
-    return this.client.post<any>(this.moviesUrl, movie, {params : queryParams, observe: 'response'});
+    return this.client.post<number>(this.moviesUrl, movie, {params : queryParams});
   }
 
-  updateMovie(id : number, movie : object, genres : Genre[], director : Director) : Observable<any> {
+  updateMovie(id : number, movie : object, genres : Genre[], director : Director) : Observable<number> {
     let genreParams : string = "";
     let queryParams = new HttpParams();
     queryParams = queryParams.append('directorId', director.directorId);
@@ -69,20 +73,20 @@ export class MovieService {
     });
     
    
-    return this.client.put<any>(this.moviesUrl + '/' + id, movie, {params : queryParams, observe: 'response'});
+    return this.client.put<number>(this.moviesUrl + '/' + id, movie, {params : queryParams});
     
   }
   deleteMovie(movieId : number) : Observable<any>{
-    return this.client.delete<Movie>(this.moviesUrl + '/' + movieId);
+    return this.client.delete<any>(this.moviesUrl + '/' + movieId);
   }
   addMovieRole(role : Role) : Observable<any> {
-    return this.client.post<Role>(this.movieRoleUrl, role);
+    return this.client.post<any>(this.movieRoleUrl, role);
   }
   updateMovieRole(role : Role) : Observable<any> {
-    return this.client.put<Role>(this.movieRoleUrl + role.movieId + '/' + role.actorId, role);
+    return this.client.put<any>(this.movieRoleUrl + role.movieId + '/' + role.actorId, role);
   }
   deleteMovieRole(movieId : number, actorId : number) : Observable<any> {
-    return this.client.delete<Movie>(this.movieRoleUrl + movieId + '/' + actorId);
+    return this.client.delete<any>(this.movieRoleUrl + movieId + '/' + actorId);
   }
   
 }

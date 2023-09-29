@@ -5,6 +5,7 @@ import { User } from '../shared/models/user';
 import { Movie } from '../shared/models/movie';
 import { WatchlistService } from '../shared/services/watchlist.service';
 import { UserStoreService } from '../shared/services/user-store.service';
+import { DefaultPhoto } from '../shared/functions/default-photos';
 
 @Component({
   selector: 'app-user',
@@ -21,6 +22,7 @@ export class UserComponent implements OnInit{
   watchlist : Movie[] = [];//the watchlist of the user whose profile is being viewed
   currentUserWatchlist : Movie[] | undefined = undefined// the watchlist of the currently active user
   currentUserId = 0;
+  dp = new DefaultPhoto();
 
   constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private watchlistService : WatchlistService, private route : ActivatedRoute, private router : Router) {}
 

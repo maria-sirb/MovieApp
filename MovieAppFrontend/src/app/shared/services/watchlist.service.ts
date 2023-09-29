@@ -17,7 +17,7 @@ export class WatchlistService {
     return this.client.get<Movie[]>(this.baseUrl + "/" + userId);
   } 
   addToWatchlist(item : Watchlist) : Observable<any>{
-    return this.client.post<Watchlist>(this.baseUrl, item, {observe : 'response'});
+    return this.client.post<any>(this.baseUrl, item, {observe : 'response'});
   }
   deleteFromWatchlist(userId : number, movieId : number): Observable<any>{
     return this.client.delete<any>(this.baseUrl + '/' + userId + '/' + movieId);

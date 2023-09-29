@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { catchError, of, switchMap } from 'rxjs';
+import { Movie } from 'src/app/shared/models/movie';
 
 
 
@@ -16,7 +18,8 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 export class ActorDetailComponent {
 
-  @Input() actor? : Actor;
+  actor : Actor | undefined = undefined;
+  actorMovies : Movie[] | undefined = undefined;
   dp = new DefaultPhoto();
   userRole = "";
 
@@ -34,10 +37,17 @@ export class ActorDetailComponent {
 
   getActor()  {
     const id = Number(this.route.snapshot.paramMap.get('actorId'));
-    this.actorService.getActor(id).subscribe(actor => {
-      this.actor = actor;
-      this.actorService.getActorsMovies(id).subscribe(movies => actor.movieActors = movies);
-    }, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
+    
+    this.actorService.getActor(id).pipe(
+      switchMap((actor) => {
+        this.actor = actor;
+        return this.actorService.getActorsMovies(id);
+      }),
+      catchError((error) => {
+        if(error.status == 404)
+          this.router.navigate(['/404'])
+        return of(error)
+      })).subscribe(movies => this.actorMovies = movies);
   }
 
   deleteActor(actorId : number)

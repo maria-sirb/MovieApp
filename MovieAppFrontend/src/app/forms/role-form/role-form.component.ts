@@ -6,6 +6,7 @@ import { Actor } from 'src/app/shared/models/actor';
 import { ActorsService } from 'src/app/shared/services/actors.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { catchError, of, switchMap } from 'rxjs';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { Location } from '@angular/common';
 })
 export class RoleFormComponent implements OnInit {
 
-  @Output() onSubmision = new EventEmitter<any>();
+  /*@Output() onSubmision = new EventEmitter<any>();*/
   actorError : boolean = false;
   errors = "";
   role : Role = {
@@ -41,11 +42,10 @@ export class RoleFormComponent implements OnInit {
   ngOnInit(): void {
 
    if(this.actorId)
-      {
-        
-        this.actorService.getActor(this.actorId).subscribe(actor => this.actor = actor);
-        this.movieService.getMovieRole(this.movieId, this.actorId).subscribe(role => this.role = role);
-      }
+    {
+      this.actorService.getActor(this.actorId).subscribe(actor => this.actor = actor);
+      this.movieService.getMovieRole(this.movieId, this.actorId).subscribe(role => this.role = role);
+    }
   }
   
   cancel(){
@@ -55,30 +55,26 @@ export class RoleFormComponent implements OnInit {
   addRoleSubmit(data : any)
   {
     let inputActor : Actor;
-    this.actorService.getActorByName(this.actor.name).subscribe(actor => {
-      inputActor = actor;
+    this.actorService.getActorByName(this.actor.name).pipe(
+      catchError((error) => {
+        if(error.status == 404)
+          this.actorError = true;
+        return of();
+      }),
+      switchMap((actor) =>{
+        inputActor =actor;
         if(!this.actorId)
         {
           this.role.movieId = this.movieId;
           this.role.actorId = inputActor.actorId;
-          this.movieService.addMovieRole(this.role).subscribe((result) => this.location.back(), (error) => this.errors = error.error);
-       } 
-       else
-       {
-        this.movieService.updateMovieRole(this.role).subscribe(result => 
-          {
-            this.location.back();
-          },
-          error => this.errors = error.error
-        );
-       } 
-      
-      
-    },
-       error => {
-        if(error.status == 404)
-          this.actorError = true;
-      });
+          return this.movieService.addMovieRole(this.role);
+        }
+        else
+        {
+          return this.movieService.updateMovieRole(this.role);
+        }
+      })
+    ).subscribe(result => this.location.back(), error => this.errors = error.error);
 
   }
 

@@ -49,10 +49,10 @@ export class AuthenticationService {
   sendResetEmail(email : string) : Observable<any>{
     let queryParams = new HttpParams();
     queryParams = queryParams.append('email', email);
-    return this.client.post<string>(this.baseUrl + "/send-reset-email", {}, {params : queryParams, observe : 'response'});
+    return this.client.post<any>(this.baseUrl + "/send-reset-email", {}, {params : queryParams, observe : 'response'});
   }
   resetPasswrod(resetPassword : ResetPassword) : Observable<any>{
-    return this.client.post<ResetPassword>(this.baseUrl + "/reset-password", resetPassword, {observe : 'response'});
+    return this.client.post<any>(this.baseUrl + "/reset-password", resetPassword, {observe : 'response'});
   }
   storeToken(tokenValue : string){
     localStorage.setItem('token', tokenValue);

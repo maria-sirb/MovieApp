@@ -12,15 +12,15 @@ export class VoteService {
   baseUrl = environment.apiUrl + "/Vote";
   constructor(private client : HttpClient) { }
 
-  getReviewVotes(reviewId : number) : Observable<any[]>
+  getReviewVotes(reviewId : number) : Observable<Vote[]>
   {
-    return this.client.get<any[]>(this.baseUrl + "/" + reviewId);
+    return this.client.get<Vote[]>(this.baseUrl + "/" + reviewId);
   }
-  getUserReviewVote(reviewId : number, userId : number) : Observable<any>
+  getUserReviewVote(reviewId : number, userId : number) : Observable<Vote>
   {
-    return this.client.get<any>(this.baseUrl + "/" + reviewId + "/" + userId);
+    return this.client.get<Vote>(this.baseUrl + "/" + reviewId + "/" + userId);
   }
-  addVote(vote : object, userId : number, reviewId : number) : Observable<any>
+  addVote(vote : Vote, userId : number, reviewId : number) : Observable<any>
   {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("userId", userId);
@@ -29,6 +29,6 @@ export class VoteService {
   }
   editVote(vote : Vote) : Observable<any>
   {
-    return this.client.put<Vote>(this.baseUrl + "/" + vote.voteId, vote);
+    return this.client.put<any>(this.baseUrl + "/" + vote.voteId, vote);
   }
 }

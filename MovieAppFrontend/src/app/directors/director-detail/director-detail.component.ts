@@ -6,6 +6,8 @@ import { DirectorService } from 'src/app/shared/services/director.service';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { catchError, of, switchMap } from 'rxjs';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'app-director-detail',
@@ -14,7 +16,8 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 export class DirectorDetailComponent implements OnInit{
 
-  @Input() director? : Director;
+  director : Director | undefined = undefined;
+  directorMovies : Movie[] | undefined = undefined;
   dp = new DefaultPhoto();
   userRole = "";
 
@@ -33,10 +36,18 @@ export class DirectorDetailComponent implements OnInit{
   getDirector() {
 
     const id = Number(this.route.snapshot.paramMap.get('directorId'));
-    this.directorService.getDirector(id).subscribe(director => {
-      this.director = director;
-      this.directorService.getDirectorMovies(id).subscribe(movies => director.movies = movies );
-    }, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
+    
+    this.directorService.getDirector(id).pipe(
+      switchMap(director => {
+        this.director = director;
+        return this.directorService.getDirectorMovies(id);
+      }),
+      catchError((error) => {
+        if(error.status == 404)
+          this.router.navigate(['/404']);
+        return of(error);
+      })
+    ).subscribe(movies => this.directorMovies = movies);
   }
   
   deleteDirector(directorId : number)

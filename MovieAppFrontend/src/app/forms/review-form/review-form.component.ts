@@ -3,8 +3,9 @@ import { ReviewsService } from 'src/app/shared/services/reviews.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Review } from 'src/app/shared/models/review';
-import { empty } from 'rxjs';
+import { empty, switchMap } from 'rxjs';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { UserStoreService } from 'src/app/shared/services/user-store.service';
 
 @Component({
   selector: 'app-review-form',
@@ -21,13 +22,10 @@ export class ReviewFormComponent {
     title : "",
     text : ""
   }
-  username : string;
   movieId = Number(this.route.snapshot.paramMap.get('movieId'));
+  errors = "";
 
-  constructor(private reviewService : ReviewsService, private location : Location, private authenticationService : AuthenticationService, private route : ActivatedRoute) {
-    this.username = this.authenticationService.getUsernameFromToken();
-    
-  }
+  constructor(private reviewService : ReviewsService, private location : Location, private authenticationService : AuthenticationService, private userStore : UserStoreService, private route : ActivatedRoute) {}
   cancel(){
    this.location.back();
   }
@@ -39,12 +37,12 @@ export class ReviewFormComponent {
   }
 
   addReview(){
-    this.authenticationService.getUser(this.username).subscribe(user => 
-      {
-        const userId = user.userId;
-        this.reviewService.addReview(userId, this.movieId, this.review).subscribe(response => this.location.back(), error => console.log(error));
-      },
-      error => console.log(error));
+    this.userStore.getIdFromStore().pipe(
+      switchMap((id) => {
+        const userId = Number(id) || Number(this.authenticationService.getIdFromToken());
+        return this.reviewService.addReview(userId, this.movieId, this.review);
+      })
+    ).subscribe(response => this.location.back(), error => this.errors = error.error);
    
   }
 }

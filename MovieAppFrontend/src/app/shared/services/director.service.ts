@@ -29,13 +29,13 @@ export class DirectorService {
   getDirectorMovies(directorId : number) : Observable<Movie[]> {
     return this.client.get<Movie[]>(this.directorsUrl + '/movie/' + directorId);
   }
-  addDirector(director : object) : Observable<any>{
-    return this.client.post<any>(this.directorsUrl, director, {observe : 'response'});
+  addDirector(director : object) : Observable<number>{
+    return this.client.post<number>(this.directorsUrl, director);
   }
   updateDirector(directorId : number, director : object) : Observable<any>{
     return this.client.put<any>(this.directorsUrl + '/' + directorId, director, {observe : 'response'});
   }
   deleteDirector(actorId : number) : Observable<any>{
-    return this.client.delete<Director>(this.directorsUrl + '/' + actorId);
+    return this.client.delete<any>(this.directorsUrl + '/' + actorId);
   }
 }

@@ -8,8 +8,9 @@ import { DirectorService } from 'src/app/shared/services/director.service';
 import { NgModel } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { TrueFalse } from 'src/app/add/add.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-movie-form',
@@ -46,7 +47,7 @@ export class MovieFormComponent implements OnInit{
   id = Number(this.route.snapshot.paramMap.get('movieId'));
   errors = "";
 
-  constructor(private genreService : GenreService, private directorService : DirectorService, private movieService : MovieService, private route : ActivatedRoute, private location : Location){
+  constructor(private genreService : GenreService, private directorService : DirectorService, private movieService : MovieService, private route : ActivatedRoute, private location : Location, private router : Router){
   }
   ngOnInit(): void {
 
@@ -57,10 +58,7 @@ export class MovieFormComponent implements OnInit{
     {
       this.movieService.getMovie(this.id).subscribe(movie => this.movie = movie);
       this.movieService.getMovieDirector(this.id).subscribe(director => this.director = director);
-      console.log(this.director);
       this.movieService.getMovieGenres(this.id).subscribe(genres => this.checkedGenres = genres);
-      console.log(this.checkedGenres);
-      
     }
   }
 
@@ -89,31 +87,29 @@ export class MovieFormComponent implements OnInit{
 
   addMovieSubmit(data : any)
   {
-
-    this.directorService.getDirectorByName(data.director).subscribe(d => {this.director = d;
-      if(this.director.directorId == 0)
-      this.directorError = true;
-      else
-      this.directorError = false;
-      if(this.id != 0)
-      {
-         this.movie.movieId = this.id;
-         this.movieService.updateMovie(this.id, this.movie, this.checkedGenres, this.director).subscribe(response =>
-          {
-            this.onSubmision.emit(true);
-            this.location.back();
-          }, 
-          error => this.errors = error.error);
-      }
-      else
-      {
-        this.movieService.addMovie(this.movie, this.checkedGenres, this.director).subscribe(response =>
-          this.onSubmision.emit(true), 
-          error => this.errors = error.error);
-      }
-      
-    },
-    error => {this.directorError = true;});
+    this.directorService.getDirectorByName(data.director).pipe(
+      catchError((error) => {
+        this.directorError = true;
+        console.log(this.directorError);
+        return of();
+      }),
+      switchMap((director) => {
+        this.director = director;
+        this.director.directorId == 0 ? this.directorError = true : this.directorError = false;
+        if(this.id != 0)
+        {
+          this.movie.movieId = this.id;
+          return this.movieService.updateMovie(this.id, this.movie, this.checkedGenres, this.director);
+        }
+        else 
+        {
+          return this.movieService.addMovie(this.movie, this.checkedGenres, this.director);
+        }
+      })  
+    ).subscribe(createdId => {
+      this.onSubmision.emit(true);
+      this.router.navigate(['/movie-detail/' + createdId]);
+    })
 
   }
 }

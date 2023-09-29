@@ -16,8 +16,8 @@
         <p><span class = "label">Runtime : </span>{{movie.runTime}} minutes</p>
         <p><span class = "label">Oscar Wins : </span>{{movie.oscarWins}}</p>
         <p><span class = "label">Oscar Nominations : </span>{{movie.oscarNominations}}</p>
-        <ul>
-            <li *ngFor = "let genre of movie.movieGenres">
+        <ul *ngIf = "genres">
+            <li *ngFor = "let genre of genres">
                 <p>{{genre.name}}</p>
             </li>
         </ul>
@@ -25,22 +25,22 @@
     </div>
     <div>
         <h3 class = "label section-header">Summary : </h3><p class = "bottom-line light-gray-text">{{movie.summary}}</p>
-        <div class = "bottom-line ">
+        <div *ngIf = "director" class = "bottom-line ">
             <h3 class = "label section-header">Director : </h3>
-            <a *ngIf = "movie.director" class = "detail-link director" routerLink="/director-detail/{{movie.director.directorId}}">
-                <img class = "photo" [src] = "movie.director.photo" (error) = "dp.addDefaultPhotoDirector(movie.director)"/>
-                <p  style = "font-weight: bold">{{movie.director.name}}</p>
+            <a class = "detail-link director" routerLink="/director-detail/{{director.directorId}}">
+                <img class = "photo" [src] = "director.photo" (error) = "dp.addDefaultPhotoDirector(director)"/>
+                <p  style = "font-weight: bold">{{director.name}}</p>
             </a>
         </div>
-        <h3 class = "label section-header">Cast : </h3>
+        <h3 class = "label section-header" *ngIf = "cast">Cast : </h3>
         <ul  class = "bottom-line" class = "cast">
-            <li *ngFor = "let actor of movie.movieActors">
+            <li *ngFor = "let actor of cast">
                 <a class = "detail-link" routerLink="/actor-detail/{{actor.actorId}}">
-                    <img class = "photo detail-poster" [src] = " actor.photo" (error) = "dp.addDefaultPhotoActor(actor)" alt = "photo of actor" >
+                    <img class = "photo detail-poster" [src] = " actor.photo" (error) = "dp.addDefaultPhotoCast(actor)" alt = "photo of actor" >
                     <p  style = "font-weight: bold">{{actor.name}}</p>
                 </a>
                 <div>
-                    <p class="actor-role"> as {{movie.roles.get(actor.actorId)}}</p>
+                    <p class="actor-role"> as {{actor.role}}</p>
                     <div class = "options" *ngIf = "userRole == 'admin'">
                         <button class = "edit"><a routerLink="/edit-role/{{movie.movieId}}/{{actor.actorId}}">Edit</a></button>
                         <button class = "delete" (click)="deleteRole(movie.movieId, actor.actorId)">Delete</button>
@@ -56,5 +56,5 @@
             </li>
         </ul>
         <h3 class = "label section-header">Storyline : </h3><p class = "bottom-line light-gray-text">{{movie.storyLine}}</p>
-        <app-reviews [movie] = "movie"></app-reviews>
+        <app-reviews *ngIf = "movie.movieId != 0" [movie] = "movie"></app-reviews>
     </div>

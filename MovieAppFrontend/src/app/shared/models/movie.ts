@@ -13,9 +13,9 @@ export interface Movie{
     oscarWins: number;
     oscarNominations: number;
     poster : string;
-    director : Director;
-    movieGenres : Genre[];
-    movieActors: Actor[];
-    roles : Map<number, string>;
+    director? : Director;
+    movieGenres? : Genre[];
+    movieActors?: Actor[];
+    roles? : Map<number, string>;
     averageRating? : number;
 }

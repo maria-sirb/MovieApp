@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Review } from '../models/review';
 import { query } from '@angular/animations';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/user';
+import { Movie } from '../models/movie';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +21,14 @@ export class ReviewsService {
   getAverageMovieRating(movieId : number) : Observable<number>{
     return this.client.get<number>(this.baseUrl + "/average/" + movieId);
   } 
-  getUserReviews(userId : number) : Observable<any[]>{
-    return this.client.get<any[]>(this.baseUrl + "/user/" + userId);
+  getUserReviews(userId : number) : Observable<Review[]>{
+    return this.client.get<Review[]>(this.baseUrl + "/user/" + userId);
   }
-  getReviewAuthor(reviewId : number) : Observable<any>{
-    return this.client.get<any>(this.baseUrl + "/author/" + reviewId);
+  getReviewAuthor(reviewId : number) : Observable<User>{
+    return this.client.get<User>(this.baseUrl + "/author/" + reviewId);
   }
-  getReviewedMovie(reviewId : number) : Observable<any>{
-    return this.client.get<any>(this.baseUrl + "/reviewed/" + reviewId);
+  getReviewedMovie(reviewId : number) : Observable<Movie>{
+    return this.client.get<Movie>(this.baseUrl + "/reviewed/" + reviewId);
   }
   addReview(userId : number, movieId : number, review : object) : Observable<any>{
     let queryParams = new HttpParams();

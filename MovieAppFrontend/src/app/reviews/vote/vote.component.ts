@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { of, switchMap } from 'rxjs';
 import { User } from 'src/app/shared/models/user';
 import { Vote } from 'src/app/shared/models/vote';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -34,21 +35,17 @@ export class VoteComponent implements OnInit{
           else if(vote.isDislike)
             this.dislikesNo++;}
         ), error => console.log(error));
-
-    this.userStoreService.getIdFromStore().subscribe(userId => {
-      this.currentUserId = Number(userId) || Number(this.authenticationService.getIdFromToken()) || 0;
-      if(this.currentUserId == 0)
-      {
-        this.currentVote = {voteId : 0, isLike : false, isDislike : false};
-      }
-      else if(this.reviewId)
-      {
-        this.voteService.getUserReviewVote(this.reviewId, this.currentUserId).subscribe(vote => {
-          this.currentVote = vote || {voteId : 0, isLike : false, isDislike : false};
-        }, error => console.log(error));
-      }
-      
-    })  
+    
+    this.userStoreService.getIdFromStore().pipe(
+      switchMap((id) => {
+        this.currentUserId = Number(id) || Number(this.authenticationService.getIdFromToken()) || 0;
+        if(this.currentUserId == 0)
+          this.currentVote = {voteId : 0, isLike : false, isDislike : false};
+        else if(this.reviewId)
+          return this.voteService.getUserReviewVote(this.reviewId, this.currentUserId);
+        return of();
+      })
+    ).subscribe(vote => this.currentVote = vote || {voteId : 0, isLike : false, isDislike : false});
   }
 
   like(){

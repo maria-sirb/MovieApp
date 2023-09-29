@@ -1,7 +1,7 @@
 import { Component, Output,EventEmitter, OnInit } from '@angular/core';
 import { ActorsService } from 'src/app/shared/services/actors.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
@@ -25,7 +25,7 @@ export class ActorFormComponent implements OnInit {
   errors = "";
   userRole = "";
 
-  constructor(private actorService : ActorsService, private route : ActivatedRoute, private location : Location) {
+  constructor(private actorService : ActorsService, private route : ActivatedRoute, private router : Router, private location : Location) {
 
   }
   ngOnInit(): void {
@@ -44,7 +44,10 @@ export class ActorFormComponent implements OnInit {
 
     if(this.id == 0)
     {
-      this.actorService.addActor(this.actor).subscribe(response => this.onSubmision.emit(true),  error => this.errors = error.error);
+      this.actorService.addActor(this.actor).subscribe(createdId => {
+        this.onSubmision.emit(true); 
+        this.router.navigate(['/actor-detail/' + createdId])
+      },  error => this.errors = error.error);
       
     }
     else 

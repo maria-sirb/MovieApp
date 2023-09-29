@@ -24,7 +24,7 @@
                         </div>
                         <p class="small-text" *ngIf = "review.user">
                             <a href="/{{review.user.role}}/{{review.user.userId}}" class="small-text">
-                                <img class="photo" [src] = "review.user.imageSource || '../../assets/person.jpg'"/>
+                                <img class="photo" [src] = "review.user.imageSource || '../../assets/person.jpg'" (error) = "dp.addDefaultPhotoUser(review.user)"/>
                                 {{review.user.username}}</a>
                             on {{review.date | date}}
                         </p>
