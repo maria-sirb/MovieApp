@@ -9,7 +9,7 @@ namespace MovieAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ResponseCache(CacheProfileName = "Cache1Min")]
+    [ResponseCache(CacheProfileName = "CacheDefault")]
     public class MovieController : Controller
     {
         private readonly IMovieRepository _movieRepository;
@@ -201,7 +201,7 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest("Something went wrong while saving.");
             }
-            return Ok(movieMap.MovieId);
+            return NoContent();
 
         }
         [HttpDelete("{movieId}")]

@@ -12,7 +12,7 @@ namespace MovieAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ResponseCache(CacheProfileName = "Cache1Min")]
+    [ResponseCache(CacheProfileName = "CacheDefault")]
     public class ReviewController : Controller
     {
         private readonly IReviewRepository _reviewRepository;

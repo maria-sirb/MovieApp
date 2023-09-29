@@ -10,7 +10,7 @@ namespace MovieAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ResponseCache(CacheProfileName = "Cache1Min")]
+    [ResponseCache(CacheProfileName = "CacheDefault")]
     public class ActorController : Controller
     {
         private readonly IActorRepository _actorRepository;

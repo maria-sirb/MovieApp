@@ -20,10 +20,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(options =>
 {
-    options.CacheProfiles.Add("Cache1Min",
+    options.CacheProfiles.Add("CacheDefault",
         new CacheProfile()
         {
-            Duration = 60,
+            Duration = 15
+            ,
             Location = ResponseCacheLocation.Any
         });
 }).AddNewtonsoftJson(options =>
