@@ -272,16 +272,16 @@ header{
   justify-content: center;
   padding-inline-start: 0;
 }
-img, .photo, .poster{
-    width: 200px !important;
-    height:265px !important;
+img, .poster{
+    width: 200px;
+    height:265px;
     object-fit: cover;
     box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;
     transition: all 0.2s ease-in-out;
 }
 .photo{
-  width: 200px !important;
-  height:200px !important;
+  width: 200px;
+  height:200px;
   object-fit: cover;
   object-position: 0% 20%;
   border-radius: 25px;
@@ -432,7 +432,7 @@ li .detail-link:hover h5{
 }
 
 @media(max-width: 450px){
-  app-movies .poster, app-search .poster{
+  app-movies .poster, app-search .poster, .watchlist .poster, app-reviews .poster{
     width: 120px !important;
     height: 160px !important;
   }
@@ -440,7 +440,9 @@ li .detail-link:hover h5{
     width: 120px !important;
     height: 120px !important;
   }
-  app-movies .movies-list .movie, app-search .movies-list .movie{
+  app-movies .movies-list .movie, 
+  app-search .movies-list .movie,
+  .watchlist li{
     width: 120px !important;
     height: 220px !important;
     margin: 10px 20px !important;

@@ -1,9 +1,3 @@
-
-img {
-    width: 200px;
-    height:auto;
-    box-shadow:rgba(0, 0, 0, 0.56) 0px 5px 10px;  
-}
 li img{
     position: absolute; 
     top: 0px;

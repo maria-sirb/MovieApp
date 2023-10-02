@@ -68,8 +68,8 @@ a{
     color: var(--light-gray);
 }
 .poster{
-    height: 200px !important;
-    width : auto !important;
+    height: 200px;
+    width : auto;
 }
 .detail-link{
     min-width: 150px;

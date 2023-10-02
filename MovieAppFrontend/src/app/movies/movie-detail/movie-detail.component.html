@@ -36,7 +36,7 @@
         <ul  class = "bottom-line" class = "cast">
             <li *ngFor = "let actor of cast">
                 <a class = "detail-link" routerLink="/actor-detail/{{actor.actorId}}">
-                    <img class = "photo detail-poster" [src] = " actor.photo" (error) = "dp.addDefaultPhotoCast(actor)" alt = "photo of actor" >
+                    <img class = "photo" [src] = " actor.photo" (error) = "dp.addDefaultPhotoCast(actor)" alt = "photo of actor" >
                     <p  style = "font-weight: bold">{{actor.name}}</p>
                 </a>
                 <div>

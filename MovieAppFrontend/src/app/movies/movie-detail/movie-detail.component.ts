@@ -53,11 +53,11 @@ export class MovieDetailComponent implements OnInit {
   {
     const id = Number(this.route.snapshot.paramMap.get('movieId'));
 
-    this.movieService.getMovie(id).subscribe(movie => {this.movie = movie; console.log(movie)}, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
+    this.movieService.getMovie(id).subscribe(movie => this.movie = movie, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
     this.reviewService.getAverageMovieRating(id).subscribe(rating => this.rating = Math.round(rating * 10) /10, error => console.log(error));
-    this.movieService.getMovieDirector(id).subscribe(director => {this.director = director; console.log(director)});
-    this.movieService.getMovieGenres(id).subscribe(genres => {this.genres = genres; console.log(genres)});
-    this.movieService.getMovieCast(id).subscribe(cast => {this.cast = cast; console.log(cast)});
+    this.movieService.getMovieDirector(id).subscribe(director => this.director = director);
+    this.movieService.getMovieGenres(id).subscribe(genres => this.genres = genres);
+    this.movieService.getMovieCast(id).subscribe(cast => this.cast = cast);
 
   }
   

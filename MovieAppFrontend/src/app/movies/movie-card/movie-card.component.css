@@ -1,6 +1,6 @@
 :host-context(.watchlist-item) .poster{
-    height: 200px !important;
-    width : auto !important;
+    height: 200px;
+    width : auto;
 }
 .detail-link{
     position: absolute;
