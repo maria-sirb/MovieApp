@@ -9,11 +9,9 @@ namespace MovieAppAPI.Dtos
         public string Email { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string Token { get; set; }
+        public string? Token { get; set; }
         public string? ImageName { get; set; }
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string ImageSource { get; set; }
+        public string? ImageSource { get; set; }
         public IFormFile? ImageFile { get; set; }
     }
 }
