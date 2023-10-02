@@ -2,7 +2,7 @@
     <h1 class="form-title">Edit profile</h1>
     <form #userForm = ngForm (ngSubmit)="updateUser()">
        <div class="d-flex flex-column align-items-center">   
-           <img [src] = "imageSrc || user.imageSource || '../assets/person.jpg'" class="photo"/>
+           <img [src] = "imageSrc || user.imageSource || '../assets/person.jpg'" (error)="dp.addDefaultPhotoUser(user)" class="photo"/>
            <div class="d-flex align-items-center justify-content-between image-file-container">
                 <label for ="profileImage" class="choose-image">Choose image</label>
                 <a (click)="deleteProfileImage()" class="remove-image">Remove image</a>

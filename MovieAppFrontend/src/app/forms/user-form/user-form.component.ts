@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { User } from 'src/app/shared/models/user';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
@@ -27,6 +28,7 @@ export class UserFormComponent implements OnInit{
   }
   errors : any = {};
   currentUserId = 0;
+  dp = new DefaultPhoto();
   
   constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private location : Location, private route : ActivatedRoute, private router: Router) {}
 
