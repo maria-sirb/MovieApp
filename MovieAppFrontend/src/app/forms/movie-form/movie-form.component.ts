@@ -90,7 +90,6 @@ export class MovieFormComponent implements OnInit{
     this.directorService.getDirectorByName(data.director).pipe(
       catchError((error) => {
         this.directorError = true;
-        console.log(this.directorError);
         return of();
       }),
       switchMap((director) => {

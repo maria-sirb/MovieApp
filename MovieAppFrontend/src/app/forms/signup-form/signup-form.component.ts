@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-signup-form',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SignupFormComponent implements OnInit{
 
-  user = {
+  user : User = {
     userId: 0,
     username : "",
     email : "",

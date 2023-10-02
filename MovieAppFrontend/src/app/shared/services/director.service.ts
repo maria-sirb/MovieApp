@@ -29,10 +29,10 @@ export class DirectorService {
   getDirectorMovies(directorId : number) : Observable<Movie[]> {
     return this.client.get<Movie[]>(this.directorsUrl + '/movie/' + directorId);
   }
-  addDirector(director : object) : Observable<number>{
+  addDirector(director : Director) : Observable<number>{
     return this.client.post<number>(this.directorsUrl, director);
   }
-  updateDirector(directorId : number, director : object) : Observable<any>{
+  updateDirector(directorId : number, director : Director) : Observable<any>{
     return this.client.put<any>(this.directorsUrl + '/' + directorId, director, {observe : 'response'});
   }
   deleteDirector(actorId : number) : Observable<any>{

@@ -58,46 +58,17 @@ export class MovieDetailComponent implements OnInit {
     this.movieService.getMovieDirector(id).subscribe(director => {this.director = director; console.log(director)});
     this.movieService.getMovieGenres(id).subscribe(genres => {this.genres = genres; console.log(genres)});
     this.movieService.getMovieCast(id).subscribe(cast => {this.cast = cast; console.log(cast)});
-    /*this.movieService.getMovieActors(id).pipe(
-      mergeMap((actors : Actor[]) => {
-        this.actors = actors;
-        //this.roles = new Map<number, string>();
-        return forkJoin(
-          actors.map(actor => this.movieService.getMovieRole(id, actor.actorId))
-        )
-      })
-     ).subscribe(roles => roles.forEach(role => this.movie.roles?.set(role.actorId, role.role)));*/
 
   }
-
-  /*Role(movieId : number, actorId : number) {
-
-    let role : Role | undefined;
-    this.movieService.getMovieRole(movieId, actorId).subscribe(r => {role = r;
-    //console.log(role);
-  });
-   // console.log(role);
-    return role;
-  }*/
   
-  toggleButton(button : TrueFalse)
-  {
-    button.value = !button.value;
-  }
-
-  hasSubmitted(submitted : any, button : TrueFalse)
-  {
-    if(submitted)
-      this.toggleButton(button);
-  }
   deleteMovie(movieId : number)
   {
     this.movieService.deleteMovie(movieId).subscribe(response => {console.log(response); this.location.back()}, error => console.log(error));
   }
+
   deleteRole(movieId : number, actorId : number)
   {
     this.movieService.deleteMovieRole(movieId, actorId).subscribe(response => {
-     // console.log(response);
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([`/movie-detail/${movieId}`]);
     }); 

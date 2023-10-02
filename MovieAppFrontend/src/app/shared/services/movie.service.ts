@@ -49,7 +49,7 @@ export class MovieService {
   getMovieDirector(movieId :number) : Observable<Director>{
     return this.client.get<Director>(this.moviesUrl + "/director/" + movieId);
   }
-  addMovie(movie : object, genres :Genre[], director : Director) : Observable<number>{
+  addMovie(movie : Movie, genres :Genre[], director : Director) : Observable<number>{
 
     let genreParams : string = "";
     let queryParams = new HttpParams();
@@ -60,10 +60,10 @@ export class MovieService {
     });
     
    
-    return this.client.post<number>(this.moviesUrl, movie, {params : queryParams});
+    return this.client.post<any>(this.moviesUrl, movie, {params : queryParams});
   }
 
-  updateMovie(id : number, movie : object, genres : Genre[], director : Director) : Observable<number> {
+  updateMovie(id : number, movie : Movie, genres : Genre[], director : Director) : Observable<number> {
     let genreParams : string = "";
     let queryParams = new HttpParams();
     queryParams = queryParams.append('directorId', director.directorId);

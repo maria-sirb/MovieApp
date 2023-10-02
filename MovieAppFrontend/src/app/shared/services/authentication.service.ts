@@ -26,11 +26,11 @@ export class AuthenticationService {
     return this.client.get<any>(this.baseUrl + "/id/" + userId);
   }
 
-  signupUser(user : any) : Observable<any>{
+  signupUser(user : User) : Observable<any>{
     return this.client.post<any>(this.baseUrl + '/register', user, {observe : 'response'});
   }
 
-  loginUser(user : any) : Observable<any>{
+  loginUser(user : User) : Observable<any>{
     return this.client.post<any>(this.baseUrl + '/authenticate', user, {observe : 'response'});
   }
 

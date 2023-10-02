@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Route, Router } from '@angular/router';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-login-form',
@@ -11,7 +12,7 @@ import { UserStoreService } from 'src/app/shared/services/user-store.service';
 })
 export class LoginFormComponent {
 
-  user = {
+  user : User = {
     userId: 0,
     username : "",
     email : "",
@@ -39,13 +40,11 @@ export class LoginFormComponent {
       this.userStoreService.setRoleForStore(role);
       this.userStoreService.setIdForStore(id);
 
-      //this.router.navigate(['']);
       this.location.back();
     }, error => {this.errors = error.error})
   }
 
   cancel(){
-   // this.router.navigate(['']);
    this.location.back();
   }
 
