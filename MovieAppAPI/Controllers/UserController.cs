@@ -93,7 +93,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult AuthenticateUser([FromBody] UserDto userVerify)
+        public IActionResult AuthenticateUser([FromBody] UserLoginDto userVerify)
         {
             if (userVerify == null)
                 return BadRequest();
@@ -159,7 +159,7 @@ namespace MovieAppAPI.Controllers
         {
             if (updatedUser == null)
                 return BadRequest();
-            if (userId != updatedUser.UserId)
+           if (userId != updatedUser.UserId)
                 return BadRequest();
             if (!_userRepository.UserExists(userId))
                 return NotFound();

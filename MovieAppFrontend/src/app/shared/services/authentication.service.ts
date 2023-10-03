@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/user';
 import { ResetPassword } from '../models/resetPassword';
 import { environment } from 'src/environments/environment';
+import { UserLogin } from '../models/userLogin';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class AuthenticationService {
     return this.client.post<any>(this.baseUrl + '/register', user, {observe : 'response'});
   }
 
-  loginUser(user : User) : Observable<any>{
+  loginUser(user : UserLogin) : Observable<any>{
     return this.client.post<any>(this.baseUrl + '/authenticate', user, {observe : 'response'});
   }
 

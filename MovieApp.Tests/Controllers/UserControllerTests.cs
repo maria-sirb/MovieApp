@@ -107,7 +107,7 @@ namespace MovieApp.Tests.Controllers
         public void UserController_AuthenticateUser_ReturnsOk()
         {
             //Arrange
-            var userVerify = A.Fake<UserDto>();
+            var userVerify = A.Fake<UserLoginDto>();
             var user = A.Fake<User>();
             A.CallTo(() => _userRepository.GetUserByEmail(userVerify.Email)).Returns(user);
             A.CallTo(() => _passwordHasher.VerifyPassword(userVerify.Password, user.Password)).Returns(true);
@@ -126,7 +126,7 @@ namespace MovieApp.Tests.Controllers
         public void UserController_AuthenticateUser_ReturnsNotFound()
         {
             //Arrange
-            var userVerify = A.Fake<UserDto>();
+            var userVerify = A.Fake<UserLoginDto>();
             var user = A.Fake<User>();
             A.CallTo(() => _userRepository.GetUserByEmail(userVerify.Email)).Returns(user);
             A.CallTo(() => _passwordHasher.VerifyPassword(userVerify.Password, user.Password)).Returns(false);

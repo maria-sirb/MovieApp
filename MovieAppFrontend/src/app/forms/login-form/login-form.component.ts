@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 import { Route, Router } from '@angular/router';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { User } from 'src/app/shared/models/user';
+import { UserLogin } from 'src/app/shared/models/userLogin';
 
 @Component({
   selector: 'app-login-form',
@@ -12,15 +13,9 @@ import { User } from 'src/app/shared/models/user';
 })
 export class LoginFormComponent {
 
-  user : User = {
-    userId: 0,
-    username : "",
+  user : UserLogin = {
     email : "",
-    password : "",
-    role : "",
-    token : "",
-    imageName : "",
-    imageSource : ""
+    password : ""
   }
   errors = "";
 
