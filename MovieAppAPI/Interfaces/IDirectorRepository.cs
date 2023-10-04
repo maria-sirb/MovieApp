@@ -1,4 +1,5 @@
-﻿using MovieAppAPI.Models;
+﻿using MovieAppAPI.Helper;
+using MovieAppAPI.Models;
 
 namespace MovieAppAPI.Interfaces
 {
@@ -6,6 +7,7 @@ namespace MovieAppAPI.Interfaces
     {
         ICollection<Director> GetDirectors();
         ICollection<Director> GetDirectors(string? input);
+        PagedResult<Director> GetDirectorsPaged(QueryStringParameters parameters);
         Director GetDirector(int id);
         Director GetDirector(string name);
         ICollection<Movie> GetMoviesFromADirector(int directorId);

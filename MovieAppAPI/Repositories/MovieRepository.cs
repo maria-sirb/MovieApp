@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MovieAppAPI.Data;
 using MovieAppAPI.Dtos;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using System.Data;
@@ -11,9 +12,12 @@ namespace MovieAppAPI.Repositories
     public class MovieRepository : IMovieRepository
     {
         private readonly DataContext _context;
-        public MovieRepository(DataContext context) 
+        private readonly ISortingHelper<Movie> _sortingHelper;
+
+        public MovieRepository(DataContext context, ISortingHelper<Movie> sortingHelper) 
         {
             _context = context;
+            _sortingHelper = sortingHelper;
         }
 
         public Movie GetMovie(int id)
@@ -54,6 +58,11 @@ namespace MovieAppAPI.Repositories
         {
             return _context.Movies.ToList().Where(m => Search(m, input)).OrderByDescending(m => GetSearchScore(m, input)).ToList();
         }
+        public PagedResult<Movie> GetMoviesPaged(QueryStringParameters parameters)
+        {
+            var movies = _sortingHelper.ApplySort(_context.Movies, parameters.OrderBy ?? "");
+            return new PagedResult<Movie>(movies, parameters.PageNumber, parameters.PageSize);
+        }
 
         public ICollection<MovieActor> GetRolesInMovie(int id)
         {
@@ -89,37 +98,6 @@ namespace MovieAppAPI.Repositories
 
         }
 
-        /* public bool CreateMovie(List<(int actorId, string actorRole)> actorsRoles, List<int> genreIds, Movie movie)
-         {
-             foreach (var pair in actorsRoles)
-             {
-                 var movieActorEntity = _context.Actors.Where(a => a.ActorId == pair.actorId).FirstOrDefault();
-                 var movieActor = new MovieActor()
-                 {
-                     Actor = movieActorEntity,
-                     Movie = movie,
-                     Role = pair.actorRole
-                 };
-                 _context.Add(movieActor);
-             }
-
-             foreach (var genreId in genreIds)
-             {
-                 var movieGenreEntity = _context.Genres.Where(g => g.GenreId == genreId).FirstOrDefault();
-                 var movieGenre = new MovieGenre()
-                 {
-                     Genre = movieGenreEntity,
-                     Movie = movie
-
-                 };
-                 _context.Add(movieGenre);
-
-
-             }
-             _context.Add(movie);
-             return Save();
-
-         }*/
         public bool UpdateMovie(List<int> newGenreIds, Movie movie)
         {
 

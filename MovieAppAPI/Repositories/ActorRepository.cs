@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using MovieAppAPI.Data;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 
@@ -8,10 +9,12 @@ namespace MovieAppAPI.Repositories
     public class ActorRepository : IActorRepository
     {
         private readonly DataContext _context;
+        private readonly ISortingHelper<Actor> _sortingHelper;
 
-        public ActorRepository(DataContext context)
+        public ActorRepository(DataContext context, ISortingHelper<Actor> sortingHelper)
         {
             _context = context;
+            _sortingHelper = sortingHelper;
         }
 
         public bool ActorExists(int actorId)
@@ -42,6 +45,13 @@ namespace MovieAppAPI.Repositories
         {
            return _context.Actors.ToList();
         }
+
+        public PagedResult<Actor> GetActorsPaged(QueryStringParameters parameters)
+        {
+            var sortedActors = _sortingHelper.ApplySort(_context.Actors, parameters.OrderBy??"");
+            return new PagedResult<Actor>(sortedActors, parameters.PageNumber, parameters.PageSize);
+        }
+
         public ICollection<Actor> GetActors(string? input)
         {
             return _context.Actors.ToList().Where(a => Search(a, input)).ToList();

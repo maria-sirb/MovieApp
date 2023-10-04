@@ -1,4 +1,5 @@
-﻿using MovieAppAPI.Models;
+﻿using MovieAppAPI.Helper;
+using MovieAppAPI.Models;
 
 namespace MovieAppAPI.Interfaces
 {
@@ -6,10 +7,10 @@ namespace MovieAppAPI.Interfaces
     {
         ICollection<Movie> GetMovies();
         ICollection<Movie> GetMovies(string? input);
+        PagedResult<Movie> GetMoviesPaged(QueryStringParameters parameters);
         Movie GetMovie(int id);
         Movie GetMovie(string title);
         ICollection<MovieActor> GetRolesInMovie(int id);
-        //ICollection<MovieActor> GetMovieCast(int id);
         IQueryable<MovieActor> GetMovieCast(int id);  
         ICollection<Genre> GetMovieGenres(int id);
         ICollection<Actor> GetMovieActors(int id);

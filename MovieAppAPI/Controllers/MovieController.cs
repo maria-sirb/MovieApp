@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Dtos;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
+using Newtonsoft.Json;
 
 namespace MovieAppAPI.Controllers
 {
@@ -30,6 +32,22 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            return Ok(movies);
+        }
+
+        [HttpGet("paged")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieDto>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetMovies([FromQuery] QueryStringParameters parameters)
+        {
+            var pagedResult = _movieRepository.GetMoviesPaged(parameters);
+            var movies = _mapper.Map<List<MovieDto>>(pagedResult.items);
+            var paginationData = _mapper.Map<PaginationDataDto>(pagedResult);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationData));
             return Ok(movies);
         }
 

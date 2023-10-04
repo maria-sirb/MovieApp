@@ -1,11 +1,13 @@
-﻿using MovieAppAPI.Models;
+﻿using MovieAppAPI.Helper;
+using MovieAppAPI.Models;
 
 namespace MovieAppAPI.Interfaces
 {
     public interface IActorRepository
     {
         ICollection<Actor> GetActors();
-        public ICollection<Actor> GetActors(string? input);
+        ICollection<Actor> GetActors(string? input);
+        PagedResult<Actor> GetActorsPaged(QueryStringParameters parameters);
         Actor GetActor(int actorId);
         Actor GetActor(string actorName);
         ICollection<Actor> GetActorInAMovie(int movieId);

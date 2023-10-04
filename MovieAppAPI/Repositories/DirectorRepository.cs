@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MovieAppAPI.Data;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 
@@ -8,11 +9,12 @@ namespace MovieAppAPI.Repositories
     public class DirectorRepository : IDirectorRepository
     {
         private readonly DataContext _context;
-       
+        private readonly ISortingHelper<Director> _sortingHelper;
 
-        public DirectorRepository(DataContext context)
+        public DirectorRepository(DataContext context, ISortingHelper<Director> sortingHelper)
         {
             _context = context;
+            _sortingHelper = sortingHelper;
           
         }
 
@@ -50,7 +52,11 @@ namespace MovieAppAPI.Repositories
         {
             return _context.Directors.ToList().Where(d => Search(d, input)).ToList();
         }
-
+        public PagedResult<Director> GetDirectorsPaged(QueryStringParameters parameters)
+        {
+            var sortedDirectors = _sortingHelper.ApplySort(_context.Directors, parameters.OrderBy??"");
+            return new PagedResult<Director>(sortedDirectors, parameters.PageNumber, parameters.PageSize);
+        }
         public ICollection<Movie> GetMoviesFromADirector(int directorId)
         {
             return _context.Movies.Where(m => m.Director.DirectorId == directorId).ToList();

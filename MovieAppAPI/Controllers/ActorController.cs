@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Data;
 using MovieAppAPI.Dtos;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
+using Newtonsoft.Json;
 
 namespace MovieAppAPI.Controllers
 {
@@ -29,6 +31,22 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            return Ok(actors);
+        }
+
+        [HttpGet("paged")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Actor>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetActors([FromQuery] QueryStringParameters parameters)
+        {
+            var pagedResult = _actorRepository.GetActorsPaged(parameters);
+            var actors = _mapper.Map<List<ActorDto>>(pagedResult.items);
+            var paginationData = _mapper.Map<PaginationDataDto>(pagedResult);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationData));
             return Ok(actors);
         }
 

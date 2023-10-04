@@ -13,6 +13,7 @@ using MovieAppAPI.UtilityService;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,7 @@ builder.Services.AddScoped<IWatchlistRepository, WatchlistRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddTransient<IAzureStorageService, AzureStorageService>();
+builder.Services.AddScoped(typeof(ISortingHelper<>), typeof(SortingHelper<>));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -54,7 +56,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("X-Pagination"); ;
 }));
 
 builder.Services.AddAuthentication(options =>

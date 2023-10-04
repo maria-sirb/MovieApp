@@ -2,9 +2,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Dtos;
+using MovieAppAPI.Helper;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
+using Newtonsoft.Json;
 
 namespace MovieAppAPI.Controllers
 {
@@ -23,7 +25,7 @@ namespace MovieAppAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Director>))]
-
+        [ProducesResponseType(400)]
         public IActionResult GetDirectors([FromQuery] string? input)
         {
             var directors = _mapper.Map<List<DirectorDto>>(_directorRepository.GetDirectors(input));
@@ -33,6 +35,23 @@ namespace MovieAppAPI.Controllers
             }
             return Ok(directors);
         }
+
+        [HttpGet("paged")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<DirectorDto>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetMovies([FromQuery] QueryStringParameters parameters)
+        {
+            var pagedResult = _directorRepository.GetDirectorsPaged(parameters);
+            var directors = _mapper.Map<List<DirectorDto>>(pagedResult.items);
+            var paginationData = _mapper.Map<PaginationDataDto>(pagedResult);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationData));
+            return Ok(directors);
+        }
+
 
         [HttpGet("{directorId}")]
         [ProducesResponseType(200, Type = typeof(Director))]

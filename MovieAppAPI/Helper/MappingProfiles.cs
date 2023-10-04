@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MovieAppAPI.Dtos;
 using MovieAppAPI.Models;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace MovieAppAPI.Helper
 {
@@ -31,7 +32,8 @@ namespace MovieAppAPI.Helper
             CreateProjection<MovieActor, CastMemberDto>()
                 .ForMember(dto => dto.Name, conf => conf.MapFrom(ma => ma.Actor.Name))
                 .ForMember(dto => dto.Photo, conf => conf.MapFrom(ma => ma.Actor.Photo));
-        
+            CreateMap(typeof(PagedResult<>), typeof(PaginationDataDto));
+
         }
     }
 }
