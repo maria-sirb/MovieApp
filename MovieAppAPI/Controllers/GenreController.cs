@@ -22,7 +22,8 @@ namespace MovieAppAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Genre>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<GenreDto>))]
+        [ProducesResponseType(400)]
         public IActionResult GetGenres()
         {
             var genres = _mapper.Map<List<GenreDto>>(_genreRepository.GetGenres());
@@ -33,7 +34,8 @@ namespace MovieAppAPI.Controllers
             return Ok(genres);
         }
         [HttpGet("{genreId}")]
-        [ProducesResponseType(200, Type = typeof(Genre))]
+        [ProducesResponseType(200, Type = typeof(GenreDto))]
+        [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         public IActionResult GetGenre(int genreId)
         {
@@ -50,8 +52,9 @@ namespace MovieAppAPI.Controllers
 
         }
         [HttpGet("genre-name/{genreName}")]
-        [ProducesResponseType(200, Type = typeof(Genre))]
+        [ProducesResponseType(200, Type = typeof(GenreDto))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetGenreByName(string genreName)
         {
             if (!_genreRepository.GenreExists(genreName))
@@ -67,7 +70,7 @@ namespace MovieAppAPI.Controllers
 
         }
         [HttpGet("movie/{genreId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Movie>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetMovieByGenreId(int genreId)
         {

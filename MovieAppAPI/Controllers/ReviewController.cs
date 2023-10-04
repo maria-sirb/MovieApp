@@ -20,6 +20,7 @@ namespace MovieAppAPI.Controllers
         private readonly IMovieRepository _movieRepository;
         private readonly IAzureStorageService _azureStorageService;
         private readonly IMapper _mapper;
+
         public ReviewController(IReviewRepository reviewRepository, IUserRepository userRepository, IMovieRepository movieRepository, IAzureStorageService azureStorageService, IMapper mapper)
         {
             _reviewRepository = reviewRepository;
@@ -28,8 +29,9 @@ namespace MovieAppAPI.Controllers
             _azureStorageService = azureStorageService;
             _mapper = mapper;
         }
+
         [HttpGet("movie/{movieId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Review>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetMovieReviews(int movieId)
         {
@@ -53,7 +55,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Review>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetUserReviews(int userId)
         {
@@ -87,16 +89,15 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest("Something went wrong while saving.");
             }
-
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("author/{reviewId}")]
         [ProducesResponseType(400)]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
         public IActionResult GetReviewAuthor(int reviewId)
         {
-            var user = _reviewRepository.GetReviewAuthor(reviewId);
+            var user = _mapper.Map<UserDto>(_reviewRepository.GetReviewAuthor(reviewId));
             if (user != null && !String.IsNullOrEmpty(user.ImageName))
                 user.ImageSource = _azureStorageService.GetFileUrl(user.ImageName);
             if (!ModelState.IsValid)
@@ -106,10 +107,10 @@ namespace MovieAppAPI.Controllers
 
         [HttpGet("reviewed/{reviewId}")]
         [ProducesResponseType(400)]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(MovieDto))]
         public IActionResult GetReviewedMovie(int reviewId)
         {
-            var movie = _reviewRepository.GetReviewedMovie(reviewId);
+            var movie = _mapper.Map<MovieDto>(_reviewRepository.GetReviewedMovie(reviewId));
             if (!ModelState.IsValid)
                 return BadRequest();
             return Ok(movie);

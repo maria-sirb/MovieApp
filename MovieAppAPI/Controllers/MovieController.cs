@@ -24,7 +24,8 @@ namespace MovieAppAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Movie>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieDto>))]
+        [ProducesResponseType(400)]
         public IActionResult GetMovies([FromQuery] string? input)
         {
             var movies = _mapper.Map<List<MovieDto>>(_movieRepository.GetMovies(input));
@@ -52,7 +53,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("{movieId}")]
-        [ProducesResponseType(200, Type = typeof(Movie))]
+        [ProducesResponseType(200, Type = typeof(MovieDto))]
         [ProducesResponseType(400)]
         public IActionResult GetMovie(int movieId)
         {
@@ -69,8 +70,9 @@ namespace MovieAppAPI.Controllers
 
         }
         [HttpGet("movie-title/{movieTitle}")]
-        [ProducesResponseType(200, Type = typeof(Movie))]
+        [ProducesResponseType(200, Type = typeof(MovieDto))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetMovie(string movieTitle)
         {
             if (!_movieRepository.MovieExists(movieTitle))
@@ -88,14 +90,14 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("movieActor/{movieId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieActor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieActorDto>))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetRolesInMovie(int movieId)
         {
             if (!_movieRepository.MovieExists(movieId))
             {
                 return NotFound();
-
             }
             var roles = _mapper.Map<List<MovieActorDto>>(_movieRepository.GetRolesInMovie(movieId));
             if (!ModelState.IsValid)
@@ -120,18 +122,17 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("actor/{movieId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Actor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ActorDto>))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetActorsInMovie(int movieId)
         {
             if (!_movieRepository.MovieExists(movieId))
             {
                 return NotFound();
-
             }
             var actors = _mapper.Map<List<ActorDto>>(_movieRepository.GetMovieActors(movieId));
             if (!ModelState.IsValid)
-
             {
                 return BadRequest(ModelState);
             }
@@ -139,18 +140,17 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("genre/{movieId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Actor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<GenreDto>))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetMovieGenres(int movieId)
         {
             if (!_movieRepository.MovieExists(movieId))
             {
                 return NotFound();
-
             }
             var genres = _mapper.Map<List<GenreDto>>(_movieRepository.GetMovieGenres(movieId));
             if (!ModelState.IsValid)
-
             {
                 return BadRequest(ModelState);
             }
@@ -158,13 +158,12 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("director/{movieId}")]
-        [ProducesResponseType(200, Type = typeof(Director))]
+        [ProducesResponseType(200, Type = typeof(DirectorDto))]
         [ProducesResponseType(400)]
         public IActionResult GetDirectorOfAMovie(int movieId)
         {
             var director = _mapper.Map<DirectorDto>(_movieRepository.GetMovieDirector(movieId));
             if (!ModelState.IsValid)
-
             {
                 return BadRequest(ModelState);
             }
@@ -172,7 +171,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
         public IActionResult CreateMovie([FromQuery] int directorId, [FromQuery]List<int> genreIds, [FromBody] MovieDto movieCreate)
         {

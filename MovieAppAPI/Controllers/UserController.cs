@@ -52,6 +52,7 @@ namespace MovieAppAPI.Controllers
         [HttpGet("username/{username}")]
         [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public IActionResult GetUser(string username)
         {
             var user = _mapper.Map<UserDto>(_userRepository.GetUser(username));
@@ -90,7 +91,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpPost("authenticate")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult AuthenticateUser([FromBody] UserLoginDto userVerify)
@@ -103,7 +104,7 @@ namespace MovieAppAPI.Controllers
 
             user.Token = _userRepository.CreateJwt(user);
 
-            return Ok(user);
+            return Ok(_mapper.Map<UserDto>(user));
         }
 
         [HttpPost("register")]
@@ -147,7 +148,7 @@ namespace MovieAppAPI.Controllers
                 ModelState.AddModelError("", "Something went wrong while saving.");
                 return StatusCode(500, ModelState);
             }
-            return Ok();
+            return NoContent();
         }
 
         [HttpPut("{userId}")]
@@ -192,7 +193,7 @@ namespace MovieAppAPI.Controllers
 
         [HttpPost("send-reset-email")]
         [ProducesResponseType(404)]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult SendResetEmail([FromQuery]string email)
         {
@@ -215,12 +216,12 @@ namespace MovieAppAPI.Controllers
                 return BadRequest("Something went wrong while sending reset email.");
             }
             _emailService.SendEmail(emailModel);
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost("reset-password")]
         [ProducesResponseType(404)]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult ResetPassword(ResetPasswordDto resetPasswordDto)
         {
@@ -255,7 +256,7 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest("Something went wrong while updating password.");
             }
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{userId}")]

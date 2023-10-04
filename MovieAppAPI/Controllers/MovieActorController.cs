@@ -21,7 +21,8 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieActor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieActorDto>))]
+        [ProducesResponseType(400)]
         public IActionResult GetRoles()
         {
             var roles = _mapper.Map<List<MovieActorDto>>(_movieActorRepository.GetRoles());
@@ -33,7 +34,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("{movieId}/{actorId}")]
-        [ProducesResponseType(200, Type = typeof(MovieActor))]
+        [ProducesResponseType(200, Type = typeof(MovieActorDto))]
         [ProducesResponseType(400)]
         public IActionResult GetRole(int movieId, int actorId)
         {
@@ -71,7 +72,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest("Something went wrong while saving.");
             }
 
-            return Ok();
+            return NoContent();
 
         }
         [HttpPut("{movieId}/{actorId}")]

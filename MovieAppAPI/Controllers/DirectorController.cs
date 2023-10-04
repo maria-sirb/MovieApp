@@ -24,7 +24,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Director>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<DirectorDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetDirectors([FromQuery] string? input)
         {
@@ -54,7 +54,7 @@ namespace MovieAppAPI.Controllers
 
 
         [HttpGet("{directorId}")]
-        [ProducesResponseType(200, Type = typeof(Director))]
+        [ProducesResponseType(200, Type = typeof(DirectorDto))]
         [ProducesResponseType(400)]
         public IActionResult GetDirector(int directorId)
         {
@@ -72,7 +72,7 @@ namespace MovieAppAPI.Controllers
 
         }
         [HttpGet("director-name/{directorName}")]
-        [ProducesResponseType(200, Type = typeof(Director))]
+        [ProducesResponseType(200, Type = typeof(DirectorDto))]
         [ProducesResponseType(400)]
         public IActionResult GetDirector(string directorName)
         {
@@ -91,7 +91,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("movie/{directorId}")]
-        [ProducesResponseType(200, Type = typeof(Movie))]
+        [ProducesResponseType(200, Type = typeof(MovieDto))]
         [ProducesResponseType(400)]
         public IActionResult GetDirectorMovie(int directorId)
         {
@@ -103,7 +103,7 @@ namespace MovieAppAPI.Controllers
             return Ok(movies);
         }
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
         public IActionResult CreateDirector([FromBody] DirectorDto directorCreate)
         {
@@ -148,8 +148,6 @@ namespace MovieAppAPI.Controllers
 
             }
             return NoContent();
-
-
 
         }
         [HttpDelete("{directorId}")]

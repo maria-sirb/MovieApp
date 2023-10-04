@@ -32,7 +32,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpPost()]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [Authorize]
         public IActionResult AddWatchlistItem(WatchlistDto itemCreate)
@@ -46,7 +46,7 @@ namespace MovieAppAPI.Controllers
             var item = _mapper.Map<Watchlist>(itemCreate);
             if (!_watchlistController.AddWatchlistItem(item))
                 return BadRequest("Something went wrong while saving item.");
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{userId}/{movieId}")]

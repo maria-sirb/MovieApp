@@ -23,7 +23,7 @@ namespace MovieAppAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Actor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ActorDto>))]
         public IActionResult GetActors([FromQuery] string? input)
         {
             var actors = _mapper.Map<List<ActorDto>>(_actorRepository.GetActors(input));
@@ -35,7 +35,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("paged")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Actor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ActorDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetActors([FromQuery] QueryStringParameters parameters)
         {
@@ -51,7 +51,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("{actorId}")]
-        [ProducesResponseType(200, Type = typeof(Actor))]
+        [ProducesResponseType(200, Type = typeof(ActorDto))]
         [ProducesResponseType(400)]
         public IActionResult GetActor(int actorId)
         {
@@ -69,7 +69,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("actor-name/{actorName}")]
-        [ProducesResponseType(200, Type = typeof(Actor))]
+        [ProducesResponseType(200, Type = typeof(ActorDto))]
         [ProducesResponseType(400)]
         public IActionResult GetActor(string actorName)
         {
@@ -87,7 +87,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("movie/{actorId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Movie>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetMovieByActor( int actorId)
         {
@@ -106,7 +106,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("movieActor/{actorId}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Movie>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<MovieActorDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetRolesOfActor(int actorId)
         {
@@ -125,7 +125,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
         public IActionResult CreateActor([FromBody] ActorDto actorCreate)
         {

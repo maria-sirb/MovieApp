@@ -26,7 +26,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("{reviewId}/{userId}")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(VoteDto))]
         [ProducesResponseType(400)]
         public IActionResult GetUserReviewVote(int userId, int reviewId)
         {
@@ -37,7 +37,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpGet("{reviewId}")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<VoteDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetReviewVotes(int reviewId)
         {
@@ -48,7 +48,7 @@ namespace MovieAppAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [Authorize]
         public IActionResult CreateVote([FromQuery]int userId, [FromQuery]int reviewId, [FromBody]VoteDto voteCreate)
@@ -66,7 +66,7 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest("Something went wrong while saving vote.");
             }
-            return Ok();
+            return NoContent();
         }
 
         [HttpPut("{voteId}")]
