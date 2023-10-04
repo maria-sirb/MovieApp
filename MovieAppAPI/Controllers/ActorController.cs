@@ -27,10 +27,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetActors([FromQuery] string? input)
         {
             var actors = _mapper.Map<List<ActorDto>>(_actorRepository.GetActors(input));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(actors);
         }
 
@@ -42,10 +38,6 @@ namespace MovieAppAPI.Controllers
             var pagedResult = _actorRepository.GetActorsPaged(parameters);
             var actors = _mapper.Map<List<ActorDto>>(pagedResult.items);
             var paginationData = _mapper.Map<PaginationDataDto>(pagedResult);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationData));
             return Ok(actors);
         }
@@ -60,10 +52,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var actor = _mapper.Map<ActorDto>(_actorRepository.GetActor(actorId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(actor);
 
         }
@@ -78,10 +66,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var actor = _mapper.Map<ActorDto>(_actorRepository.GetActor(actorName));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(actor);
 
         }
@@ -97,11 +81,6 @@ namespace MovieAppAPI.Controllers
 
             }
             var movies = _mapper.Map<List<MovieDto>>(_actorRepository.GetMovieByActor(actorId));
-            if (!ModelState.IsValid)
-
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(movies);
         }
 
@@ -116,11 +95,7 @@ namespace MovieAppAPI.Controllers
 
             }
             var roles = _mapper.Map<List<MovieActorDto>>(_actorRepository.GetRolesOfActor(actorId));
-            if (!ModelState.IsValid)
-
-            {
-                return BadRequest(ModelState);
-            }
+    
             return Ok(roles);
         }
 
@@ -134,10 +109,6 @@ namespace MovieAppAPI.Controllers
             if (_actorRepository.ActorExists(actorCreate.Name))
             {
                 return BadRequest("Actor already exists.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
             }
             var actorMap = _mapper.Map<Actor>(actorCreate);
             if (!_actorRepository.CreateActor(actorMap))

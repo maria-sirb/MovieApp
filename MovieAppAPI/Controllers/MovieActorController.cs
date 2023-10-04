@@ -26,10 +26,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetRoles()
         {
             var roles = _mapper.Map<List<MovieActorDto>>(_movieActorRepository.GetRoles());
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(roles);
         }
 
@@ -43,11 +39,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var role = _mapper.Map<MovieActorDto>(_movieActorRepository.GetRole(movieId, actorId));
-            if (!ModelState.IsValid)
-
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(role);
 
         }
@@ -61,10 +52,6 @@ namespace MovieAppAPI.Controllers
             if (_movieActorRepository.RoleExists(roleCreate.MovieId, roleCreate.ActorId))
             {
                 return BadRequest("Role already exists.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
             }
             var roleMap = _mapper.Map<MovieActor>(roleCreate);
             if (!_movieActorRepository.CreateRole(roleMap))
@@ -87,9 +74,7 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_movieActorRepository.RoleExists(movieId, actorId))
                 return NotFound();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
+          
             var roleMap = _mapper.Map<MovieActor>(updatedRole);
             if (!_movieActorRepository.UpdateRole(roleMap))
             {
@@ -110,8 +95,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
 
             var roleToDelete = _movieActorRepository.GetRole(movieId, actorId);
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             if (!_movieActorRepository.DeleteRole(roleToDelete))
             {
                 return BadRequest("Something went wrong while deleting role.");

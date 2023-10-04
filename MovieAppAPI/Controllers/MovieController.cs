@@ -29,10 +29,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetMovies([FromQuery] string? input)
         {
             var movies = _mapper.Map<List<MovieDto>>(_movieRepository.GetMovies(input));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(movies);
         }
 
@@ -44,10 +40,6 @@ namespace MovieAppAPI.Controllers
             var pagedResult = _movieRepository.GetMoviesPaged(parameters);
             var movies = _mapper.Map<List<MovieDto>>(pagedResult.items);
             var paginationData = _mapper.Map<PaginationDataDto>(pagedResult);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationData));
             return Ok(movies);
         }
@@ -62,10 +54,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var movie = _mapper.Map<MovieDto>(_movieRepository.GetMovie(movieId));
-            if(!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(movie);
 
         }
@@ -80,11 +68,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var movie = _mapper.Map<MovieDto>(_movieRepository.GetMovie(movieTitle));
-            if (!ModelState.IsValid)
-
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(movie);
 
         }
@@ -100,10 +83,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var roles = _mapper.Map<List<MovieActorDto>>(_movieRepository.GetRolesInMovie(movieId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(roles);
         }
 
@@ -116,8 +95,6 @@ namespace MovieAppAPI.Controllers
             if (!_movieRepository.MovieExists(movieId))
                 return NotFound();
             var cast = _mapper.ProjectTo<CastMemberDto>(_movieRepository.GetMovieCast(movieId)).ToList();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             return Ok(cast);
         }
 
@@ -132,10 +109,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var actors = _mapper.Map<List<ActorDto>>(_movieRepository.GetMovieActors(movieId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(actors);
         }
 
@@ -150,10 +123,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var genres = _mapper.Map<List<GenreDto>>(_movieRepository.GetMovieGenres(movieId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(genres);
         }
 
@@ -163,10 +132,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetDirectorOfAMovie(int movieId)
         {
             var director = _mapper.Map<DirectorDto>(_movieRepository.GetMovieDirector(movieId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(director);
         }
 
@@ -180,10 +145,6 @@ namespace MovieAppAPI.Controllers
             if (_movieRepository.MovieExists(movieCreate.Title))
             {
                 return BadRequest("Movie already exists.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
             }
             var movieMap = _mapper.Map<Movie>(movieCreate);
             movieMap.Director = _directorRepository.GetDirector(directorId);
@@ -209,8 +170,6 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_movieRepository.MovieExists(movieId))
                 return NotFound();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
             var movieMap = _mapper.Map<Movie>(updatedMovie);
             movieMap.Director = _directorRepository.GetDirector(directorId);
@@ -232,12 +191,9 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
           
             var movieToDelete = _movieRepository.GetMovie(movieId);
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             if (!_movieRepository.DeleteMovie(movieToDelete))
             {
                 return BadRequest("Something went wrong while deleting movie.");
-
             }
             return NoContent();
         }

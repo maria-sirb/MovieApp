@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Org.BouncyCastle.Asn1.X509.Qualified;
+using MovieAppAPI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ builder.Services.AddControllers(options =>
             ,
             Location = ResponseCacheLocation.Any
         });
+    options.Filters.Add(new ValidateModelFilter());
 }).AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddResponseCaching();

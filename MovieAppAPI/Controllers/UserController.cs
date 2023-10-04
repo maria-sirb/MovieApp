@@ -42,10 +42,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetUsers()
         {
             var users = _mapper.Map<List<UserDto>>(_userRepository.GetUsers());
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             return Ok(users);
         }
 
@@ -62,10 +58,6 @@ namespace MovieAppAPI.Controllers
             }
             if (!String.IsNullOrEmpty(user.ImageName))
                 user.ImageSource = _azureStorageService.GetFileUrl(user.ImageName);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             return Ok(user);
         }
 
@@ -83,10 +75,6 @@ namespace MovieAppAPI.Controllers
             }
             if(!String.IsNullOrEmpty(user.ImageName))
                user.ImageSource = _azureStorageService.GetFileUrl(user.ImageName);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             return Ok(user);
         }
 
@@ -133,11 +121,6 @@ namespace MovieAppAPI.Controllers
                 ModelState.AddModelError("password", passwordMessages);
                 return BadRequest(ModelState);
             }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             var userMap = _mapper.Map<User>(userCreate);
             userMap.Password = _passwordHasher.HashPassword(userMap.Password);
             userMap.Token = "";
@@ -170,8 +153,6 @@ namespace MovieAppAPI.Controllers
                 ModelState.AddModelError("username", "Username not available.");
                 return BadRequest(ModelState);
             }
-            if (!ModelState.IsValid)
-                return BadRequest();
             if (updatedUser.ImageFile != null)
             {
                 //if the user adds a new image, delete their previous profile image from the system
@@ -201,10 +182,6 @@ namespace MovieAppAPI.Controllers
             if(user is null)
             {
                 return NotFound("Email not found");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
             }
             var tokenBytes = RandomNumberGenerator.GetBytes(64);
             var emailToken = Convert.ToBase64String(tokenBytes);
@@ -247,10 +224,6 @@ namespace MovieAppAPI.Controllers
             {
                 return BadRequest(passwordMessages);
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             user.Password = _passwordHasher.HashPassword(resetPasswordDto.NewPassword);
             if (!_userRepository.UpdateUser(user))
             {
@@ -269,12 +242,9 @@ namespace MovieAppAPI.Controllers
             if (!_userRepository.UserExists(userId))
                 return NotFound();
             var userToDelete = _userRepository.GetUser(userId);
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             if (!_userRepository.DeleteUser(userToDelete))
             {
                 ModelState.AddModelError("", "Something went wrong deleting user.");
-
             }
             return NoContent();
 

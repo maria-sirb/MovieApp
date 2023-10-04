@@ -36,10 +36,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetMovieReviews(int movieId)
         {
             var reviews = _mapper.Map<List<ReviewDto>>(_reviewRepository.GetReviewsFromMovie(movieId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             return Ok(reviews);
         }
 
@@ -49,8 +45,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetAverageMovieRating(int movieId)
         {
             var rating = _reviewRepository.GetAverageRatingFromMovie(movieId);
-            if (!ModelState.IsValid)
-                return BadRequest();
             return Ok(rating);
         }
 
@@ -60,10 +54,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetUserReviews(int userId)
         {
             var reviews = _mapper.Map<List<ReviewDto>>(_reviewRepository.GetReviewsFromUser(userId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             return Ok(reviews);
         }
 
@@ -77,10 +67,6 @@ namespace MovieAppAPI.Controllers
                 return BadRequest();
             if (_reviewRepository.ReviewExists(userId, movieId))
                 return BadRequest("User already reviewed this movie.");
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             var reviewMap = _mapper.Map<Review>(reviewCreate);
             reviewMap.User = _userRepository.GetUser(userId);
             reviewMap.Movie = _movieRepository.GetMovie(movieId);
@@ -100,8 +86,6 @@ namespace MovieAppAPI.Controllers
             var user = _mapper.Map<UserDto>(_reviewRepository.GetReviewAuthor(reviewId));
             if (user != null && !String.IsNullOrEmpty(user.ImageName))
                 user.ImageSource = _azureStorageService.GetFileUrl(user.ImageName);
-            if (!ModelState.IsValid)
-                return BadRequest();
             return Ok(user);
         }
 
@@ -128,8 +112,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             if (!_reviewRepository.ReviewExists(reviewId))
                 return BadRequest();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             var reviewMap = _mapper.Map<Review>(reviewUpdate);
             if (!_reviewRepository.UpdateReview(reviewMap))
             {
@@ -148,8 +130,6 @@ namespace MovieAppAPI.Controllers
             if (!_reviewRepository.ReviewExists(reviewId))
                 return NotFound();
             var reviewToDelete = _reviewRepository.GetReview(reviewId);
-            if (!ModelState.IsValid)
-                return BadRequest();
             if (!_reviewRepository.DeleteReview(reviewToDelete))
             {
                 return BadRequest("Something went wrong while deleting review.");

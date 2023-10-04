@@ -26,8 +26,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetUserWatchlist(int userId)
         {
             var watchlist = _mapper.Map<List<MovieDto>>(_watchlistController.GetUserWatchlist(userId));
-            if (!ModelState.IsValid)
-                return BadRequest();
             return Ok(watchlist);
         }
 
@@ -41,8 +39,6 @@ namespace MovieAppAPI.Controllers
                 return BadRequest();
             if (_watchlistController.WatchlistItemExists(itemCreate.UserId, itemCreate.MovieId))
                 return BadRequest("User already has this movie in their watchlist.");
-            if (!ModelState.IsValid)
-                return BadRequest();
             var item = _mapper.Map<Watchlist>(itemCreate);
             if (!_watchlistController.AddWatchlistItem(item))
                 return BadRequest("Something went wrong while saving item.");
@@ -59,8 +55,6 @@ namespace MovieAppAPI.Controllers
             if (!_watchlistController.WatchlistItemExists(userId, movieId))
                 return NotFound();
             var item = _watchlistController.GetWatchlistItem(userId, movieId);
-            if (!ModelState.IsValid)
-                return BadRequest();
             if (!_watchlistController.DeleteWatchlistItem(item))
                 return BadRequest("Something went wrong while deleting item.");
             return NoContent();

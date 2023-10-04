@@ -31,8 +31,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetUserReviewVote(int userId, int reviewId)
         {
             var vote = _mapper.Map<VoteDto>(_voteRepository.GetVoteFromUserAndReview(userId, reviewId));
-            if(!ModelState.IsValid)
-                    return BadRequest();
             return Ok(vote);
         }
 
@@ -42,8 +40,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetReviewVotes(int reviewId)
         {
             var votes = _mapper.Map<List<VoteDto>>(_voteRepository.GetReviewVotes(reviewId));
-            if (!ModelState.IsValid)
-                return BadRequest();
             return Ok(votes);
         }
 
@@ -57,8 +53,6 @@ namespace MovieAppAPI.Controllers
                 return BadRequest();
             if(_voteRepository.VoteExists(userId, reviewId))
                 return BadRequest("User already voted this review.");
-            if(!ModelState.IsValid)
-                return BadRequest();
             var voteMap = _mapper.Map<Vote>(voteCreate);
             voteMap.User = _userRepository.GetUser(userId);
             voteMap.Review = _reviewRepository.GetReview(reviewId);
@@ -81,8 +75,6 @@ namespace MovieAppAPI.Controllers
             if(voteUpdate.VoteId != voteId)
                 return NotFound();
             if (!_voteRepository.VoteExists(voteId))
-                return BadRequest();
-            if (!ModelState.IsValid)
                 return BadRequest();
             var voteMap = _mapper.Map<Vote>(voteUpdate);
             if(!_voteRepository.UpdateVote(voteMap))

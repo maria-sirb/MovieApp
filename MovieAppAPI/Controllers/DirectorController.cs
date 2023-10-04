@@ -29,10 +29,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetDirectors([FromQuery] string? input)
         {
             var directors = _mapper.Map<List<DirectorDto>>(_directorRepository.GetDirectors(input));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(directors);
         }
 
@@ -44,10 +40,6 @@ namespace MovieAppAPI.Controllers
             var pagedResult = _directorRepository.GetDirectorsPaged(parameters);
             var directors = _mapper.Map<List<DirectorDto>>(pagedResult.items);
             var paginationData = _mapper.Map<PaginationDataDto>(pagedResult);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationData));
             return Ok(directors);
         }
@@ -63,11 +55,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var director = _mapper.Map<DirectorDto>(_directorRepository.GetDirector(directorId));
-            if (!ModelState.IsValid)
-
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(director);
 
         }
@@ -81,11 +68,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var director = _mapper.Map<DirectorDto>(_directorRepository.GetDirector(directorName));
-            if (!ModelState.IsValid)
-
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(director);
 
         }
@@ -96,10 +78,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetDirectorMovie(int directorId)
         {
             var movies = _mapper.Map<List<MovieDto>>(_directorRepository.GetMoviesFromADirector(directorId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(movies);
         }
         [HttpPost]
@@ -112,10 +90,6 @@ namespace MovieAppAPI.Controllers
             if (_directorRepository.DirectorExists(directorCreate.Name))
             {
                 return BadRequest("Director already exists.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
             }
             var directorMap = _mapper.Map<Director>(directorCreate);
             if (!_directorRepository.CreateDirector(directorMap))
@@ -138,14 +112,11 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_directorRepository.DirectorExists(directorId))
                 return NotFound();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
             var directorMap = _mapper.Map<Director>(updatedDirector);
             if (!_directorRepository.UpdateDirector(directorMap))
             {
                 return BadRequest("Something went wrong while saving.");
-
             }
             return NoContent();
 
@@ -156,17 +127,13 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(400)]
         public IActionResult DeleteDirector(int directorId)
         {
-
             if (!_directorRepository.DirectorExists(directorId))
                 return NotFound();
            
             var directorToDelete = _directorRepository.GetDirector(directorId);
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             if (!_directorRepository.DeleteDirector(directorToDelete))
             {
                 return BadRequest("Something went wrong while deleting director.");
-
             }
             return NoContent();
         }

@@ -27,10 +27,6 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetGenres()
         {
             var genres = _mapper.Map<List<GenreDto>>(_genreRepository.GetGenres());
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(genres);
         }
         [HttpGet("{genreId}")]
@@ -44,12 +40,7 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var genre = _mapper.Map<GenreDto>(_genreRepository.GetGenre(genreId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(genre);
-
         }
         [HttpGet("genre-name/{genreName}")]
         [ProducesResponseType(200, Type = typeof(GenreDto))]
@@ -62,12 +53,7 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
             }
             var genre = _mapper.Map<GenreDto>(_genreRepository.GetGenre(genreName));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             return Ok(genre);
-
         }
         [HttpGet("movie/{genreId}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<MovieDto>))]
@@ -75,13 +61,8 @@ namespace MovieAppAPI.Controllers
         public IActionResult GetMovieByGenreId(int genreId)
         {
             var movies = _mapper.Map<List<MovieDto>>(_genreRepository.GetMovieByGenre(genreId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             return Ok(movies);
         }
-
 
         [HttpPost]
         [ProducesResponseType(204)]
@@ -97,10 +78,6 @@ namespace MovieAppAPI.Controllers
             {
                 ModelState.AddModelError("", "Genre already exits");
                 return StatusCode(422, ModelState);
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
             }
             var genreMap = _mapper.Map<Genre>(genreCreate);
             if (!_genreRepository.CreateGenre(genreMap))
@@ -124,15 +101,12 @@ namespace MovieAppAPI.Controllers
                 return BadRequest(ModelState);
             if (!_genreRepository.GenreExists(genreId))
                 return NotFound();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
             var genreMap = _mapper.Map<Genre>(updatedGenre);
             if(!_genreRepository.UpdateGenre(genreMap))
             {
                 ModelState.AddModelError("", "Something went wrong updating genre");
-                return StatusCode(500, ModelState); 
-                 
+                return StatusCode(500, ModelState);       
             }
             return NoContent();
 
@@ -149,8 +123,6 @@ namespace MovieAppAPI.Controllers
                 return NotFound();
            
             var genreToDelete = _genreRepository.GetGenre(genreId);
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             if (!_genreRepository.DeleteGenre(genreToDelete))
             {
                 ModelState.AddModelError("","Something went wrong deleting genre.");
