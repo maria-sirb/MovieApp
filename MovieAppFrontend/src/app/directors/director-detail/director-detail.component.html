@@ -7,7 +7,7 @@
     <div class = "top-details">
         <div>
         <h2>{{director.name}}</h2>
-        <img [src] = "director.photo" class="photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
+        <img [src] = "director.photo" class="photo" (error)= "dp.addDefaultPhotoPerson($event)" alt = "photo of director"/>
         </div>
         <div class = "right-details">
         <p *ngIf = "director.born"><span class = "label">Born : </span>{{director.born | date}}</p>

@@ -14,7 +14,7 @@
     <li *ngFor = "let director of directors">
         <a class = "detail-link" routerLink = "/director-detail/{{director.directorId}}">
             <h5>{{director.name}}</h5>
-            <img class = "photo" [src] = "director.photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
+            <img class = "photo" [src] = "director.photo" (error)= "dp.addDefaultPhotoPerson($event)" alt = "photo of director"/>
         </a>
     </li>
 </ul>

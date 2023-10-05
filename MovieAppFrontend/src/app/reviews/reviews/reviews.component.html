@@ -14,7 +14,7 @@
         <li  *ngFor = "let review of reviews" class="review">
             <div class="d-flex review-container">
                 <a *ngIf = "userId && review.movie"  class = "detail-link" routerLink = "/movie-detail/{{review.movie.movieId}}">
-                    <img class = "poster" [src] = "review.movie.poster"  (error) = "dp.addDefaultPhotoMovie(review.movie)" alt = "movie poster"/>
+                    <img class = "poster" [src] = "review.movie.poster"  (error) = "dp.addDefaultPhoto($event)" alt = "movie poster"/>
                 </a>
                 <div class="d-flex flex-column justify-content-between">
                     <div>
@@ -24,7 +24,7 @@
                         </div>
                         <p class="small-text" *ngIf = "review.user">
                             <a href="/{{review.user.role}}/{{review.user.userId}}" class="small-text">
-                                <img class="photo" [src] = "review.user.imageSource || '../../assets/person.jpg'" (error) = "dp.addDefaultPhotoUser(review.user)"/>
+                                <img class="photo" [src] = "review.user.imageSource || '../../assets/person.jpg'" (error) = "dp.addDefaultPhotoPerson($event)"/>
                                 {{review.user.username}}</a>
                             on {{review.date | date}}
                         </p>

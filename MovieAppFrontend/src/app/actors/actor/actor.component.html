@@ -14,7 +14,7 @@
     <li *ngFor = "let actor of actors">
       <a class = "detail-link" routerLink = "/actor-detail/{{actor.actorId}}">
         <h5>{{actor.name}}</h5>
-        <img class = "photo" #actorPhoto [src]= "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "actor photo"/>
+        <img class = "photo" #actorPhoto [src]= "actor.photo" (error)= "dp.addDefaultPhotoPerson($event)" alt = "actor photo"/>
       </a>
     </li>
 </ul>

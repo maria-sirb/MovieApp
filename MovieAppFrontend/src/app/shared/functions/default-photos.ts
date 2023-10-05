@@ -6,25 +6,13 @@ import { User } from "../models/user";
 
 export class DefaultPhoto{
 
-  addDefaultPhotoMovie(movie : Movie)
+  addDefaultPhotoPerson(event : Event)
   {
-    movie.poster = "assets/black-image.jpg";
+    (event.target as HTMLSourceElement).src = "assets/person.jpg";
   }
-  addDefaultPhotoActor(actor : Actor)
+  addDefaultPhoto(event : Event)
   {
-    actor.photo = "assets/person.jpg";
-  }
-  addDefaultPhotoCast(castMember : CastMember)
-  {
-    castMember.photo = "assets/person.jpg";
-  }
-  addDefaultPhotoDirector(director : Director)
-  {
-    director.photo = "assets/person.jpg";
-  }
-  addDefaultPhotoUser(user : User)
-  {
-    user.imageSource = "assets/person.jpg";
+    (event.target as HTMLSourceElement).src = "assets/black-image.jpg";
   }
 }
   

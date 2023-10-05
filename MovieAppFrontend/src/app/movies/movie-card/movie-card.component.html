@@ -1,7 +1,7 @@
 <a class = "detail-link" (click)="navigateToMovieDetail()">
     <h5>{{movie?.title}}</h5>
     <div>
-        <img *ngIf = "movie" class = "poster"  (error) = "dp.addDefaultPhotoMovie(movie)" [src] = "movie.poster" alt = "movie poster"/>
+        <img *ngIf = "movie" class = "poster"  (error) = "dp.addDefaultPhoto($event)" [src] = "movie.poster" alt = "movie poster"/>
         <span class="save-btn-container">
             <svg (click)="addMovieToWatchlist($event)" class = "save-btn" [ngClass]="{'active' : isCurrentUserInWatchlist}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M17,3H7A2,2 0 0,0 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z" />

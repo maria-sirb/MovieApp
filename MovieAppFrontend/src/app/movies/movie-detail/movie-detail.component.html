@@ -7,7 +7,7 @@
     <div class = "top-details">
         <div>
         <h2>{{movie.title}}</h2>
-        <img class = "poster" [src] = "movie.poster"  (error) = "dp.addDefaultPhotoMovie(movie)" alt = "movie poster"/>
+        <img class = "poster" [src] = "movie.poster"  (error) = "dp.addDefaultPhoto($event)" alt = "movie poster"/>
         <p class="rating"><span class="star-icon">★</span><span class="bigger-text">{{rating}}</span>/10</p>
         </div>
         <div class="right-details">
@@ -28,7 +28,7 @@
         <div *ngIf = "director" class = "bottom-line ">
             <h3 class = "label section-header">Director : </h3>
             <a class = "detail-link director" routerLink="/director-detail/{{director.directorId}}">
-                <img class = "photo" [src] = "director.photo" (error) = "dp.addDefaultPhotoDirector(director)"/>
+                <img class = "photo" [src] = "director.photo" (error) = "dp.addDefaultPhotoPerson($event)"/>
                 <p  style = "font-weight: bold">{{director.name}}</p>
             </a>
         </div>
@@ -36,7 +36,7 @@
         <ul  class = "bottom-line" class = "cast">
             <li *ngFor = "let actor of cast">
                 <a class = "detail-link" routerLink="/actor-detail/{{actor.actorId}}">
-                    <img class = "photo" [src] = " actor.photo" (error) = "dp.addDefaultPhotoCast(actor)" alt = "photo of actor" >
+                    <img class = "photo" [src] = " actor.photo" (error) = "dp.addDefaultPhotoPerson($event)" alt = "photo of actor" >
                     <p  style = "font-weight: bold">{{actor.name}}</p>
                 </a>
                 <div>

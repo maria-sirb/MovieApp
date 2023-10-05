@@ -16,7 +16,7 @@
         <li *ngFor = "let actor of actors">
             <a class = "detail-link" routerLink = "/actor-detail/{{actor.actorId}}">
                 <h5>{{actor.name}}</h5>
-                <img class = "photo" [src]= "actor.photo" (error)= "dp.addDefaultPhotoActor(actor)" alt = "actor photo"/>
+                <img class = "photo" [src]= "actor.photo" (error)= "dp.addDefaultPhotoPerson($event)" alt = "actor photo"/>
             </a>
         </li>
     </ul>
@@ -28,7 +28,7 @@
         <li *ngFor = "let director of directors">
             <a class = "detail-link" routerLink = "/director-detail/{{director.directorId}}">
                 <h5>{{director.name}}</h5>
-                <img class = "photo" [src] = "director.photo" (error)= "dp.addDefaultPhotoDirector(director)" alt = "photo of director"/>
+                <img class = "photo" [src] = "director.photo" (error)= "dp.addDefaultPhotoPerson($event)" alt = "photo of director"/>
             </a>
         </li>
     </ul>
