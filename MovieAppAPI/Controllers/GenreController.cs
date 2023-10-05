@@ -1,10 +1,12 @@
 ﻿
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Dtos;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
+using System.Data;
 
 namespace MovieAppAPI.Controllers
 {
@@ -67,6 +69,7 @@ namespace MovieAppAPI.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult CreateGenre([FromBody] GenreDto genreCreate)
         {
             if (genreCreate == null)
@@ -93,6 +96,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult  UpdateGenre(int genreId, [FromBody]GenreDto updatedGenre)
         {
             if (updatedGenre == null)
@@ -116,6 +120,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteGenre(int genreId)
         {
            

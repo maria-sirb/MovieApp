@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Dtos;
 using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
+using System.Data;
 
 namespace MovieAppAPI.Controllers
 {
@@ -45,6 +47,7 @@ namespace MovieAppAPI.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult CreateRole([FromBody] MovieActorDto roleCreate)
         {
             if (roleCreate == null)
@@ -66,6 +69,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateRole(int movieId, int actorId, [FromBody] MovieActorDto updatedRole)
         {
             if (updatedRole == null)
@@ -88,6 +92,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteRole(int movieId, int actorId)
         {
 

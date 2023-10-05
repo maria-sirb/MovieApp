@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Dtos;
 using MovieAppAPI.Helper;
@@ -6,6 +7,7 @@ using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace MovieAppAPI.Controllers
 {
@@ -138,6 +140,7 @@ namespace MovieAppAPI.Controllers
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult CreateMovie([FromQuery] int directorId, [FromQuery]List<int> genreIds, [FromBody] MovieDto movieCreate)
         {
             if (movieCreate == null)
@@ -162,6 +165,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateMovie(int movieId, [FromQuery] int directorId, [FromQuery] List<int> genreIds,[FromBody] MovieDto updatedMovie)
         {
             if (updatedMovie == null)
@@ -184,6 +188,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteMovie(int movieId)
         {
 

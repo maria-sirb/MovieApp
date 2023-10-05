@@ -104,6 +104,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
+        [Authorize]
         public IActionResult UpdateReview(int reviewId, [FromBody] ReviewDto reviewUpdate)
         {
             if (reviewUpdate == null)

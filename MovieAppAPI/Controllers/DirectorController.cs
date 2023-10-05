@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieAppAPI.Dtos;
 using MovieAppAPI.Helper;
@@ -7,6 +8,7 @@ using MovieAppAPI.Interfaces;
 using MovieAppAPI.Models;
 using MovieAppAPI.Repositories;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace MovieAppAPI.Controllers
 {
@@ -83,6 +85,7 @@ namespace MovieAppAPI.Controllers
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult CreateDirector([FromBody] DirectorDto directorCreate)
         {
             if (directorCreate == null)
@@ -104,6 +107,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateDirector(int directorId, [FromBody] DirectorDto updatedDirector)
         {
             if (updatedDirector == null)
@@ -125,6 +129,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteDirector(int directorId)
         {
             if (!_directorRepository.DirectorExists(directorId))
