@@ -6,6 +6,5 @@ export interface User{
     password? : string,
     token? : string,
     imageName? : string,
-    imageSource? : string,
-    imageFile? : File
+    imageSource? : string
 }

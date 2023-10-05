@@ -2,7 +2,7 @@
     <h1 class="form-title">Edit profile</h1>
     <form #userForm = ngForm (ngSubmit)="updateUser()">
        <div class="d-flex flex-column align-items-center">   
-           <img [src] = "imageSrc || user.imageSource || '../assets/person.jpg'" (error)="dp.addDefaultPhotoUser(user)" class="photo"/>
+           <img [src] = "addedImageSrc || userProfileImageSrc || '../assets/person.jpg'" (error)= "dp.addDefaultPhotoPerson($event)" class="photo"/>
            <div class="d-flex align-items-center justify-content-between image-file-container">
                 <label for ="profileImage" class="choose-image">Choose image</label>
                 <a (click)="deleteProfileImage()" class="remove-image">Remove image</a>
@@ -16,6 +16,15 @@
             </div>
             <div class="errors" *ngIf = "errors.Username">
                 {{errors.Username[0]}}
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "form-group col-md-12">
+                <label for = "password" class="label">*Confirm password</label>
+                <input type = "password" id="password" name = "password" [(ngModel)]="user.confirmPassword" (keyup)= "errors = ''" required ngModel/>
+            </div>
+            <div class="errors" *ngIf = "errors.password">
+                {{errors.password[0]}}
             </div>
         </div>
         <div class = "buttons">

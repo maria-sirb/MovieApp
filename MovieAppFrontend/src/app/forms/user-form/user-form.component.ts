@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { User } from 'src/app/shared/models/user';
+import { UserUpdate } from 'src/app/shared/models/userUpdate';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { UserStoreService } from 'src/app/shared/services/user-store.service';
 
@@ -13,19 +14,14 @@ import { UserStoreService } from 'src/app/shared/services/user-store.service';
 })
 export class UserFormComponent implements OnInit{
 
-  imageSrc : string | null | ArrayBuffer = "";
+  addedImageSrc : string | null | ArrayBuffer = "";
   imageFile : File | undefined = undefined;
-  user : User = {
-    userId: 0,
-    username : "",
-    email : "",
-    password : "",
-    role : "",
-    token : "",
-    imageName : "",
-    imageSource : "",
-    imageFile : undefined
+  user : UserUpdate = {
+    username: '',
+    confirmPassword: '',
+    deleteCurrentImage: false
   }
+  userProfileImageSrc : string | undefined = undefined;
   errors : any = {};
   currentUserId = 0;
   dp = new DefaultPhoto();
@@ -43,7 +39,10 @@ export class UserFormComponent implements OnInit{
             this.router.navigate(['']);
       }
       );
-      this.authService.getUserById(userId).subscribe(user => this.user = user, error => console.log(error));
+      this.authService.getUserById(userId).subscribe(user => {
+        this.user.username = user.username;
+        this.userProfileImageSrc = user.imageSource;
+      }, error => console.log(error));
     });
   }
 
@@ -55,20 +54,21 @@ export class UserFormComponent implements OnInit{
       this.imageFile = target.files[0];
       const file = target.files[0];
       const reader = new FileReader();
-      reader.onload = e => this.imageSrc = reader.result;
+      reader.onload = e => this.addedImageSrc = reader.result;
       reader.readAsDataURL(file);
     }
   }
 
   deleteProfileImage(){
-    this.user.imageSource = "";
-    this.imageSrc  = "";
+    this.userProfileImageSrc = "";
+    this.addedImageSrc  = "";
     this.imageFile = undefined;
   }
 
   updateUser(){
     this.user.imageFile = this.imageFile;
-    this.authService.editUser(this.user).subscribe(response => {
+    this.user.deleteCurrentImage = (!this.imageFile && !this.userProfileImageSrc);
+    this.authService.editUser(this.user, this.currentUserId).subscribe(response => {
       this.authService.storeToken(response.body.token);
 
       const username = this.authService.getUsernameFromToken();

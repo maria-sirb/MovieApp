@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
+import { UserSignup } from 'src/app/shared/models/userSignup';
 
 @Component({
   selector: 'app-signup-form',
@@ -11,15 +12,10 @@ import { User } from 'src/app/shared/models/user';
 })
 export class SignupFormComponent implements OnInit{
 
-  user : User = {
-    userId: 0,
+  user : UserSignup = {
     username : "",
     email : "",
-    password : "",
-    role : "",
-    token : "",
-    imageName : "",
-    imageSource : ""
+    password : ""
   }
   errors : any = {};
 
@@ -30,7 +26,7 @@ export class SignupFormComponent implements OnInit{
       this.router.navigate(['']);
   }
 
-  signup(data : any){
+  signup(){
     this.authenticationService.signupUser(this.user).subscribe((response) => this.router.navigate(['login']), (error) => this.errors = error.error);
   }
 

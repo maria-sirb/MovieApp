@@ -6,6 +6,8 @@ import { User } from '../models/user';
 import { ResetPassword } from '../models/resetPassword';
 import { environment } from 'src/environments/environment';
 import { UserLogin } from '../models/userLogin';
+import { UserSignup } from '../models/userSignup';
+import { UserUpdate } from '../models/userUpdate';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +29,7 @@ export class AuthenticationService {
     return this.client.get<any>(this.baseUrl + "/id/" + userId);
   }
 
-  signupUser(user : User) : Observable<any>{
+  signupUser(user : UserSignup) : Observable<any>{
     return this.client.post<any>(this.baseUrl + '/register', user, {observe : 'response'});
   }
 
@@ -35,12 +37,12 @@ export class AuthenticationService {
     return this.client.post<any>(this.baseUrl + '/authenticate', user, {observe : 'response'});
   }
 
-  editUser(user : User){
+  editUser(user : UserUpdate, userId : number){
     const formData = new FormData();
     Object.entries(user).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    return this.client.put<any>(this.baseUrl + "/" + user.userId, formData, {observe : 'response'});
+    return this.client.put<any>(this.baseUrl + "/" + userId, formData, {observe : 'response'});
   }
 
   deleteUser(userId : number) : Observable<any>{

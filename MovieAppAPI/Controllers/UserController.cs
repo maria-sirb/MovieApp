@@ -95,7 +95,7 @@ namespace MovieAppAPI.Controllers
             return Ok(_mapper.Map<UserDto>(user));
         }
 
-        [HttpPost("register")]
+        /*[HttpPost("register")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -132,9 +132,48 @@ namespace MovieAppAPI.Controllers
                 return StatusCode(500, ModelState);
             }
             return NoContent();
+        }*/
+
+        [HttpPost("register")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public IActionResult RegisterUser([FromBody] UserSignupDto userCreate)
+        {
+            if (userCreate == null)
+                return BadRequest();
+
+            if (_userRepository.UserExists(userCreate.Email))
+            {
+                ModelState.AddModelError("email", "Email  already exists.");
+                return BadRequest(ModelState);
+            }
+            if (_userRepository.UsernameExists(userCreate.Username))
+            {
+                ModelState.AddModelError("username", "Username not available.");
+                return BadRequest(ModelState);
+            }
+
+            string passwordMessages = _userRepository.CheckPasswordStrength(userCreate.Password);
+            if (!string.IsNullOrEmpty(passwordMessages))
+            {
+                ModelState.AddModelError("password", passwordMessages);
+                return BadRequest(ModelState);
+            }
+            var userMap = _mapper.Map<User>(userCreate);
+            userMap.Password = _passwordHasher.HashPassword(userMap.Password);
+            userMap.Role = "user";
+
+            if (!_userRepository.CreateUser(userMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving.");
+                return StatusCode(500, ModelState);
+            }
+            return NoContent();
         }
 
-        [HttpPut("{userId}")]
+
+        /*[HttpPut("{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -170,6 +209,47 @@ namespace MovieAppAPI.Controllers
                 return BadRequest("Something went wrong while updating the user.");
             userMap.Token = _userRepository.CreateJwt(userMap);
             return Ok(userMap);
+        }*/
+        [HttpPut("{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [Authorize]
+        public IActionResult UpdateUser(int userId, [FromForm] UserUpdateDto updatedUser)
+        {
+            if (updatedUser == null)
+                return BadRequest();
+            if (!_userRepository.UserExists(userId))
+                return NotFound();
+            var user = _userRepository.GetUser(userId);
+            if (!_passwordHasher.VerifyPassword(updatedUser.ConfirmPassword, user.Password))
+            {
+                ModelState.AddModelError("password", "Password is incorrect.");
+                return BadRequest(ModelState);
+            }
+            if (_userRepository.UsernameExistsUpdate(userId, updatedUser.Username))
+            {
+                ModelState.AddModelError("username", "Username not available.");
+                return BadRequest(ModelState);
+            }
+            user.Username = updatedUser.Username;
+            if (updatedUser.ImageFile != null)
+            {
+                //if the user adds a new image, delete their previous profile image from the system
+                if (!String.IsNullOrEmpty(user.ImageName))
+                    _azureStorageService.DeleteImage(user.ImageName);
+                user.ImageName = _azureStorageService.UploadImage(updatedUser.ImageFile);
+            }
+            //if the user wishes only to delete their current image 
+            else if (updatedUser.DeleteCurrentImage == true && !String.IsNullOrEmpty(user.ImageName))
+            {
+                _azureStorageService.DeleteImage(user.ImageName);
+                user.ImageName = "";
+            }
+            if (!_userRepository.UpdateUser(user))
+                return BadRequest("Something went wrong while updating the user.");
+            user.Token = _userRepository.CreateJwt(user);
+            return Ok(_mapper.Map<UserDto>(user));
         }
 
         [HttpPost("send-reset-email")]
@@ -242,6 +322,10 @@ namespace MovieAppAPI.Controllers
             if (!_userRepository.UserExists(userId))
                 return NotFound();
             var userToDelete = _userRepository.GetUser(userId);
+            if (!String.IsNullOrEmpty(userToDelete.ImageName))
+            {
+                _azureStorageService.DeleteImage(userToDelete.ImageName);
+            }
             if (!_userRepository.DeleteUser(userToDelete))
             {
                 ModelState.AddModelError("", "Something went wrong deleting user.");
