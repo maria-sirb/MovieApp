@@ -95,45 +95,6 @@ namespace MovieAppAPI.Controllers
             return Ok(_mapper.Map<UserDto>(user));
         }
 
-        /*[HttpPost("register")]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        public IActionResult RegisterUser([FromBody] UserDto userCreate)
-        {
-            if (userCreate == null)
-                return BadRequest();
-
-            if (_userRepository.UserExists(userCreate.Email))
-            {
-                ModelState.AddModelError("email", "Email  already exists.");
-                return BadRequest(ModelState);
-            }
-            if (_userRepository.UsernameExists(userCreate.Username))
-            {
-                 ModelState.AddModelError("username", "Username not available.");
-                return BadRequest(ModelState);
-            }
-
-            string passwordMessages = _userRepository.CheckPasswordStrength(userCreate.Password);
-            if (!string.IsNullOrEmpty(passwordMessages))
-            {
-                ModelState.AddModelError("password", passwordMessages);
-                return BadRequest(ModelState);
-            }
-            var userMap = _mapper.Map<User>(userCreate);
-            userMap.Password = _passwordHasher.HashPassword(userMap.Password);
-            userMap.Token = "";
-            if(string.IsNullOrEmpty(userCreate.Role))
-                userMap.Role = "user";
-            if (!_userRepository.CreateUser(userMap))
-            {
-                ModelState.AddModelError("", "Something went wrong while saving.");
-                return StatusCode(500, ModelState);
-            }
-            return NoContent();
-        }*/
-
         [HttpPost("register")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -172,44 +133,6 @@ namespace MovieAppAPI.Controllers
             return NoContent();
         }
 
-
-        /*[HttpPut("{userId}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        [Authorize]
-        public IActionResult UpdateUser(int userId, [FromForm]UserUpdateDto updatedUser)
-        {
-            if (updatedUser == null)
-                return BadRequest();
-           if (userId != updatedUser.UserId)
-                return BadRequest();
-            if (!_userRepository.UserExists(userId))
-                return NotFound();
-            var userMap = _mapper.Map<User>(updatedUser);
-            if(_userRepository.UsernameExistsUpdate(userId, userMap.Username))
-            {
-                ModelState.AddModelError("username", "Username not available.");
-                return BadRequest(ModelState);
-            }
-            if (updatedUser.ImageFile != null)
-            {
-                //if the user adds a new image, delete their previous profile image from the system
-                if (!String.IsNullOrEmpty(updatedUser.ImageName))
-                    _azureStorageService.DeleteImage(updatedUser.ImageName);
-                userMap.ImageName = _azureStorageService.UploadImage(updatedUser.ImageFile);
-            }
-            //if the user wishes only to delete their current image 
-            else if (updatedUser.ImageFile == null && String.IsNullOrEmpty(updatedUser.ImageSource) && !String.IsNullOrEmpty(updatedUser.ImageName))
-            {
-                _azureStorageService.DeleteImage(updatedUser.ImageName);
-                userMap.ImageName = "";
-            }
-            if (!_userRepository.UpdateUser(userMap))
-                return BadRequest("Something went wrong while updating the user.");
-            userMap.Token = _userRepository.CreateJwt(userMap);
-            return Ok(userMap);
-        }*/
         [HttpPut("{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
