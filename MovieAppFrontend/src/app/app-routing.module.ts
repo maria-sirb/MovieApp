@@ -21,7 +21,7 @@ import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './forms/user-form/user-form.component';
 import { ResetPasswordFormComponent } from './forms/reset-password-form/reset-password-form.component';
 import { SendResetEmailFormComponent } from './forms/send-reset-email-form/send-reset-email-form.component';
-import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 
@@ -49,8 +49,8 @@ const routes: Routes = [
   {path : 'profile/edit/:userId', component : UserFormComponent, canActivate : [AuthGuard]},
   {path: 'send-reset-email', component : SendResetEmailFormComponent},
   {path : 'reset/:email/:emailToken', component : ResetPasswordFormComponent},
-  {path: '404', component: NotFoundPageComponent},
-  {path : '**', redirectTo : '404'}
+  {path : ':code', component : ErrorPageComponent},
+  {path: '**', redirectTo : '404'}
 ];
 
 @NgModule({

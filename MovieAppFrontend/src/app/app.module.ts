@@ -17,7 +17,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { UserComponent } from './user/user.component';
 import { ReviewsModule } from './reviews/reviews.module';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
-import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 @NgModule({
@@ -28,7 +28,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
         AddComponent,
         FooterComponent,
         UserComponent,
-        NotFoundPageComponent
+        ErrorPageComponent
        
     ],
     providers: [{

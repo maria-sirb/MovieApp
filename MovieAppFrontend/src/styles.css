@@ -61,7 +61,7 @@ app-movies{
  min-height: 69vh;
 }
 app-actor, app-director, app-add, app-search, app-actor-detail, app-movie-detail, app-director-detail, 
-app-root>app-actor-form, app-root>app-movie-form, app-root>app-director-form, app-root>app-role-form, app-user, app-not-found-page{
+app-root>app-actor-form, app-root>app-movie-form, app-root>app-director-form, app-root>app-role-form, app-user, app-error-page{
   position: relative;
   top:100px;
   min-height: 69vh;

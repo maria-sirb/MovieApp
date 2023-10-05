@@ -26,10 +26,14 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {
-        if (err.status !== 401) {
-         return;
+        if (err.status == 401) {
+          this.router.navigate(['login']);
         }
-        this.router.navigate(['login']);
+        else if (err.status == 403) {
+          this.router.navigate(['/403']);
+        }
+        else 
+          return;
       }
     }));
   }
