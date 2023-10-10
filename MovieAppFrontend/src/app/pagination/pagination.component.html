@@ -1,0 +1,11 @@
+<div class="pagination-container d-flex align-items-center justify-content-center">
+    <div class="pagination d-flex" *ngIf = "paginationData">
+        <button class="navigation-button" [disabled]="!paginationData.HasPrevious" (click)="changePage(paginationData.CurrentPageNumber - 1)">&lt;</button>
+        <ul class = "pages d-flex">
+            <li *ngFor="let _ of [].constructor(paginationData.TotalPagesCount); let pageNr = index">
+                <button (click)="changePage(pageNr + 1)" [ngClass] = "{'active' : pageNr == activePage - 1}">{{pageNr + 1}}</button>
+            </li>
+        </ul>
+        <button class="navigation-button" [disabled]="!paginationData.HasNext" (click)="changePage(paginationData.CurrentPageNumber + 1)">&gt;</button>
+    </div>
+</div>

@@ -5,6 +5,8 @@ import { ActorDetailComponent } from './actor-detail/actor-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { Form, FormsModule } from '@angular/forms';
 import { MoviesModule } from '../movies/movies.module';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { PaginationModule } from '../pagination/pagination.module';
 
 
 
@@ -17,7 +19,8 @@ import { MoviesModule } from '../movies/movies.module';
     CommonModule,
     AppRoutingModule,
     FormsModule,
-    MoviesModule
+    MoviesModule,
+    PaginationModule
   ],
   exports : [
     ActorComponent,

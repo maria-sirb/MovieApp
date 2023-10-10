@@ -10,6 +10,7 @@ import { UserStoreService } from '../shared/services/user-store.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { WatchlistService } from '../shared/services/watchlist.service';
 import { of, switchMap } from 'rxjs';
+import { PaginationData } from '../shared/models/paginationData';
 
 @Component({
   selector: 'app-movies',
@@ -19,16 +20,14 @@ import { of, switchMap } from 'rxjs';
 export class MoviesComponent implements OnInit{
 
   movies : Movie[] = [];
-  selectedMovie? : Movie;
-  sortMode = this.route.snapshot.paramMap.get('sortMode');
-  pickedGenreId = Number(this.route.snapshot.paramMap.get('genreId'));
+  sortMode = "";
+  pickedGenreId = undefined;
   dp = new DefaultPhoto();
   currentUserId = 0;
   currentUserWatchlist : Movie[] | undefined = undefined;
+  paginationData : PaginationData | undefined = undefined;
 
-  constructor(private movieService : MovieService, private genreService : GenreService, private userStoreService : UserStoreService, private authService : AuthenticationService, private watchlistService : WatchlistService, private route : ActivatedRoute, private router : Router){
-     
-  }
+  constructor(private movieService : MovieService, private genreService : GenreService, private userStoreService : UserStoreService, private authService : AuthenticationService, private watchlistService : WatchlistService, private route : ActivatedRoute, private router : Router){}
 
   ngOnInit() : void {   
 
@@ -41,69 +40,33 @@ export class MoviesComponent implements OnInit{
         return of(null);
       })
     ).subscribe(watchlist => this.currentUserWatchlist = watchlist || undefined);
- 
-    if(this.pickedGenreId)
-      this.genreService.getGenre(this.pickedGenreId).subscribe(genre => this.displayGenreMovies(genre));
-    else
-      this.getAllMovies();
-    
+
+    this.route.queryParams.subscribe(params => {
+      this.sortMode = params['sort'] || "";
+      this.pickedGenreId = params['genreId'];
+      this.getMovies(params['page'] || 1, params['sort'], params['genreId']);
+    })
   }
-  getAllMovies() {
-    this.movieService.getMovies().subscribe(res => {
-      this.movies = res; 
-      this.sortMovies();
+  getMovies(pageNumber : number, sortMode : string | null, genreId : number | null)
+  {
+    this.movieService.getMoviesPaged(pageNumber, sortMode, genreId).subscribe(response => {
+      if(response.body)
+        this.movies = response.body;
+      this.paginationData = JSON.parse(response.headers.get('X-Pagination')||"");
     });
   }
-  displayGenreMovies(genre : Genre) {
-    
-    if(genre == undefined || genre == null)
-       this.getAllMovies();
-    else
-    {
-      this.genreService.getGenreMovies(genre.genreId).subscribe(movies => {this.movies = movies; this.sortMovies()});
-    }
-  }
-  onSelect(movie : Movie)
+  changePage(pageNumber : number)
   {
-    this.selectedMovie = movie;
+    this.router.navigate(['/movies'], {queryParams : {page : pageNumber, sort : this.sortMode, genreId : this.pickedGenreId}});
+  }
+  pickGenre(genreId : number)
+  {
+    this.router.navigate(['/movies'], {queryParams : {page : 1, sort : this.sortMode, genreId : genreId}});
   }
   updateSort(sortOption : any)
   {
     this.sortMode = sortOption;
-    this.router.navigate([`../${this.sortMode}`], { relativeTo: this.route });
-    this.sortMovies();
+    this.router.navigate(['/movies'], {queryParams : {page : 1, sort : this.sortMode, genreId : this.pickedGenreId}});
   }
-  
-  sortMovies()
-  {
-    if(this.sortMode == 'none')
-    {
-      this.movies.sort((movie1, movie2) => movie1.movieId < movie2.movieId? -1 : 1);
-    }
-    if(this.sortMode == 'releaseYearAsc')  
-    {
-      this.movies.sort((movie1, movie2) => ((movie1.releaseYear || 0) < (movie2.releaseYear || 0))? -1 : 1);
-    }
-    if(this.sortMode == 'releaseYearDesc')  
-    {
-      this.movies.sort((movie1, movie2) => ((movie1.releaseYear || 0) < ( movie2.releaseYear || 0))? 1 : -1);
-    }
-    if(this.sortMode == 'imdbRating')  
-    {
-      this.movies.sort((movie1, movie2) => ((movie1.imdbRating || 0) < (movie2.imdbRating || 0)) ? 1 : -1);
-    }
-    if(this.sortMode == 'oscarWins')  
-    {
-      this.movies.sort((movie1, movie2) => {
-        if (movie1.oscarWins || 0 < (movie2.oscarWins || 0)) return 1;
-        if (movie1.oscarWins || 0 > (movie2.oscarWins || 0)) return -1;
-        if (movie1.oscarNominations || 0 < (movie2.oscarNominations || 0)) return 1;
-        if (movie1.oscarNominations || 0 > (movie2.oscarNominations || 0)) return -1;
-        return 0;
-      });
-    }
-  }
-  
- 
   
 }

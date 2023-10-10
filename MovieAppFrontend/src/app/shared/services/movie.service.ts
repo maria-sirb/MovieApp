@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Movie } from '../models/movie';
 import { Genre } from '../models/genre';
 import { Actor } from '../models/actor';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { Role } from '../models/role';
 import { Director } from '../models/director';
@@ -33,6 +33,16 @@ export class MovieService {
   }
   getMovie(id : number) : Observable<Movie>{
     return this.client.get<Movie>(this.moviesUrl + '/' + id);
+  }
+  getMoviesPaged(pageNumber : number, orderBy : string | null, genreId : number | null) : Observable<HttpResponse<Movie[]>>{
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("PageNumber", pageNumber);
+    queryParams = queryParams.append("PageSize", 25);
+    if(orderBy)
+      queryParams = queryParams.append("OrderBy", orderBy);
+    if(genreId)
+      queryParams = queryParams.append("GenreId", genreId);
+    return this.client.get<Movie[]>(this.moviesUrl + '/paged', {params : queryParams, observe : 'response'});
   }
   getMovieGenres(movieId : number) : Observable<Genre[]> {
     return this.client.get<Genre[]>(this.moviesUrl + '/genre/' + movieId);

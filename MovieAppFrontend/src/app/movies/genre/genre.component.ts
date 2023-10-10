@@ -12,17 +12,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class GenreComponent implements OnInit{
 
   genres :Genre[] = [];
-  activeGenreId = Number(this.route.snapshot.paramMap.get('genreId'));
-  @Input() sortMode? : string | null;
+  activeGenreId = undefined;
+  @Output() pickedGenre = new EventEmitter<number>();
   constructor(private genreService : GenreService, private router : Router, private route : ActivatedRoute) {
 
   }
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.activeGenreId = params['genreId'];
+    })
     this.genreService.getGenres().subscribe(genres => this.genres = genres);
   }
-  pickGenre(genre? : Genre) {
-   this.router.navigateByUrl('actors', {skipLocationChange: true})
-  .then(()=> this.router.navigate([`movies/${genre?.genreId??0}/${this.sortMode}`]));
-   
+  pickGenre(genre? : Genre){
+    this.pickedGenre.emit(genre?.genreId || undefined);
   }
 }

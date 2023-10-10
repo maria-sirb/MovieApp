@@ -26,14 +26,12 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 const routes: Routes = [
-  {path : '', redirectTo : 'movies/0/none', pathMatch: 'full'},
-  {path: 'movies/:genreId/:sortMode', component: MoviesComponent },
+  {path: '', redirectTo : 'movies', pathMatch : 'full' },
+  {path: 'movies', component: MoviesComponent },
   {path: 'movie-detail/:movieId', component : MovieDetailComponent},
-  {path : 'actors', redirectTo : '/actors/none', pathMatch: 'full'},
-  {path : 'actors/:sortMode', component : ActorComponent},
+  {path : 'actors', component : ActorComponent},
   {path : 'actor-detail/:actorId', component : ActorDetailComponent},
-  {path : 'directors', redirectTo : '/directors/none', pathMatch: 'full'},
-  {path: 'directors/:sortMode', component: DirectorComponent},
+  {path : 'directors', component: DirectorComponent},
   {path: 'director-detail/:directorId', component : DirectorDetailComponent},
   {path : 'search', component : SearchComponent},
   {path : 'add', component : AddComponent, canActivate : [AuthGuard], data: {roles: 'admin'}},

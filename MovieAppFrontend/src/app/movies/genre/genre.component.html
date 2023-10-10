@@ -1,7 +1,7 @@
 
 <ul class = "genre-list">
     <li>
-        <p class = "genre-name" (click) = "pickGenre()" [ngClass] = "{'active' : activeGenreId == 0}">All movies</p>
+        <p class = "genre-name" (click) = "pickGenre()" [ngClass] = "{'active' : !activeGenreId}">All movies</p>
     </li>
     <li *ngFor = "let genre of genres">
        <p class = "genre-name" (click) = "pickGenre(genre)" [ngClass] = "{'active' : activeGenreId == genre.genreId}">{{genre.name}}</p>

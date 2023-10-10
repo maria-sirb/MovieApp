@@ -8,6 +8,7 @@ import { UserStoreService } from 'src/app/shared/services/user-store.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { catchError, of, switchMap } from 'rxjs';
 import { Movie } from 'src/app/shared/models/movie';
+import { PaginationData } from 'src/app/shared/models/paginationData';
 
 @Component({
   selector: 'app-director-detail',
@@ -21,9 +22,7 @@ export class DirectorDetailComponent implements OnInit{
   dp = new DefaultPhoto();
   userRole = "";
 
-  constructor(private route : ActivatedRoute, private location : Location, private router : Router, private directorService : DirectorService, private userStoreService : UserStoreService, private authenticationService : AuthenticationService) {
-
-  }
+  constructor(private route : ActivatedRoute, private location : Location, private router : Router, private directorService : DirectorService, private userStoreService : UserStoreService, private authenticationService : AuthenticationService) {}
 
   ngOnInit(): void {
     this.getDirector();

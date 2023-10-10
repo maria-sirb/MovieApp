@@ -10,6 +10,7 @@ import { AppModule } from '../app.module';
 import { ReviewsModule } from '../reviews/reviews.module';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { MovieListComponent } from './movie-list/movie-list.component';
+import { PaginationModule } from '../pagination/pagination.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MovieListComponent } from './movie-list/movie-list.component';
     AppRoutingModule,
     AllFormsModule,
     FormsModule,
-    ReviewsModule
+    ReviewsModule,
+    PaginationModule
   ],
 
   exports : [

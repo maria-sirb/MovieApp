@@ -5,6 +5,7 @@ import { DirectorDetailComponent } from './director-detail/director-detail.compo
 import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MoviesModule } from '../movies/movies.module';
+import { PaginationModule } from '../pagination/pagination.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MoviesModule } from '../movies/movies.module';
     CommonModule,
     AppRoutingModule,
     FormsModule,
-    MoviesModule
+    MoviesModule,
+    PaginationModule
   ],
   exports: [
     DirectorComponent,

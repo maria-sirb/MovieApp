@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Director } from '../models/director';
 import { Movie } from '../models/movie';
@@ -15,6 +15,14 @@ export class DirectorService {
 
   getDirectors() : Observable<Director[]> {
     return this.client.get<Director[]>(this.directorsUrl);
+  }
+  getDirectorsPaged(pageNumber : number, orderBy : string | null) : Observable<HttpResponse<Director[]>>{
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("PageNumber", pageNumber);
+    queryParams = queryParams.append("PageSize", 25);
+    if(orderBy)
+      queryParams = queryParams.append("OrderBy", orderBy);
+    return this.client.get<Director[]>(this.directorsUrl + '/paged', {params : queryParams, observe : 'response'});
   }
   getDirectorByName(name : string) : Observable<Director> {
     return this.client.get<Director>(this.directorsUrl + '/director-name/' + encodeURIComponent(name.trim()));
