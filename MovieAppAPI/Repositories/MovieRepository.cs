@@ -58,10 +58,16 @@ namespace MovieAppAPI.Repositories
         {
             return _context.Movies.ToList().Where(m => Search(m, input)).OrderByDescending(m => GetSearchScore(m, input)).ToList();
         }
-        public PagedResult<Movie> GetMoviesPaged(QueryStringParameters parameters)
+
+        public PagedResult<Movie> GetMoviesPaged(QueryStringParametersMovie parameters)
         {
-            var movies = _sortingHelper.ApplySort(_context.Movies, parameters.OrderBy ?? "");
-            return new PagedResult<Movie>(movies, parameters.PageNumber, parameters.PageSize);
+            IQueryable<Movie> movies;
+            if (parameters.GenreId != null)
+                movies = _context.MovieGenres.Where(mg => mg.GenreId == parameters.GenreId).Select(mg => mg.Movie);
+            else
+                movies = _context.Movies;
+            var sortedMovies = _sortingHelper.ApplySort(movies, parameters.OrderBy ?? "");
+            return new PagedResult<Movie>(sortedMovies, parameters.PageNumber, parameters.PageSize);
         }
 
         public ICollection<MovieActor> GetRolesInMovie(int id)

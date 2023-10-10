@@ -7,7 +7,7 @@ namespace MovieAppAPI.Interfaces
     {
         ICollection<Movie> GetMovies();
         ICollection<Movie> GetMovies(string? input);
-        PagedResult<Movie> GetMoviesPaged(QueryStringParameters parameters);
+        PagedResult<Movie> GetMoviesPaged(QueryStringParametersMovie parameters);
         Movie GetMovie(int id);
         Movie GetMovie(string title);
         ICollection<MovieActor> GetRolesInMovie(int id);

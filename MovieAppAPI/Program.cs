@@ -25,9 +25,9 @@ builder.Services.AddControllers(options =>
     options.CacheProfiles.Add("CacheDefault",
         new CacheProfile()
         {
-            Duration = 15
-            ,
-            Location = ResponseCacheLocation.Any
+            Duration = 15,
+            Location = ResponseCacheLocation.Any,
+            VaryByQueryKeys = new[] { "*" }
         });
     options.Filters.Add(new ValidateModelFilter());
 }).AddNewtonsoftJson(options =>

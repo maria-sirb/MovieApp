@@ -37,7 +37,7 @@ namespace MovieAppAPI.Controllers
         [HttpGet("paged")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<MovieDto>))]
         [ProducesResponseType(400)]
-        public IActionResult GetMovies([FromQuery] QueryStringParameters parameters)
+        public IActionResult GetMovies([FromQuery] QueryStringParametersMovie parameters)
         {
             var pagedResult = _movieRepository.GetMoviesPaged(parameters);
             var movies = _mapper.Map<List<MovieDto>>(pagedResult.items);
