@@ -7,10 +7,6 @@
     padding-inline-start: 0;
     padding-bottom: 50px;
 }
-:host-context(app-movies) .movies-list{
-    top: 140px;
-    position: relative;
-}
 :host-context(app-actor-detail) .movies-list,
 :host-context(app-director-detail) .movies-list{
     display: flex;

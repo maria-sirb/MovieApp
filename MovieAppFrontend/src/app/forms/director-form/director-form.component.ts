@@ -14,7 +14,7 @@ export class DirectorFormComponent implements OnInit{
   @Output() onSubmision = new EventEmitter<any>();
   director : Director = {
     directorId : 0,
-    name : " ",
+    name : "",
     photo : undefined,
     born : undefined,
     oscarWins : undefined,

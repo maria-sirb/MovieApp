@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { of, switchMap } from 'rxjs';
 import { Movie } from 'src/app/shared/models/movie';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { MovieService } from 'src/app/shared/services/movie.service';
@@ -19,14 +20,16 @@ export class MovieListComponent  implements OnInit{
      
   }
   ngOnInit() : void {   
-    this.userStoreService.getIdFromStore().subscribe(id => {
-      var currentUserId = Number(id) || Number(this.authService.getIdFromToken());  
-      if(currentUserId)  
-        this.watchlistService.getUserWatchlist(currentUserId).subscribe(watchlist => {
-          this.currentUserWatchlist = watchlist;
-        }, error => console.log(error));  
-      else 
-        this.currentUserWatchlist = [];
-    });   
+    this.userStoreService.getIdFromStore().pipe(
+      switchMap(id => {
+        var currentUserId = Number(id) || Number(this.authService.getIdFromToken());
+        if(!currentUserId){
+          return of([]);
+        }
+        else{
+          return this.watchlistService.getUserWatchlist(currentUserId);
+        }
+      })
+    ).subscribe(watchlist => this.currentUserWatchlist = watchlist);
   }
 }

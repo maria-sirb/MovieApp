@@ -6,6 +6,7 @@ import { Movie } from '../shared/models/movie';
 import { WatchlistService } from '../shared/services/watchlist.service';
 import { UserStoreService } from '../shared/services/user-store.service';
 import { DefaultPhoto } from '../shared/functions/default-photos';
+import { catchError, forkJoin, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -27,24 +28,35 @@ export class UserComponent implements OnInit{
   constructor(private authService : AuthenticationService, private userStoreService : UserStoreService, private watchlistService : WatchlistService, private route : ActivatedRoute, private router : Router) {}
 
   ngOnInit(): void {
-    
-    this.route.paramMap.subscribe(paramMap => 
-      {
-        this.userId = Number(paramMap.get('userId'));
-        this.authService.getUserById(this.userId).subscribe(user => this.user = user, error => error.status == 404 ? this.router.navigate(['/404']) : console.log(error));
-        this.watchlistService.getUserWatchlist(this.userId).subscribe(watchlist => this.watchlist = watchlist, error => console.log(error));
-    });
 
-    this.userStoreService.getIdFromStore().subscribe(id =>
-      {  
+    this.route.paramMap.pipe(
+      switchMap(paramMap => {
+        this.userId = Number(paramMap.get('userId'));
+        return forkJoin([
+          this.authService.getUserById(this.userId),
+          this.watchlistService.getUserWatchlist(this.userId)
+        ]);
+      }),
+      catchError(error => {
+        if(error.status == 404)
+          this.router.navigate(['/404']);
+        return of();
+      })
+    ).subscribe(([user, watchlist]) => {
+      this.user = user;
+      this.watchlist = watchlist;
+    })
+
+    this.userStoreService.getIdFromStore().pipe(
+      switchMap(id => {
         this.currentUserId = Number(id) || Number(this.authService.getIdFromToken());
         if(this.currentUserId)
-          this.watchlistService.getUserWatchlist(this.currentUserId).subscribe(watchlist => this.currentUserWatchlist = watchlist, error => console.log(error));
-        else
-          this.currentUserWatchlist = [];
-      }
-    )
-   
+          return this.watchlistService.getUserWatchlist(this.currentUserId);
+        return of([]);
+      })
+    ).subscribe(watchlist => {
+      this.currentUserWatchlist = watchlist;
+    })
   }
 
 

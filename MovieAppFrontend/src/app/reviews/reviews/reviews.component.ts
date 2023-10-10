@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { forkJoin, switchMap } from 'rxjs';
 import { DefaultPhoto } from 'src/app/shared/functions/default-photos';
 import { Movie } from 'src/app/shared/models/movie';
 import { Review } from 'src/app/shared/models/review';
@@ -30,20 +31,27 @@ export class ReviewsComponent implements OnInit{
 
     if(this.movie)
     {
-       this.reviewService.getMovieReviews(this.movie.movieId).subscribe(reviews => 
-        {
-          this.reviews = reviews;
-          this.reviews.forEach(review => this.reviewService.getReviewAuthor(review.reviewId).subscribe(author => review.user = author, error => console.log(error)));
-        }, error => console.log(error));
+        this.reviewService.getMovieReviews(this.movie.movieId).pipe(
+          switchMap(reviews => {
+            this.reviews = reviews;
+            return forkJoin(reviews.map(review => this.reviewService.getReviewAuthor(review.reviewId)));
+          })
+        ).subscribe(authors => {
+          authors.forEach((author, index) => this.reviews[index].user = author);
+        });
     }
     else if(this.userId)
     {
-      this.reviewService.getUserReviews(this.userId).subscribe(reviews => 
-        {
-          this.reviews = reviews
-          this.reviews.forEach(review => this.reviewService.getReviewedMovie(review.reviewId).subscribe(movie => review.movie = movie, error => console.log(error)));
-        }, error => console.log(error));
+        this.reviewService.getUserReviews(this.userId).pipe(
+          switchMap(reviews => {
+            this.reviews = reviews;
+            return forkJoin(reviews.map(review => this.reviewService.getReviewedMovie(review.reviewId)));
+          })
+        ).subscribe(movies => {
+          movies.forEach((movie, index) => this.reviews[index].movie = movie);
+        });
     }
+    
   }
   deleteReview(reviewId : number)
   {
