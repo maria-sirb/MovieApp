@@ -33,7 +33,7 @@
         </li>
     </ul>
 </div>
-<div *ngIf = "!movies?.length && !actors?.length && !directors?.length && query.value">
+<div *ngIf = "noResults">
     <h3 class="no-results">No matching movies, actors, or directors. Try a different search.</h3>
 </div>
 </div>
