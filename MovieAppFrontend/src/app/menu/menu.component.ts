@@ -48,8 +48,7 @@ export class MenuComponent {
   }
 
   deleteAccount(){
-    this.authenticationService.deleteUser(this.userId).subscribe();
-    this.logout();
+    this.authenticationService.deleteUser(this.userId).subscribe(response => this.logout);
   }
 
 }

@@ -13,9 +13,6 @@
         </div>
     </div>
     <div class = "dropdown">
-        <!--<a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{username||"User"}}
-        </a>-->
         <button *ngIf = "!username" type="button" disabled>User</button>
         <button *ngIf = "username" type="button"><a href="{{role}}/{{userId}}" class="user-link">{{username}}</a></button>
         <button type="button" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

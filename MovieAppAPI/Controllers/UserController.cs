@@ -137,7 +137,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        [Authorize]
+        [Authorize(Policy = "OwnAccountOnly")]
         public IActionResult UpdateUser(int userId, [FromForm] UserUpdateDto updatedUser)
         {
             if (updatedUser == null)
@@ -239,7 +239,7 @@ namespace MovieAppAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        [Authorize]
+        [Authorize(Policy = "OwnAccountOnly")]
         public IActionResult DeleteUser(int userId)
         {
             if (!_userRepository.UserExists(userId))

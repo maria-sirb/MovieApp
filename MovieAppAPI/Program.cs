@@ -15,6 +15,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Org.BouncyCastle.Asn1.X509.Qualified;
 using MovieAppAPI.Filters;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,7 +78,20 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = false
     };
 });
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("OwnAccountOnly", policy =>
+    {
+        policy.RequireAssertion(context =>
+        {
+            var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var queryId = new HttpContextAccessor().HttpContext.Request.Query["userId"];
 
+            return userId == queryId;
+        });
+    });
+});
 
 var app = builder.Build();
 //app.UseCors();
