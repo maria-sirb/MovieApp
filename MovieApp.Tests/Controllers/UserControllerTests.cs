@@ -48,7 +48,7 @@ namespace MovieApp.Tests.Controllers
         public void UserController_RegisterUser_ReturnsOk()
         {
             //Arrange
-            var userCreate = A.Fake<UserDto>();
+            var userCreate = A.Fake<UserSignupDto>();
             var user = A.Fake<User>();
             A.CallTo(() => _userRepository.UserExists(userCreate.Email)).Returns(false);
             A.CallTo(() => _userRepository.UsernameExists(userCreate.Username)).Returns(false);
@@ -70,7 +70,7 @@ namespace MovieApp.Tests.Controllers
         public void UserController_RegisterUser_ReturnsBadRequest()
         {
             //Arrange
-            var userCreate = A.Fake<UserDto>();
+            var userCreate = A.Fake<UserSignupDto>();
             var user = A.Fake<User>();
             A.CallTo(() => _userRepository.UserExists(userCreate.Email)).Returns(false);
             A.CallTo(() => _userRepository.UsernameExists(userCreate.Username)).Returns(true);
@@ -88,7 +88,7 @@ namespace MovieApp.Tests.Controllers
         public void UserController_RegisterUser_ReturnsBadRequestPassword()
         {
             //Arrange
-            var userCreate = A.Fake<UserDto>();
+            var userCreate = A.Fake<UserSignupDto>();
             var user = A.Fake<User>();
             A.CallTo(() => _userRepository.UserExists(userCreate.Email)).Returns(false);
             A.CallTo(() => _userRepository.UsernameExists(userCreate.Username)).Returns(false);
