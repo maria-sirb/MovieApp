@@ -18,6 +18,8 @@ import { UserComponent } from './user/user.component';
 import { ReviewsModule } from './reviews/reviews.module';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 
 
 @NgModule({
@@ -28,12 +30,18 @@ import { ErrorPageComponent } from './error-page/error-page.component';
         AddComponent,
         FooterComponent,
         UserComponent,
-        ErrorPageComponent    
+        ErrorPageComponent,
+        SpinnerComponent    
     ],
     providers: [{
         provide : HTTP_INTERCEPTORS,
         useClass : TokenInterceptor,
         multi : true
+    },
+    {
+        provide: HTTP_INTERCEPTORS, 
+        useClass: LoadingInterceptor, 
+        multi: true
     },
     { 
         provide: JWT_OPTIONS, useValue: JWT_OPTIONS 

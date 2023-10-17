@@ -2,3 +2,6 @@ header{
     position: relative;
     overflow: hidden;
 }
+.empty{
+    min-height: 100px;
+}

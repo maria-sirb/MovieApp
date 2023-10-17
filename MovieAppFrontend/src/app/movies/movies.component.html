@@ -13,7 +13,14 @@
 </select>
 </form>
 </header>
-<div class="movie-list-container">
-    <app-movie-list [movies] = "movies"></app-movie-list>
+<div *ngIf = "movies.length; else emptyTemplate">
+    <div class="movie-list-container">
+        <app-movie-list [movies] = "movies"></app-movie-list>
+    </div>
+    <app-pagination [paginationData]="paginationData" (changedPage)="changePage($event)"></app-pagination>
 </div>
-<app-pagination [paginationData]="paginationData" (changedPage)="changePage($event)"></app-pagination>
+<ng-template #emptyTemplate>
+    <div class = "empty d-flex justify-content-center align-items-center">
+        <h4>There are no movies here yet.</h4>
+    </div>
+</ng-template>
