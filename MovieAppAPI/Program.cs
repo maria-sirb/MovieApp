@@ -16,6 +16,8 @@ using System.Text.Json;
 using Org.BouncyCastle.Asn1.X509.Qualified;
 using MovieAppAPI.Filters;
 using System.Security.Claims;
+using MovieAppAPI.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,7 @@ builder.Services.AddControllers(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddResponseCaching();
 builder.Services.AddTransient<Seed>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IDirectorRepository, DirectorRepository>();
@@ -49,6 +52,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddTransient<IAzureStorageService, AzureStorageService>();
 builder.Services.AddScoped(typeof(ISortingHelper<>), typeof(SortingHelper<>));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddSingleton<IAuthorizationHandler, OwnAccountAuhtorizationHandler>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -83,13 +87,9 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("OwnAccountOnly", policy =>
     {
-        policy.RequireAssertion(context =>
-        {
-            var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var queryId = new HttpContextAccessor().HttpContext.Request.Query["userId"];
+        policy.RequireAuthenticatedUser();
+        policy.Requirements.Add(new OwnAccountRequirement());
 
-            return userId == queryId;
-        });
     });
 });
 
